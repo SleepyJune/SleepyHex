@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+[System.Serializable]
 public struct Hex : IEquatable<Hex>
 {
     public int col;

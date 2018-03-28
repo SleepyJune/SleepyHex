@@ -24,7 +24,7 @@ public class UITemplateSlot : MonoBehaviour
     {
         if (levelEditor)
         {
-            levelEditor.selectedTemplate = this;            
+            levelEditor.OnTemplateSlotPressed(this);       
         }
     }
 }

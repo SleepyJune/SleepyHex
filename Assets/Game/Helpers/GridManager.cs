@@ -15,16 +15,22 @@ public class GridManager
 
     Vector3 initialPos;
 
+    List<UISlot> uiSlots;
+
     public GridManager(int column, int row)
     {
         this.column = column;
         this.row = row;
+
+        uiSlots = new List<UISlot>();
+
+        CalculateInitialPos();
     }
 
     public void CalculateInitialPos()
     {
-        /*initialPos = new Vector3(-slotWidth * row / 2f + slotWidth / 2, 0,
-            column / 2f * slotHeight - slotHeight / 2);*/
+        /*initialPos = new Vector3(-slotWidth * row / 2f + slotWidth / 2,
+                                 slotHeight * column / 2f - slotHeight / 2f, 0);*/
     }
 
     public Vector3 CalculateWorldPos(Hex hexPos)
@@ -40,5 +46,33 @@ public class GridManager
         float z = initialPos.z - hexPos.col * slotHeight + offset;
 
         return new Vector3(x, z, 0);
+    }
+        
+    public void DeleteAllSlots()
+    {
+        foreach(var slot in uiSlots)
+        {
+            GameObject.Destroy(slot.gameObject);
+        }
+    }
+
+    public void MakeGrid(Level level, UISlot slotPrefab, Transform slotParent, LevelEditor levelEditor = null)
+    {
+        foreach(var slot in level.map.Values)
+        {
+            var newSlot = GameObject.Instantiate(slotPrefab, slotParent);
+            var worldPos = CalculateWorldPos(slot.hexPosition);
+            newSlot.transform.localPosition = worldPos;
+            newSlot.slot = slot;
+
+            uiSlots.Add(newSlot);
+
+            if (levelEditor != null)
+            {
+                var editorSlot = newSlot.gameObject.AddComponent<UIEditorSlot>();
+                editorSlot.uiSlot = newSlot;
+                editorSlot.levelEditor = levelEditor;
+            }
+        }
     }
 }

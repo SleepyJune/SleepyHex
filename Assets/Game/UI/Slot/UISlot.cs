@@ -16,13 +16,13 @@ public class UISlot : MonoBehaviour
     
     void Start()
     {
-        var number = slot.number;
-
-        SetNumber(number);
+        SetNumber(slot.number);
     }
 
     public void SetNumber(int number)
     {
+        slot.number = number;
+
         if (number > 0 && number <= 9)
         {
             text.text = number.ToString();

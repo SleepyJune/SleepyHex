@@ -24,14 +24,7 @@ public class UIEditorSlot : MonoBehaviour
     {
         if (levelEditor)
         {
-            levelEditor.selectedEditorSlot = this;
-
-            if (levelEditor.selectedTemplate)
-            {
-                var number = levelEditor.selectedTemplate.uiSlot.slot.number;
-
-                uiSlot.SetNumber(number);
-            }
+            levelEditor.OnEditorSlotPressed(this);
         }
     }
 }
