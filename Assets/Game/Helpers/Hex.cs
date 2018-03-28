@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine;
+
 public struct Hex : IEquatable<Hex>
 {
     public int col;
@@ -42,13 +44,13 @@ public struct Hex : IEquatable<Hex>
 
 public static class HexExtensions
 {
-    public static Vector ConvertCube(this Hex hex)
+    public static Vector3 ConvertCube(this Hex hex)
     {
-        double x = hex.col - (hex.row - (hex.row & 1)) / 2;
-        double z = hex.row;
-        double y = -x - z;
-
-        return new Vector(x, y, z);
+        float x = hex.col - (hex.row - (hex.row & 1)) / 2;
+        float z = hex.row;
+        float y = -x - z;
+        
+        return new Vector3(x, y, z);
     }
 
     public static bool isInBound(this Hex hex)
