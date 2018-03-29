@@ -8,14 +8,14 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelEditorLoader : MonoBehaviour
+public class LevelSelector : MonoBehaviour
 {
     public Transform levelList;
     public Transform levelListParent;
 
     public GameObject levelSelectionButton;
 
-    public LevelEditor levelEditor;
+    public LevelLoader levelLoader;
 
     string savePath;
 
@@ -61,7 +61,7 @@ public class LevelEditorLoader : MonoBehaviour
             var newButton = Instantiate(levelSelectionButton, levelList);
 
             //newButton.transform.SetParent(levelSelectionButtonHolder.transform, false);
-            newButton.GetComponentInChildren<Text>().text = Path.GetFileNameWithoutExtension(file.Name);
+            newButton.GetComponentInChildren<Text>().text = System.IO.Path.GetFileNameWithoutExtension(file.Name);
 
             string fullPath = file.FullName;
 
@@ -73,7 +73,7 @@ public class LevelEditorLoader : MonoBehaviour
 
     public void LoadLevel(string path)
     {
-        levelEditor.Load(path);
+        levelLoader.Load(path, null);
         levelListParent.gameObject.SetActive(false);
     }
 

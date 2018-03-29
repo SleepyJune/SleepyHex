@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224572312929928214}
   - component: {fileID: 114539261948332656}
   - component: {fileID: 95963180341084358}
-  - component: {fileID: 114615720776307466}
+  - component: {fileID: 114689508419159758}
   m_Layer: 5
   m_Name: HexSlot
   m_TagString: Untagged
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -143,7 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 114217836632449942}
   anim: {fileID: 95963180341084358}
---- !u!114 &114615720776307466
+  buttonImage: {fileID: 114845731558000208}
+--- !u!114 &114689508419159758
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.17647058, g: 0.17647058, b: 0.17647058, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

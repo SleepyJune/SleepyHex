@@ -4,27 +4,24 @@ using System.Linq;
 using System.Text;
 
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UITemplateSlot : MonoBehaviour
+public class UITemplateSlot : MonoBehaviour, IPointerDownHandler
 {
     public UISlot uiSlot;
-
-    public Button button;
-
+    
     public LevelEditor levelEditor;
-
-    void Start()
-    {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnSlotPressed);
-    }
-
+    
     public void OnSlotPressed()
     {
         if (levelEditor)
         {
             levelEditor.OnTemplateSlotPressed(this);       
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnSlotPressed();
     }
 }

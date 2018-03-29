@@ -6,17 +6,17 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIEditorSlot : MonoBehaviour, IPointerDownHandler
+public class UIGameSlot : MonoBehaviour, IPointerDownHandler
 {
     public UISlot uiSlot;
-    
-    public LevelEditor levelEditor;
-    
+
+    public PathManager pathManager;
+
     public void OnSlotPressed()
     {
-        if (levelEditor)
+        if (pathManager)
         {
-            levelEditor.OnEditorSlotPressed(this);
+            pathManager.OnGameSlotPressed(this);
         }
     }
 

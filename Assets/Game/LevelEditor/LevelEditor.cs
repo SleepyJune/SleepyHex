@@ -7,24 +7,16 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelEditor : MonoBehaviour
+public class LevelEditor : LevelLoader
 {
-    public Transform templateSlotParent;
-    public Transform editorSlotParent;
-
-    public UISlot slotPrefab;
-
-    public InputField levelNameField;
-    
+    public Transform templateSlotParent;  
+   
     [NonSerialized]
     public UITemplateSlot selectedTemplate;
 
     [NonSerialized]
     public UIEditorSlot selectedEditorSlot;
-
-    Level level;
-    GridManager gridManager;
-
+    
     string savePath;
 
     void Start()
@@ -56,7 +48,7 @@ public class LevelEditor : MonoBehaviour
         level.MakeEmptyLevel();
 
         gridManager = new GridManager(gridColumns, gridRows);        
-        gridManager.MakeGrid(level, slotPrefab, editorSlotParent, this);
+        gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
     }
 
     void GenerateTemplateSlots()
@@ -109,31 +101,11 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
-    void Clear()
+    public override void InitUISlot(UISlot newSlot)
     {
-        if (gridManager != null)
-        {
-            gridManager.DeleteAllSlots();
-            gridManager = null;
-        }
-
-        level = null;
-    }
-
-    public void Load(string path)
-    {
-        Clear();
-
-        level = Level.LoadLevel(path);
-        if (level != null)
-        {
-            Debug.Log("Loading " + level.levelName);
-
-            gridManager = new GridManager(level.columns, level.rows);
-            gridManager.MakeGrid(level, slotPrefab, editorSlotParent, this);
-
-            levelNameField.text = level.levelName;
-        }
+        var editorSlot = newSlot.gameObject.AddComponent<UIEditorSlot>();
+        editorSlot.uiSlot = newSlot;
+        editorSlot.levelEditor = this;
     }
 
     public void Save()

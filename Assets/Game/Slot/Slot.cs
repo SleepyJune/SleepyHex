@@ -20,6 +20,9 @@ public class Slot
     public Hex hexPosition;
     public Vector3 position;
 
+    [NonSerialized]
+    public HashSet<Slot> neighbours = new HashSet<Slot>();
+
     public Slot(int number)
     {
         this.number = number;
@@ -32,6 +35,16 @@ public class Slot
         this.number = number;
         this.hexPosition = position;
         this.position = position.ConvertCube();
+    }
+
+    public bool isNeighbour(Slot slot)
+    {
+        if (neighbours.Contains(slot))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public static bool operator ==(Slot value1, Slot value2)

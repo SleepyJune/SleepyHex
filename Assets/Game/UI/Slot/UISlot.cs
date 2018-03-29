@@ -12,11 +12,19 @@ public class UISlot : MonoBehaviour
 
     public Animator anim;
 
+    [NonSerialized]
     public Slot slot;
+
+    public Image buttonImage;
     
     void Start()
     {
-        SetNumber(slot.number);
+        buttonImage.alphaHitTestMinimumThreshold = .5f;
+
+        if (slot != null)
+        {
+            SetNumber(slot.number);
+        }
     }
 
     public void SetNumber(int number)

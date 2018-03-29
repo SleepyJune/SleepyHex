@@ -10,8 +10,8 @@ public class GridManager
     int column;
     int row;
 
-    float slotHeight = 45;
-    float slotWidth = 45;
+    float slotHeight = 44;
+    float slotWidth = 50;
 
     Vector3 initialPos;
 
@@ -56,13 +56,16 @@ public class GridManager
         }
     }
 
-    public void MakeGrid(Level level, UISlot slotPrefab, Transform slotParent, LevelEditor levelEditor = null)
+    public void MakeGrid(Level level, UISlot slotPrefab, Transform slotParent, LevelLoader levelLoader)
     {
         foreach(var slot in level.map.Values)
         {
-            if(levelEditor == null && slot.number < 0)
+            if(levelLoader != null)
             {
-                continue;
+                if (!levelLoader.isValidSlot(slot))
+                {
+                    continue;
+                }
             }
 
             var newSlot = GameObject.Instantiate(slotPrefab, slotParent);
@@ -72,11 +75,9 @@ public class GridManager
 
             uiSlots.Add(newSlot);
 
-            if (levelEditor != null)
+            if (levelLoader != null)
             {
-                var editorSlot = newSlot.gameObject.AddComponent<UIEditorSlot>();
-                editorSlot.uiSlot = newSlot;
-                editorSlot.levelEditor = levelEditor;
+                levelLoader.InitUISlot(newSlot);
             }
         }
     }
