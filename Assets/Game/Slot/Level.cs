@@ -2,16 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 using UnityEngine;
 
+[Serializable]
 public class Level
 {
-    public string name = "New Level";
-    public Dictionary<Vector3, Slot> map;
+    public string levelName = "New Level";
+
+    public Slot[] slots;
 
     public int columns;
     public int rows;
+
+    [NonSerialized]
+    public Dictionary<Vector3, Slot> map;
 
     public Level(int columns, int rows)
     {
@@ -25,14 +31,14 @@ public class Level
     {
         if (!map.ContainsKey(slot.position))
         {
-            map.Add(slot.position, slot);
+            map.Add(slot.position, slot);            
         }
-    }   
-    
+    }
+
     public void ChangeSlotNumber(Slot newSlot)
     {
         Slot slot;
-        if(map.TryGetValue(newSlot.position, out slot))
+        if (map.TryGetValue(newSlot.position, out slot))
         {
             slot.number = newSlot.number;
         }
@@ -53,25 +59,41 @@ public class Level
                 AddSlot(slot);
             }
         }
+
+        slots = map.Values.ToArray();
+    }
+
+    public void AddSlotsToMap()
+    {
+        if(map == null)
+        {
+            map = new Dictionary<Vector3, Slot>();
+        }
+
+        foreach(var slot in slots)
+        {
+            AddSlot(slot);
+        }
     }
 
     public string SaveLevel()
     {
-        List<Slot> slots = new List<Slot>();
+        slots = map.Values.ToArray();
+        return JsonUtility.ToJson(this);
+    }
 
-        foreach (var slot in map.Values)
+    public static Level LoadLevel(string path)
+    {
+        if (File.Exists(path))
         {
-            if (slot != null && slot.number >= 0)
-            {
-                slots.Add(slot);
+            string str = File.ReadAllText(path);
 
-            }
+            var level = JsonUtility.FromJson<Level>(str);
+            level.AddSlotsToMap();
+
+            return level;
         }
 
-        var str = JsonHelper.ToJson<Slot>(slots.ToArray());
-
-        //str = str.Replace("\"rotation\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},", "");
-
-        return str;
+        return null;
     }
 }

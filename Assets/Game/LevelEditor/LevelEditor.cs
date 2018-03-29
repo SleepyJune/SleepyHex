@@ -76,7 +76,7 @@ public class LevelEditor : MonoBehaviour
     {
         if (level != null)
         {
-            level.name = name;
+            level.levelName = name;
         }
     }
 
@@ -124,15 +124,15 @@ public class LevelEditor : MonoBehaviour
     {
         Clear();
 
-        level = LevelLoader.LoadLevel(path);
+        level = Level.LoadLevel(path);
         if (level != null)
         {
-            Debug.Log("Loading " + level.name);
+            Debug.Log("Loading " + level.levelName);
 
             gridManager = new GridManager(level.columns, level.rows);
             gridManager.MakeGrid(level, slotPrefab, editorSlotParent, this);
 
-            levelNameField.text = level.name;
+            levelNameField.text = level.levelName;
         }
     }
 
@@ -145,7 +145,7 @@ public class LevelEditor : MonoBehaviour
             Directory.CreateDirectory(savePath);
         }
 
-        var filePath = savePath + level.name + ".json";
+        var filePath = savePath + level.levelName + ".json";
 
         File.WriteAllText(filePath, str);
 

@@ -60,6 +60,11 @@ public class GridManager
     {
         foreach(var slot in level.map.Values)
         {
+            if(levelEditor == null && slot.number < 0)
+            {
+                continue;
+            }
+
             var newSlot = GameObject.Instantiate(slotPrefab, slotParent);
             var worldPos = CalculateWorldPos(slot.hexPosition);
             newSlot.transform.localPosition = worldPos;
