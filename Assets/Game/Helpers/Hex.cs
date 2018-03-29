@@ -47,26 +47,19 @@ public static class HexExtensions
 {
     public static Vector3 ConvertCube(this Hex hex)
     {
-        float x = hex.col - (hex.row - (hex.row & 1)) / 2;
+        float x = hex.col;
         float z = hex.row;
         float y = -x - z;
         
         return new Vector3(x, y, z);
     }
 
-    public static bool isInBound(this Hex hex)
+    public static Vector3 GetWorldPos(this Hex hexPos, float size = 25)
     {
-        return !(hex.col < 0 || hex.col > 22 || hex.row < 0 || hex.row > 20);
-    }
+        float x = size * (3 / 2f) * hexPos.col;
+        float y = size * Mathf.Sqrt(3) * (hexPos.row + hexPos.col / 2f);
 
-    public static bool isInBound2(this Hex hex)
-    {
-        return !(hex.col <= 0 || hex.col >= 22 || hex.row <= 0 || hex.row >= 20);
-    }
-
-    public static string toStr(this Hex hex)
-    {
-        return "(" + hex.col + " " + hex.row + ")";
+        return new Vector3(x, y, 0);
     }
 }
 

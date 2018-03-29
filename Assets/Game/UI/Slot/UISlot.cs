@@ -31,7 +31,7 @@ public class UISlot : MonoBehaviour
     {
         slot.number = number;
 
-        if (number > 0 && number <= 9)
+        if (number > 0)// && number <= 9)
         {
             text.text = number.ToString();
         }

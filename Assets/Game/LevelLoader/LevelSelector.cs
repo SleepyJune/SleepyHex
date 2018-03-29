@@ -73,7 +73,7 @@ public class LevelSelector : MonoBehaviour
 
     public void LoadLevel(string path)
     {
-        levelLoader.Load(path, null);
+        levelLoader.Load(path);
         levelListParent.gameObject.SetActive(false);
     }
 

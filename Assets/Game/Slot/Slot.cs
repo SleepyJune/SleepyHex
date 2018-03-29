@@ -21,7 +21,15 @@ public class Slot
     public Vector3 position;
 
     [NonSerialized]
-    public HashSet<Slot> neighbours = new HashSet<Slot>();
+    public HashSet<Slot> neighbours;
+    
+    public bool isNumber
+    {
+        get
+        {
+            return number > 0 && number < 10;
+        }
+    }
 
     public Slot(int number)
     {
@@ -35,6 +43,19 @@ public class Slot
         this.number = number;
         this.hexPosition = position;
         this.position = position.ConvertCube();
+    }
+
+    public void AddNeighbour(Slot neighbour)
+    {
+        if(neighbours == null)
+        {
+            neighbours = new HashSet<Slot>();
+        }
+
+        if (true) //!neighbours.Contains(neighbour) && this != neighbour)
+        {
+            neighbours.Add(neighbour);
+        }
     }
 
     public bool isNeighbour(Slot slot)

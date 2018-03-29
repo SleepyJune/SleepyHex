@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class GridManager
 {
-    int column;
-    int row;
-
     float slotHeight = 44;
     float slotWidth = 50;
 
@@ -17,11 +14,8 @@ public class GridManager
 
     List<UISlot> uiSlots;
 
-    public GridManager(int column, int row)
+    public GridManager()
     {
-        this.column = column;
-        this.row = row;
-
         uiSlots = new List<UISlot>();
 
         CalculateInitialPos();
@@ -33,7 +27,7 @@ public class GridManager
                                  slotHeight * column / 2f - slotHeight / 2f, 0);*/
     }
 
-    public Vector3 CalculateWorldPos(Hex hexPos)
+    /*public Vector3 CalculateWorldPos(Hex hexPos)
     {
         float offset = 0;
 
@@ -46,8 +40,8 @@ public class GridManager
         float z = initialPos.z - hexPos.col * slotHeight + offset;
 
         return new Vector3(x, z, 0);
-    }
-        
+    }*/
+
     public void DeleteAllSlots()
     {
         foreach(var slot in uiSlots)
@@ -69,7 +63,7 @@ public class GridManager
             }
 
             var newSlot = GameObject.Instantiate(slotPrefab, slotParent);
-            var worldPos = CalculateWorldPos(slot.hexPosition);
+            var worldPos = slot.hexPosition.GetWorldPos();
             newSlot.transform.localPosition = worldPos;
             newSlot.slot = slot;
 

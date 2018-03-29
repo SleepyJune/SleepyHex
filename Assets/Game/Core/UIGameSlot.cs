@@ -6,13 +6,13 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIGameSlot : MonoBehaviour, IPointerDownHandler
+public class UIGameSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 {
     public UISlot uiSlot;
 
     public PathManager pathManager;
 
-    public void OnSlotPressed()
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (pathManager)
         {
@@ -20,8 +20,11 @@ public class UIGameSlot : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        OnSlotPressed();
+        if (pathManager)
+        {
+            pathManager.OnGameSlotEnter(this);
+        }
     }
 }

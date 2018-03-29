@@ -6,6 +6,11 @@ using UnityEngine;
 
 static class VectorExtensions
 {
+    public static List<Vector3> directions = new List<Vector3>{
+            new Vector3( 0,  1, -1), new Vector3( 1,  0, -1), new Vector3( 1, -1, 0),
+            new Vector3( 0, -1,  1), new Vector3(-1,  0,  1), new Vector3(-1,  1, 0)
+        };
+
     public static float Distance(this Vector3 a, Vector3 b)
     {
         //return (Math.Abs(value1.x - value2.x) + Math.Abs(value1.y - value2.y) + Math.Abs(value1.z - value2.z))/2;
@@ -35,20 +40,5 @@ static class VectorExtensions
         int row = (int)Math.Round(vec.z);
 
         return new Hex(col, row);
-    }
-
-    public static bool isInBound(this Vector3 vec)
-    {
-        return vec.ConvertHex().isInBound();
-    }
-
-    public static string toStr(this Vector3 vec)
-    {
-        return vec.ConvertHex().toStr();
-    }
-
-    public static string toCubeStr(this Vector3 vec)
-    {
-        return "(" + vec.x + ", " + vec.y + ", " + vec.z + ")";
     }
 }

@@ -41,13 +41,13 @@ public class LevelEditor : LevelLoader
 
     void GenerateNewLevel()
     {
-        int gridColumns = 6;
-        int gridRows = 6;
+        int gridColumns = 12;
+        int gridRows = 12;
 
         level = new Level(gridColumns, gridRows);
         level.MakeEmptyLevel();
 
-        gridManager = new GridManager(gridColumns, gridRows);        
+        gridManager = new GridManager();        
         gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
     }
 

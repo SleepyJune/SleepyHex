@@ -27,7 +27,7 @@ public class LevelLoader : MonoBehaviour
         level = null;
     }
 
-    public void Load(string path, LevelEditor levelEditor)
+    public virtual void Load(string path)
     {
         Clear();
 
@@ -36,7 +36,7 @@ public class LevelLoader : MonoBehaviour
         {
             Debug.Log("Loading " + level.levelName);
 
-            gridManager = new GridManager(level.columns, level.rows);
+            gridManager = new GridManager();
             gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
 
             SetLevelName(level.levelName);

@@ -49,11 +49,22 @@ public class Level
         var gridColumns = this.columns;
         var gridRows = this.rows;
 
-        for (int row = 0; row < gridRows; row++)
+        var maxWidth = 200;
+        var maxHeight = 250;
+
+        for (int row = (int)Math.Round(-gridRows/2f); row < gridRows; row++)
         {
-            for (int column = 0; column < gridColumns; column++)
+            for (int column = (int)Math.Round(-gridColumns / 2f); column < gridColumns; column++)
             {
                 var hex = new Hex(column, row);
+
+                var worldPos = hex.GetWorldPos();
+
+                if (worldPos.x < 0 || worldPos.y < 0 || worldPos.x > maxWidth || worldPos.y > maxHeight)
+                {
+                    continue;
+                }
+
                 var slot = new Slot(0, hex);
 
                 AddSlot(slot);
@@ -72,7 +83,22 @@ public class Level
 
         foreach(var slot in slots)
         {
-            AddSlot(slot);
+            AddSlot(slot);       
+        }
+
+        //Add neighbours
+        foreach(var slot in map.Values)
+        {
+            foreach (var direction in VectorExtensions.directions)
+            {
+                var pos = slot.position + direction;
+                
+                Slot neighbour;
+                if(map.TryGetValue(pos, out neighbour))
+                {
+                    slot.AddNeighbour(neighbour); //will be checked in add neighbour
+                }                
+            }            
         }
     }
 

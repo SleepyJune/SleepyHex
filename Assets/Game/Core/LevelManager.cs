@@ -18,4 +18,14 @@ public class LevelManager : LevelLoader
         gameSlot.uiSlot = newSlot;
         gameSlot.pathManager = GameManager.instance.pathManager;
     }
+
+    /*public override void Load(string path)
+    {
+        base.Load(path);
+
+        if(level != null)
+        {
+
+        }
+    }*/
 }
