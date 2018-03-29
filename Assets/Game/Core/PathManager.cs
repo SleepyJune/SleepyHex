@@ -13,6 +13,12 @@ public class PathManager : MonoBehaviour
 
     public LineRenderer linePrefab;
 
+    public GameObject startPrefab;
+    public GameObject endPrefab;
+
+    GameObject startIcon;
+    GameObject endIcon;
+
     Path path;
     LineRenderer line;
 
@@ -41,6 +47,19 @@ public class PathManager : MonoBehaviour
         line = Instantiate(linePrefab, transform);
         line.positionCount += 1;
         line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
+
+        if(startIcon != null)
+        {
+            Destroy(startIcon);
+        }
+
+        if(endIcon != null)
+        {
+            Destroy(endIcon);
+        }
+
+        startIcon = Instantiate(startPrefab, transform);
+        startIcon.transform.position = gameSlot.transform.position;
     }
 
     public void OnGameSlotEnter(UIGameSlot gameSlot)
