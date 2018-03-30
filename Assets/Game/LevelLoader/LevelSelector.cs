@@ -16,7 +16,9 @@ public class LevelSelector : MonoBehaviour
     public GameObject levelSelectionButton;
 
     public LevelLoader levelLoader;
-    
+
+    public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
+
     void Start()
     {
         LoadLevelNames();
@@ -29,40 +31,65 @@ public class LevelSelector : MonoBehaviour
             Directory.CreateDirectory(DataPath.savePath);
         }
 
-        /*var levels = Resources.LoadAll("Levels", typeof(TextAsset));
+        var levels = Resources.LoadAll("Levels", typeof(TextAsset));
+        int numfiles = 0;
         foreach (var obj in levels)
         {
             var level = obj as TextAsset;
-            //var path = DataPath.savePath + level.name + ".json";
+            var levelTextAsset = new LevelTextAsset(level.name, level.text);
+            //levelDatabase.Add(level.name, levelTextAsset);
 
-            if (!File.Exists(path) || Application.isMobilePlatform) //overwrite files if mobile platform
-            {
-                File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
-            }
-        }*/
-
-        DirectoryInfo d = new DirectoryInfo(DataPath.savePath);
-
-        int numfiles = 0;
-        foreach (var file in d.GetFiles("*.json"))
-        {
-            var newButton = Instantiate(levelSelectionButton, levelList);
-
-            //newButton.transform.SetParent(levelSelectionButtonHolder.transform, false);
-            newButton.GetComponentInChildren<Text>().text = System.IO.Path.GetFileNameWithoutExtension(file.Name);
-
-            string fullPath = file.FullName;
-
-            newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(fullPath));
-
+            AddLevel(levelTextAsset);
             numfiles += 1;
+        }
+
+        RefreshList();
+    }
+
+    void AddButton(LevelTextAsset levelText)
+    {
+        var newButton = Instantiate(levelSelectionButton, levelList);
+        newButton.GetComponentInChildren<Text>().text = levelText.name;
+        newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.name));
+    }
+
+    public void RefreshList()
+    {
+        foreach(Transform child in levelList)
+        {
+            Destroy(child.gameObject);
+        }
+        
+
+        foreach (var level in levelDatabase.Values)
+        {
+            if(level != null)
+            {
+                AddButton(level);
+            }
         }
     }
 
-    public void LoadLevel(string path)
+    public void LoadLevel(string name)
     {
-        levelLoader.Load(path);
-        levelListParent.gameObject.SetActive(false);
+        LevelTextAsset levelText;
+        if(levelDatabase.TryGetValue(name, out levelText))
+        {
+            levelLoader.Load(levelText);
+            levelListParent.gameObject.SetActive(false);
+        }
+    }
+
+    public static void AddLevel(LevelTextAsset newLevel)
+    {
+        if (levelDatabase.ContainsKey(newLevel.name))
+        {
+            levelDatabase[newLevel.name] = newLevel;
+        }
+        else
+        {
+            levelDatabase.Add(newLevel.name, newLevel);
+        }
     }
 
     public void ShowLevelList()

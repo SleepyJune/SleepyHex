@@ -11,7 +11,8 @@ public class DataPath : MonoBehaviour
     {
         get
         {
-            if (Application.platform == RuntimePlatform.Android)
+            if (Application.platform == RuntimePlatform.Android
+             || Application.platform == RuntimePlatform.WebGLPlayer)
             {
                 return Application.persistentDataPath + "/Resources/Levels/";
             }

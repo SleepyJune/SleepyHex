@@ -9,7 +9,9 @@ using UnityEngine.UI;
 
 public class LevelEditor : LevelLoader
 {
-    public Transform templateSlotParent;  
+    public Transform templateSlotParent;
+
+    public LevelSelector levelSelector;
    
     [NonSerialized]
     public UITemplateSlot selectedTemplate;
@@ -104,6 +106,11 @@ public class LevelEditor : LevelLoader
         var filePath = DataPath.savePath + level.levelName + ".json";
 
         File.WriteAllText(filePath, str);
+
+        var levelText = new LevelTextAsset(level.levelName, str);
+
+        LevelSelector.AddLevel(levelText);
+        levelSelector.RefreshList();
 
         Debug.Log("Saved to: " + filePath);
 

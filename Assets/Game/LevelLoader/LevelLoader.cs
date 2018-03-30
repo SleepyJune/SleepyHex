@@ -27,11 +27,11 @@ public class LevelLoader : MonoBehaviour
         level = null;
     }
 
-    public virtual void Load(string path)
+    public virtual void Load(LevelTextAsset levelText)
     {
         Clear();
 
-        level = Level.LoadLevel(path);
+        level = Level.LoadLevel(levelText);
         if (level != null)
         {
             Debug.Log("Loading " + level.levelName);

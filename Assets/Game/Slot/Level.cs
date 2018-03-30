@@ -108,11 +108,11 @@ public class Level
         return JsonUtility.ToJson(this);
     }
 
-    public static Level LoadLevel(string path)
+    public static Level LoadLevel(LevelTextAsset levelText)
     {
-        if (File.Exists(path))
+        if (levelText != null)
         {
-            string str = File.ReadAllText(path);
+            string str = levelText.text;
 
             var level = JsonUtility.FromJson<Level>(str);
             level.AddSlotsToMap();

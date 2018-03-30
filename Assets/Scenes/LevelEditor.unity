@@ -976,6 +976,7 @@ MonoBehaviour:
   slotListParent: {fileID: 1580811430}
   levelNameField: {fileID: 247633637}
   templateSlotParent: {fileID: 514904876}
+  levelSelector: {fileID: 1001926509}
 --- !u!1 &888506843
 GameObject:
   m_ObjectHideFlags: 0
