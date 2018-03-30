@@ -16,44 +16,32 @@ public class LevelSelector : MonoBehaviour
     public GameObject levelSelectionButton;
 
     public LevelLoader levelLoader;
-
-    string savePath;
-
+    
     void Start()
     {
-
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            savePath = Application.persistentDataPath + "/Saves/";
-        }
-        else
-        {
-            savePath = Application.dataPath + "/Saves/";
-        }                
-
         LoadLevelNames();
     }
 
     void LoadLevelNames()
     {
-        if (!Directory.Exists(savePath))
+        if (!Directory.Exists(DataPath.savePath))
         {
-            Directory.CreateDirectory(savePath);
+            Directory.CreateDirectory(DataPath.savePath);
         }
 
         /*var levels = Resources.LoadAll("Levels", typeof(TextAsset));
         foreach (var obj in levels)
         {
             var level = obj as TextAsset;
-            var path = savePath + level.name + ".json";
+            //var path = DataPath.savePath + level.name + ".json";
 
             if (!File.Exists(path) || Application.isMobilePlatform) //overwrite files if mobile platform
             {
-                File.WriteAllText(savePath + level.name + ".json", level.text);
+                File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
             }
         }*/
 
-        DirectoryInfo d = new DirectoryInfo(savePath);
+        DirectoryInfo d = new DirectoryInfo(DataPath.savePath);
 
         int numfiles = 0;
         foreach (var file in d.GetFiles("*.json"))

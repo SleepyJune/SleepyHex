@@ -17,26 +17,10 @@ public class LevelEditor : LevelLoader
     [NonSerialized]
     public UIEditorSlot selectedEditorSlot;
     
-    string savePath;
-
     void Start()
     {
-        InitializeSavePath();
-
         GenerateTemplateSlots();
         GenerateNewLevel();
-    }
-
-    void InitializeSavePath()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            savePath = Application.persistentDataPath + "/Saves/";
-        }
-        else
-        {
-            savePath = Application.dataPath + "/Saves/";
-        }
     }
 
     void GenerateNewLevel()
@@ -112,12 +96,12 @@ public class LevelEditor : LevelLoader
     {
         string str = level.SaveLevel();
 
-        if (!Directory.Exists(savePath))
+        if (!Directory.Exists(DataPath.savePath))
         {
-            Directory.CreateDirectory(savePath);
+            Directory.CreateDirectory(DataPath.savePath);
         }
 
-        var filePath = savePath + level.levelName + ".json";
+        var filePath = DataPath.savePath + level.levelName + ".json";
 
         File.WriteAllText(filePath, str);
 
