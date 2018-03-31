@@ -24,8 +24,37 @@ public class PathManager : MonoBehaviour
 
     public Text sumText;
 
+    bool isMouseDown = false;
+
+    void Start()
+    {
+        TouchInputManager.instance.touchStart += OnTouchStart;
+        TouchInputManager.instance.touchEnd += OnTouchEnd;
+    }
+
+    private void OnTouchStart(Touch touch)
+    {
+        isMouseDown = true;
+    }
+
+    private void OnTouchEnd(Touch touch)
+    {
+        isMouseDown = false;
+    }
+
     public void OnGameSlotPressed(UIGameSlot gameSlot)
     {
+        var slot = gameSlot.uiSlot.slot;
+
+        if(path != null)
+        {
+            var lastPoint = path.GetLastPoint();
+            if (lastPoint != null && lastPoint == slot)
+            {
+                return;
+            }
+        }
+
         if (selectedSlot)
         {
             selectedSlot.uiSlot.anim.SetBool("selected", false);
@@ -34,7 +63,6 @@ public class PathManager : MonoBehaviour
         selectedSlot = gameSlot;
         selectedSlot.uiSlot.anim.SetBool("selected", true);
 
-        var slot = gameSlot.uiSlot.slot;
         path = new Path(slot);
 
         UpdateSumText();
@@ -64,6 +92,11 @@ public class PathManager : MonoBehaviour
 
     public void OnGameSlotEnter(UIGameSlot gameSlot)
     {
+        if (!isMouseDown)
+        {
+            return;
+        }
+
         if (selectedSlot)
         {
             selectedSlot.uiSlot.anim.SetBool("selected", false);
@@ -76,16 +109,26 @@ public class PathManager : MonoBehaviour
         {
             var slot = gameSlot.uiSlot.slot;
 
-            if (path.AddPoint(slot))
+            if (slot != null && path.GetPreviousPoint() == slot) //retracting
             {
-                line.positionCount += 1;
-                line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
+                path.RemovePoint(path.GetLastPoint());
+                line.positionCount -= 1;
 
                 UpdateSumText();
-
-                if (slot.number == (int)SpecialSlot.Reverse)
+            }
+            else
+            {
+                if (path.AddPoint(slot))
                 {
-                    Debug.Log("Reverse");
+                    line.positionCount += 1;
+                    line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
+
+                    UpdateSumText();
+
+                    if (slot.number == (int)SpecialSlot.Reverse)
+                    {
+                        Debug.Log("Reverse");
+                    }
                 }
             }
         }

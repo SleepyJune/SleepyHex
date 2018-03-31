@@ -17,7 +17,7 @@ public class TouchInputManager : MonoBehaviour
     public event Callback touchMove;
     public event Callback touchEnd;
 
-    public bool useMouse = false;
+    bool useMouse = true;
 
     Vector3 lastMousePosition;
 

@@ -73,4 +73,42 @@ public class Path
 
         return false;
     }
+
+    public bool RemovePoint(Slot slot)
+    {
+        if (waypoints.Contains(slot))
+        {
+            if (slot.number == (int)SpecialSlot.Reverse)
+            {
+                isDescending = !isDescending;
+            }
+
+            waypoints.Remove(slot);
+            lastPoint = waypoints.LastOrDefault();
+
+            if (slot.number > 0 && slot.number < 10)
+            {
+                lastNumber = slot.number;
+                sum -= slot.number;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public Slot GetLastPoint()
+    {
+        return lastPoint;
+    }
+
+    public Slot GetPreviousPoint()
+    {
+        if(waypoints.Count >= 2)
+        {
+            return waypoints[waypoints.Count - 2];
+        }
+
+        return null;
+    }
 }
