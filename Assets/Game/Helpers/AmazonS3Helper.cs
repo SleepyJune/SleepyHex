@@ -118,28 +118,19 @@ public class AmazonS3Helper : MonoBehaviour
         });
     }
 
-    public void DeleteObject(string filePath)
-    {        
-        List<KeyVersion> objects = new List<KeyVersion>();
-        objects.Add(new KeyVersion()
-        {
-            Key = filePath
-        });
-
-        var request = new DeleteObjectsRequest()
+    public void DeleteObject(string name, string filePath)
+    {
+        var request = new DeleteObjectRequest()
         {
             BucketName = S3BucketName,
-            Objects = objects
+            Key = filePath
         };
 
-        Client.DeleteObjectsAsync(request, (responseObj) =>
+        Client.DeleteObjectAsync(request, (responseObj) =>
         {
             if (responseObj.Exception == null)
             {
-                responseObj.Response.DeletedObjects.ForEach((dObj) =>
-                {
-                    Debug.Log("Deleted "+ dObj.Key);
-                });
+                Debug.Log("Deleted: " + name);
             }
             else
             {

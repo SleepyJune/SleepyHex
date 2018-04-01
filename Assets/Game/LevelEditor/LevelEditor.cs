@@ -96,6 +96,28 @@ public class LevelEditor : LevelLoader
         editorSlot.levelEditor = this;
     }
 
+    public void DeleteLevel()
+    {
+        var levelText = levelSelector.GetLevel(level.levelName);
+        if(levelText != null)
+        {
+            if (Directory.Exists(DataPath.savePath))
+            {
+                var filePath = DataPath.savePath + level.levelName + ".json";
+                File.Delete(filePath);
+            }
+
+            if (levelText.hasWebVersion)
+            {
+                var webPath = DataPath.webPath + levelText.name + ".json";
+                amazonHelper.DeleteObject(level.levelName, webPath);
+            }
+
+            LevelSelector.DeleteLevel(level.levelName);
+            levelSelector.RefreshList();
+        }
+    }
+
     public void Save()
     {
         string str = level.SaveLevel();
@@ -111,12 +133,15 @@ public class LevelEditor : LevelLoader
 
         var levelText = new LevelTextAsset(level.levelName, str);
 
-        LevelSelector.AddLevel(levelText);
+        //levelText.webText = levelText.text;
+        //levelText.hasWebVersion = true;
+
+        LevelSelector.AddLevel(levelText, true);
         levelSelector.RefreshList();
 
         Debug.Log("Saved to: " + filePath);
 
-        var webPath = "SleepyHex/Resources/Levels/" + levelText.name + ".json";
+        var webPath = DataPath.webPath + levelText.name + ".json";
 
         amazonHelper.PostObject(webPath, levelText.text);
 

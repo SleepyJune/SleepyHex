@@ -98,6 +98,17 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
+    public LevelTextAsset GetLevel(string name)
+    {
+        LevelTextAsset levelText;
+        if (levelDatabase.TryGetValue(name, out levelText))
+        {
+            return levelText;
+        }
+
+        return null;
+    }
+
     public void LoadLevel(string name)
     {
         LevelTextAsset levelText;
@@ -136,15 +147,26 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
-    public static void AddLevel(LevelTextAsset newLevel)
+    public static void AddLevel(LevelTextAsset newLevel, bool overwrite = false)
     {
         if (levelDatabase.ContainsKey(newLevel.name))
         {
-            levelDatabase[newLevel.name] = newLevel;
+            if (overwrite)
+            {
+                levelDatabase[newLevel.name] = newLevel;
+            }
         }
         else
         {
             levelDatabase.Add(newLevel.name, newLevel);
+        }
+    }
+                
+    public static void DeleteLevel(string name)
+    {
+        if (levelDatabase.ContainsKey(name))
+        {
+            levelDatabase.Remove(name);
         }
     }
 
