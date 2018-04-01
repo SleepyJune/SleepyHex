@@ -196,8 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 601193425}
-  m_Horizontal: 1
-  m_Vertical: 0
+  m_Horizontal: 0
+  m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -831,7 +831,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 10
     m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 5
@@ -935,6 +935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756398035}
   - component: {fileID: 756398036}
+  - component: {fileID: 756398037}
   m_Layer: 5
   m_Name: LevelEditor
   m_TagString: Untagged
@@ -977,6 +978,18 @@ MonoBehaviour:
   levelNameField: {fileID: 247633637}
   templateSlotParent: {fileID: 514904876}
   levelSelector: {fileID: 1001926509}
+  amazonHelper: {fileID: 756398037}
+--- !u!114 &756398037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 756398034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c34d9ac015b34418ac8ffe095d753e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &888506843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1109,7 @@ MonoBehaviour:
   levelSelectionButton: {fileID: 1829426961096514, guid: 8a9df860acb9caf49ba80c98f7a400b1,
     type: 2}
   levelLoader: {fileID: 756398036}
+  amazonHelper: {fileID: 756398037}
 --- !u!1 &1002474061
 GameObject:
   m_ObjectHideFlags: 0

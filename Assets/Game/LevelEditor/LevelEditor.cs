@@ -12,6 +12,8 @@ public class LevelEditor : LevelLoader
     public Transform templateSlotParent;
 
     public LevelSelector levelSelector;
+
+    public AmazonS3Helper amazonHelper;
    
     [NonSerialized]
     public UITemplateSlot selectedTemplate;
@@ -113,6 +115,10 @@ public class LevelEditor : LevelLoader
         levelSelector.RefreshList();
 
         Debug.Log("Saved to: " + filePath);
+
+        var webPath = "SleepyHex/Resources/Levels/" + levelText.name + ".json";
+
+        amazonHelper.PostObject(webPath, levelText.text);
 
         //saveScreen.SetActive(false);
     }

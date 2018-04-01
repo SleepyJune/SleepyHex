@@ -65,8 +65,16 @@ public class Path
             }
             else
             {
-                pathSlot.number = lastPoint.number;
-                pathSlot.sum = lastPoint.sum;
+                if (slot.number == (int)SpecialSlot.Blank)
+                {
+                    pathSlot.number = lastPoint.number;
+                    pathSlot.sum = lastPoint.sum + lastPoint.number;
+                }
+                else
+                {
+                    pathSlot.number = lastPoint.number;
+                    pathSlot.sum = lastPoint.sum;
+                }                
             }
 
             lastPoint.next = pathSlot;

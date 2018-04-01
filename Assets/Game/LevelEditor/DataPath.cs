@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class DataPath : MonoBehaviour
 {
+    public static string webPath = "SleepyHex/Resources/Levels/";
+
     public static string savePath
     {
         get

@@ -687,10 +687,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -736,7 +736,8 @@ MonoBehaviour:
   CognitoIdentityRegion: us-east-1
   S3Region: us-west-2
   S3BucketName: unitytestprojects
-  SampleFileName: s3-sample-file.txt
+  SampleFileName: Resources/Levels/example.txt
+  prefix: SleepyHex/Resources/Levels/
   GetBucketListButton: {fileID: 1441414886}
   PostBucketButton: {fileID: 408278450}
   GetObjectsListButton: {fileID: 496104062}

@@ -16,6 +16,9 @@ public class Level
     public int columns;
     public int rows;
 
+    public string dateCreated;
+    public string dateModified;
+
     [NonSerialized]
     public Dictionary<Vector3, Slot> map;
 
@@ -25,6 +28,8 @@ public class Level
 
         this.columns = columns;
         this.rows = rows;
+
+        dateCreated = DateTime.UtcNow.ToString();
     }
 
     public void AddSlot(Slot slot)
@@ -104,6 +109,8 @@ public class Level
 
     public string SaveLevel()
     {
+        dateModified = DateTime.UtcNow.ToString();
+
         slots = map.Values.ToArray();
         return JsonUtility.ToJson(this);
     }
@@ -113,6 +120,11 @@ public class Level
         if (levelText != null)
         {
             string str = levelText.text;
+
+            if(levelText.hasWebVersion && levelText.webText != null)
+            {
+                str = levelText.webText;
+            }
 
             var level = JsonUtility.FromJson<Level>(str);
             level.AddSlotsToMap();

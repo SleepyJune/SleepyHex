@@ -8,6 +8,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Amazon.S3.Model;
+
 public class LevelSelector : MonoBehaviour
 {
     public Transform levelList;
@@ -17,11 +19,36 @@ public class LevelSelector : MonoBehaviour
 
     public LevelLoader levelLoader;
 
+    public AmazonS3Helper amazonHelper;
+
     public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
 
     void Start()
     {
         LoadLevelNames();
+
+        amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
+    }
+
+    public void LoadLevelNamesWeb(List<S3Object> files)
+    {
+        foreach(var file in files)
+        {
+            string levelName = System.IO.Path.GetFileNameWithoutExtension(file.Key);
+
+            LevelTextAsset level;
+            if(levelDatabase.TryGetValue(levelName, out level))
+            {
+                level.hasWebVersion = true;
+            }
+            else
+            {
+                var levelTextAsset = new LevelTextAsset(levelName);
+                AddLevel(levelTextAsset);
+            }
+        }
+
+        RefreshList();
     }
 
     void LoadLevelNames()
@@ -36,6 +63,7 @@ public class LevelSelector : MonoBehaviour
         foreach (var obj in levels)
         {
             var level = obj as TextAsset;
+            
             var levelTextAsset = new LevelTextAsset(level.name, level.text);
             //levelDatabase.Add(level.name, levelTextAsset);
 
@@ -75,8 +103,36 @@ public class LevelSelector : MonoBehaviour
         LevelTextAsset levelText;
         if(levelDatabase.TryGetValue(name, out levelText))
         {
-            levelLoader.Load(levelText);
-            levelListParent.gameObject.SetActive(false);
+            if (levelText.hasWebVersion && levelText.webText == null)
+            {
+                var filename = DataPath.webPath + levelText.name + ".json";
+                amazonHelper.GetFile(filename, name, LoadLevelTextWeb);
+            }
+            else
+            {
+                levelLoader.Load(levelText);
+                levelListParent.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void LoadLevelTextWeb(string name, string data)
+    {
+        if(data == null)
+        {
+            return;
+        }
+
+        LevelTextAsset levelText;
+        if (levelDatabase.TryGetValue(name, out levelText))
+        {
+            if (levelText.hasWebVersion)
+            {
+                levelText.webText = data;
+
+                levelLoader.Load(levelText);
+                levelListParent.gameObject.SetActive(false);
+            }
         }
     }
 

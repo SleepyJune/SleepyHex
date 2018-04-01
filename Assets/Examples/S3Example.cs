@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using Amazon.CognitoIdentity;
 using Amazon;
 
+using UnityEngine.Networking;
+
 namespace AWSSDK.Examples
 {
     public class S3Example : MonoBehaviour
@@ -45,6 +47,8 @@ namespace AWSSDK.Examples
         public string SampleFileName = null;
 
 
+        public string prefix;
+
         public Button GetBucketListButton = null;
         public Button PostBucketButton = null;
         public Button GetObjectsListButton = null;
@@ -62,6 +66,11 @@ namespace AWSSDK.Examples
             GetObjectButton.onClick.AddListener(() => { GetObject(); });
 
             AWSConfigs.HttpClient = AWSConfigs.HttpClientOption.UnityWebRequest;
+            
+            /*AWSConfigs.LoggingConfig.LogTo = LoggingOptions.UnityLogger;
+            AWSConfigs.LoggingConfig.LogResponses = ResponseLoggingOption.Always;
+            AWSConfigs.LoggingConfig.LogMetrics = true;
+            AWSConfigs.CorrectForClockSkew = true;*/
         }
 
         #region private members
@@ -153,7 +162,7 @@ namespace AWSSDK.Examples
 
             string fileName = GetFileHelper();
              
-            var stream = new FileStream(Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var stream = new FileStream(Application.dataPath + System.IO.Path.DirectorySeparatorChar + fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             ResultText.text += "\nCreating request object";
 
@@ -162,9 +171,10 @@ namespace AWSSDK.Examples
                 Bucket = S3BucketName,
                 Key = fileName,
                 InputStream = stream,
-                CannedACL = S3CannedACL.Private
+                CannedACL = S3CannedACL.Private,
+                Region = RegionEndpoint.USWest2,                
             };
-
+            
             ResultText.text += "\nMaking HTTP post call";
 
             Client.PostObjectAsync(request, (responseObj) =>
@@ -175,7 +185,8 @@ namespace AWSSDK.Examples
                 }
                 else
                 {
-                    ResultText.text += "\nException while posting the result object";
+                    ResultText.text += "\n" + responseObj.Exception.Message;
+                    ResultText.text += "\n" + responseObj.Response.ToString();
                     ResultText.text += string.Format("\n receieved error {0}", responseObj.Response.HttpStatusCode.ToString());
                 }
             });
@@ -190,7 +201,8 @@ namespace AWSSDK.Examples
 
             var request = new ListObjectsRequest()
             {
-                BucketName = S3BucketName
+                BucketName = S3BucketName,
+                Prefix = prefix,
             };
 
             Client.ListObjectsAsync(request, (responseObject) =>
@@ -257,9 +269,9 @@ namespace AWSSDK.Examples
         {
             var fileName = SampleFileName;
 
-            if (!File.Exists(Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + fileName))
+            if (!File.Exists(Application.dataPath + System.IO.Path.DirectorySeparatorChar + fileName))
             {
-                var streamReader = File.CreateText(Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + fileName);
+                var streamReader = File.CreateText(Application.dataPath + System.IO.Path.DirectorySeparatorChar + fileName);
                 streamReader.WriteLine("This is a sample s3 file uploaded from unity s3 sample");
                 streamReader.Close();
             }
