@@ -49,7 +49,7 @@ public class PathManager : MonoBehaviour
         if(path != null)
         {
             var lastPoint = path.GetLastPoint();
-            if (lastPoint != null && lastPoint == slot)
+            if (lastPoint.slot == slot)
             {
                 return;
             }
@@ -108,8 +108,9 @@ public class PathManager : MonoBehaviour
         if (path != null)
         {
             var slot = gameSlot.uiSlot.slot;
+            var previous = path.GetPreviousPoint();
 
-            if (slot != null && path.GetPreviousPoint() == slot) //retracting
+            if (slot != null && previous != null && previous.slot == slot) //retracting
             {
                 path.RemovePoint(path.GetLastPoint());
                 line.positionCount -= 1;
@@ -125,6 +126,8 @@ public class PathManager : MonoBehaviour
 
                     UpdateSumText();
 
+                    Debug.Log(path.GetLastPoint().number);
+
                     if (slot.number == (int)SpecialSlot.Reverse)
                     {
                         Debug.Log("Reverse");
@@ -138,7 +141,7 @@ public class PathManager : MonoBehaviour
     {
         if(path != null)
         {
-            sumText.text = path.sum.ToString();
+            sumText.text = path.GetSum().ToString();
         }
     }
 }

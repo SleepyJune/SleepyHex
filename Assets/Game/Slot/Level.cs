@@ -65,7 +65,7 @@ public class Level
                     continue;
                 }
 
-                var slot = new Slot(0, hex);
+                var slot = new Slot(-1, hex);
 
                 AddSlot(slot);
             }

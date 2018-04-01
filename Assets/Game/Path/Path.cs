@@ -5,110 +5,107 @@ using System.Text;
 
 public class Path
 {
-    public List<Slot> waypoints;
-
-    public int sum = 0;
-
-    Slot lastPoint;
-    Slot startPoint;
-
-    int lastNumber = 0;
-
-    bool isDescending = true;
-
+    public List<PathSlot> waypoints;
+    
+    PathSlot lastPoint;
+    PathSlot startPoint;
 
     public Path(Slot startPoint)
     {
-        waypoints = new List<Slot>();
+        waypoints = new List<PathSlot>();
 
-        this.startPoint = startPoint;
-        this.lastPoint = startPoint;
+        var pathSlot = new PathSlot(startPoint);
 
-        sum = startPoint.isNumber ? startPoint.number : 0;
+        this.startPoint = pathSlot;
+        this.lastPoint = pathSlot;
 
-        lastNumber = lastPoint.number;
+        if (startPoint.isNumber)
+        {
+            pathSlot.number = startPoint.number;
+            pathSlot.sum = startPoint.number;
+        }
 
-        waypoints.Add(startPoint);
+        waypoints.Add(pathSlot);
     }
 
     public bool AddPoint(Slot slot)
     {
-        if (!waypoints.Contains(slot))
+        var pathSlot = new PathSlot(slot);
+
+        if (!waypoints.Contains(pathSlot))
         {
-            if(lastPoint != null)
+            if (!lastPoint.slot.isNeighbour(slot))
             {
-                if (!lastPoint.isNeighbour(slot))
+                return false;
+            }
+
+            if (slot.isNumber)
+            {
+                if (lastPoint.isDescending && lastPoint.number < slot.number)
                 {
                     return false;
                 }
-
-                if (slot.number > 0 && slot.number < 10)
+                else if (!lastPoint.isDescending && lastPoint.number > slot.number)
                 {
-                    if (isDescending && lastNumber < slot.number)
-                    {
-                        return false;
-                    }
-                    else if(!isDescending && lastNumber > slot.number)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
-            
-            if(slot.number == (int)SpecialSlot.Reverse)
-            {
-                isDescending = !isDescending;
-            }
 
-            waypoints.Add(slot);
-            lastPoint = slot;
+            pathSlot.isDescending = lastPoint.isDescending;
 
-            if (slot.number > 0 && slot.number < 10)
-            {
-                lastNumber = slot.number;
-                sum += slot.number;
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool RemovePoint(Slot slot)
-    {
-        if (waypoints.Contains(slot))
-        {
             if (slot.number == (int)SpecialSlot.Reverse)
             {
-                isDescending = !isDescending;
+                pathSlot.isDescending = !pathSlot.isDescending;
             }
 
-            waypoints.Remove(slot);
-            lastPoint = waypoints.LastOrDefault();
-
-            if (slot.number > 0 && slot.number < 10)
+            if (slot.isNumber)
             {
-                lastNumber = slot.number;
-                sum -= slot.number;
+                pathSlot.number = slot.number;
+                pathSlot.sum = lastPoint.sum + slot.number;
             }
+            else
+            {
+                pathSlot.number = lastPoint.number;
+                pathSlot.sum = lastPoint.sum;
+            }
+
+            lastPoint.next = pathSlot;
+            pathSlot.previous = lastPoint;
+
+            waypoints.Add(pathSlot);
+            lastPoint = pathSlot;
+
             return true;
         }
 
         return false;
     }
 
-    public Slot GetLastPoint()
+    public bool RemovePoint(PathSlot pathSlot)
+    {
+        if (waypoints.Contains(pathSlot))
+        {
+            waypoints.Remove(pathSlot);
+            lastPoint = waypoints.LastOrDefault();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public PathSlot GetLastPoint()
     {
         return lastPoint;
     }
 
-    public Slot GetPreviousPoint()
+    public PathSlot GetPreviousPoint()
     {
-        if(waypoints.Count >= 2)
-        {
-            return waypoints[waypoints.Count - 2];
-        }
+        return lastPoint.previous;
+    }
 
-        return null;
+    public int GetSum()
+    {
+        return lastPoint.sum;
     }
 }
