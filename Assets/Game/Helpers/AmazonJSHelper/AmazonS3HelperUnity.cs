@@ -12,12 +12,8 @@ using Amazon.S3.Util;
 using Amazon.CognitoIdentity;
 using Amazon.Runtime;
 
-
-public class AmazonS3Helper : MonoBehaviour
+public class AmazonS3HelperUnity : MonoBehaviour
 {
-    public delegate void ListFilesCallback(List<S3Object> files);
-    public delegate void GetFileCallback(string name, string data);
-
     string IdentityPoolId = "us-east-1:22e866d2-8c4f-447d-b6f0-7f3227dd1807";
     string CognitoIdentityRegion = RegionEndpoint.USEast1.SystemName;
     private RegionEndpoint _CognitoIdentityRegion
@@ -30,22 +26,25 @@ public class AmazonS3Helper : MonoBehaviour
         get { return RegionEndpoint.GetBySystemName(S3Region); }
     }
     string S3BucketName = "unitytestprojects";
-    
-    void Start()
+
+    void Awake()
     {
-        UnityInitializer.AttachToGameObject(this.gameObject);
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            UnityInitializer.AttachToGameObject(this.gameObject);
 
-        /*GetBucketListButton.onClick.AddListener(() => { GetBucketList(); });
-        PostBucketButton.onClick.AddListener(() => { PostObject(); });
-        GetObjectsListButton.onClick.AddListener(() => { GetObjects(); });
-        DeleteObjectButton.onClick.AddListener(() => { DeleteObject(); });
-        GetObjectButton.onClick.AddListener(() => { GetObject(); });*/
+            /*GetBucketListButton.onClick.AddListener(() => { GetBucketList(); });
+            PostBucketButton.onClick.AddListener(() => { PostObject(); });
+            GetObjectsListButton.onClick.AddListener(() => { GetObjects(); });
+            DeleteObjectButton.onClick.AddListener(() => { DeleteObject(); });
+            GetObjectButton.onClick.AddListener(() => { GetObject(); });*/
 
-        AWSConfigs.HttpClient = AWSConfigs.HttpClientOption.UnityWebRequest;
-    } 
-    
-    public void GetFile(string filePath, string name, GetFileCallback callback)
-    {        
+            AWSConfigs.HttpClient = AWSConfigs.HttpClientOption.UnityWebRequest;
+        }
+    }
+
+    public void GetFile(string filePath, string name, AmazonS3Helper.GetFileCallback callback)
+    {
         Client.GetObjectAsync(S3BucketName, filePath, (responseObj) =>
         {
             string data = null;
@@ -56,7 +55,7 @@ public class AmazonS3Helper : MonoBehaviour
                 {
                     data = reader.ReadToEnd();
                 }
-
+                                
                 Debug.Log("Downloaded: " + name);
 
                 callback(name, data);
@@ -67,12 +66,12 @@ public class AmazonS3Helper : MonoBehaviour
             }
         });
     }
-    
+
     public void PostObject(string fileName, string s)
     {
         //string fileName = GetFileHelper();
 
-        var stream = GenerateStreamFromString(s);        
+        var stream = GenerateStreamFromString(s);
 
         var request = new PostObjectRequest()
         {
@@ -95,9 +94,9 @@ public class AmazonS3Helper : MonoBehaviour
             }
         });
     }
-    
-    public void ListFiles(string prefix, ListFilesCallback callback)
-    {        
+
+    public void ListFiles(string prefix, AmazonS3Helper.ListFilesCallback callback)
+    {
         var request = new ListObjectsRequest()
         {
             BucketName = S3BucketName,
@@ -105,11 +104,25 @@ public class AmazonS3Helper : MonoBehaviour
         };
 
         Client.ListObjectsAsync(request, (responseObject) =>
-        {            
+        {
             if (responseObject.Exception == null)
             {
                 Debug.Log("Downloaded file list");
-                callback(responseObject.Response.S3Objects);
+
+                List<AmazonS3Object> fileList = new List<AmazonS3Object>();
+                foreach(var file in responseObject.Response.S3Objects)
+                {
+                    var newfile = new AmazonS3Object()
+                    {
+                        Key = file.Key,
+                        Size = file.Size,
+                        LastModified = file.LastModified,
+                    };
+
+                    fileList.Add(newfile);
+                }
+
+                callback(fileList);
             }
             else
             {

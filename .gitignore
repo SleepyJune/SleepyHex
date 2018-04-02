@@ -3,6 +3,7 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/[Ww]ebBuild/
 /Assets/AssetStoreTools*
 
 # Visual Studio 2015 cache directory
@@ -28,6 +29,9 @@ ExportedObj/
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# Webstorm
+.idea/
 
 # Builds
 #*.apk

@@ -30,7 +30,7 @@ public class LevelSelector : MonoBehaviour
         amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
     }
 
-    public void LoadLevelNamesWeb(List<S3Object> files)
+    public void LoadLevelNamesWeb(List<AmazonS3Object> files)
     {
         foreach(var file in files)
         {
