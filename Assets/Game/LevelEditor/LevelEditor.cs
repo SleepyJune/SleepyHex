@@ -27,7 +27,7 @@ public class LevelEditor : LevelLoader
         GenerateNewLevel();
     }
 
-    void GenerateNewLevel()
+    public void GenerateNewLevel()
     {
         int gridColumns = 12;
         int gridRows = 12;
@@ -95,7 +95,7 @@ public class LevelEditor : LevelLoader
         editorSlot.uiSlot = newSlot;
         editorSlot.levelEditor = this;
     }
-
+    
     public void DeleteLevel()
     {
         var levelText = levelSelector.GetLevel(level.levelName);

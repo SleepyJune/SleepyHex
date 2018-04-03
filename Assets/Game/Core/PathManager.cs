@@ -11,6 +11,8 @@ public class PathManager : MonoBehaviour
     [NonSerialized]
     public UIGameSlot selectedSlot;
 
+    public Transform slotListTop;
+
     public LineRenderer linePrefab;
 
     public GameObject startPrefab;
@@ -40,6 +42,28 @@ public class PathManager : MonoBehaviour
     private void OnTouchEnd(Touch touch)
     {
         isMouseDown = false;
+    }
+
+    public void ClearPath()
+    {
+        if (line != null)
+        {
+            Destroy(line.gameObject);
+        }
+
+        if (startIcon != null)
+        {
+            Destroy(startIcon);
+        }
+
+        if (endIcon != null)
+        {
+            Destroy(endIcon);
+        }
+
+        path = null;
+
+        UpdateSumText();
     }
 
     public void OnGameSlotPressed(UIGameSlot gameSlot)
@@ -72,7 +96,7 @@ public class PathManager : MonoBehaviour
             Destroy(line.gameObject);
         }
 
-        line = Instantiate(linePrefab, transform);
+        line = Instantiate(linePrefab, slotListTop);
         line.positionCount += 1;
         line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
 
@@ -86,7 +110,7 @@ public class PathManager : MonoBehaviour
             Destroy(endIcon);
         }
 
-        startIcon = Instantiate(startPrefab, transform);
+        startIcon = Instantiate(startPrefab, slotListTop);
         startIcon.transform.position = gameSlot.transform.position;
     }
 
@@ -142,6 +166,10 @@ public class PathManager : MonoBehaviour
         if(path != null)
         {
             sumText.text = path.GetSum().ToString();
+        }
+        else
+        {
+            sumText.text = "0";
         }
     }
 }
