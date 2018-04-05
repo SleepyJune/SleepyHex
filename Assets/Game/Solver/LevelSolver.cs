@@ -63,12 +63,15 @@ public class LevelSolver : ThreadedJob
 
         foreach (var startPoint in slots)
         {
-            var path = new Path(startPoint);
-            ExploreNeighbour(path);
+            if (startPoint.isNumber)
+            {
+                var path = new Path(startPoint);
+                ExploreNeighbour(path);
 
-            slotsProcessed += 1;
+                slotsProcessed += 1;
 
-            progressPercent = (float)slotsProcessed / numSlots;
+                progressPercent = (float)slotsProcessed / numSlots;
+            }
         }
 
         solvedPaths = solvedPaths.OrderByDescending(p => p.waypoints.Count == numSlots)
