@@ -116,7 +116,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
                     {
                         Key = file.Key,
                         Size = file.Size,
-                        LastModified = file.LastModified,
+                        LastModified = file.LastModified.ToUniversalTime(),
                     };
 
                     fileList.Add(newfile);

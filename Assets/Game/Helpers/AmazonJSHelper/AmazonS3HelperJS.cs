@@ -43,6 +43,16 @@ public class AmazonS3HelperJS : MonoBehaviour
         var fileArray = JsonUtility.FromJson<AmazonS3ObjectList>(data);
         List<AmazonS3Object> fileList = fileArray.Contents.ToList();
 
+        DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        
+        foreach (var file in fileList)
+        {
+            DateTime date = start.AddMilliseconds(file.LastModifiedTime);
+            file.LastModified = date;
+        }
+
+        //setAlert(fileList.FirstOrDefault().LastModified.ToString());
+
         levelSelector.LoadLevelNamesWeb(fileList);
     }
 

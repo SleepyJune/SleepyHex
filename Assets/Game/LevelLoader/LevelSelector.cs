@@ -40,10 +40,11 @@ public class LevelSelector : MonoBehaviour
             if(levelDatabase.TryGetValue(levelName, out level))
             {
                 level.hasWebVersion = true;
+                level.webDateModified = file.LastModified;
             }
             else
-            {
-                var levelTextAsset = new LevelTextAsset(levelName);
+            {                
+                var levelTextAsset = new LevelTextAsset(levelName, file.LastModified);
                 AddLevel(levelTextAsset);
             }
         }
@@ -59,16 +60,31 @@ public class LevelSelector : MonoBehaviour
         }
 
         var levels = Resources.LoadAll("Levels", typeof(TextAsset));
-        int numfiles = 0;
+
         foreach (var obj in levels)
         {
             var level = obj as TextAsset;
-            
-            var levelTextAsset = new LevelTextAsset(level.name, level.text);
+
+            var path = DataPath.savePath + level.name + ".json";
+            if (!File.Exists(path)) //overwrite files if mobile platform
+            {
+                File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
+            }
+        }
+
+        DirectoryInfo d = new DirectoryInfo(DataPath.savePath);        
+        foreach (var file in d.GetFiles("*.json"))
+        {
+            var path = file.FullName;
+
+            string str = File.ReadAllText(path);
+
+            var levelName = System.IO.Path.GetFileNameWithoutExtension(path);
+
+            var levelTextAsset = new LevelTextAsset(levelName, str);
             //levelDatabase.Add(level.name, levelTextAsset);
 
             AddLevel(levelTextAsset);
-            numfiles += 1;
         }
 
         RefreshList();
@@ -114,7 +130,30 @@ public class LevelSelector : MonoBehaviour
         LevelTextAsset levelText;
         if(levelDatabase.TryGetValue(name, out levelText))
         {
-            if (levelText.hasWebVersion && levelText.webText == null)
+            var levelLocal = JsonUtility.FromJson<Level>(levelText.text);
+            bool shouldLoadLocal = false;
+
+            if(levelLocal != null && levelText.webDateModified != null && levelLocal.dateModified != null)
+            {
+                var localDateModified = DateTime.Parse(levelLocal.dateModified);
+
+                Debug.Log(localDateModified.ToString());
+                Debug.Log(levelText.webDateModified.ToString());
+
+                if (localDateModified.AddSeconds(15) >= levelText.webDateModified)
+                {
+                    shouldLoadLocal = true;
+                }
+            }
+            else
+            {
+                if(levelLocal == null)
+                {
+                    shouldLoadLocal = false;
+                }
+            }
+
+            if (levelText.hasWebVersion && !shouldLoadLocal)
             {
                 var filename = DataPath.webPath + levelText.name + ".json";
                 amazonHelper.GetFile(filename, name, LoadLevelTextWeb);
@@ -140,8 +179,11 @@ public class LevelSelector : MonoBehaviour
             if (levelText.hasWebVersion)
             {
                 levelText.webText = data;
+                levelText.text = data;
 
-                levelLoader.Load(levelText);
+                Level level = levelLoader.Load(levelText);
+                level.SaveLevel(false);
+
                 levelListParent.gameObject.SetActive(false);
             }
         }

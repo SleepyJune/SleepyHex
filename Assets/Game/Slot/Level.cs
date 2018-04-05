@@ -107,12 +107,31 @@ public class Level
         }
     }
 
-    public string SaveLevel()
+    public LevelTextAsset SaveLevel(bool modified = true)
     {
-        dateModified = DateTime.UtcNow.ToString();
+        if (modified)
+        {
+            dateModified = DateTime.UtcNow.ToString();
+        }
 
-        slots = map.Values.ToArray();
-        return JsonUtility.ToJson(this);
+        slots = map.Values.Where(s => s.number >= 0).ToArray();
+
+        string levelStr = JsonUtility.ToJson(this);
+
+        if (!Directory.Exists(DataPath.savePath))
+        {
+            Directory.CreateDirectory(DataPath.savePath);
+        }
+
+        var filePath = DataPath.savePath + levelName + ".json";
+
+        File.WriteAllText(filePath, levelStr);
+
+        var levelText = new LevelTextAsset(levelName, levelStr);
+
+        Debug.Log("Saved to: " + filePath);
+
+        return levelText;
     }
 
     public static Level LoadLevel(LevelTextAsset levelText)

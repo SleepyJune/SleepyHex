@@ -5,6 +5,20 @@ listFilesJS: function () {
         if (err) {
             return alert('There was an error listing your albums: ' + err.message);
         } else {
+									
+			if(data && data.Contents)
+			{								
+				for(var arrayIndex in data.Contents)
+				{			
+					var obj = data.Contents[arrayIndex];
+				
+					if(obj.LastModified != null)
+					{					
+						obj.LastModifiedTime = obj.LastModified.getTime();
+					}
+				}
+			}
+									
             var returnStr = JSON.stringify(data);
             SendMessage('AmazonHelpers', 'ListFileCallback', returnStr);
         }

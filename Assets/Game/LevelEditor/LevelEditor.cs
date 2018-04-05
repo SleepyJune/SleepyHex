@@ -95,7 +95,12 @@ public class LevelEditor : LevelLoader
         editorSlot.uiSlot = newSlot;
         editorSlot.levelEditor = this;
     }
-    
+
+    public override void LoadLevelFeatures(Level level)
+    {
+        level.MakeEmptyLevel();
+    }
+
     public void DeleteLevel()
     {
         var levelText = levelSelector.GetLevel(level.levelName);
@@ -120,26 +125,13 @@ public class LevelEditor : LevelLoader
 
     public void Save()
     {
-        string str = level.SaveLevel();
-
-        if (!Directory.Exists(DataPath.savePath))
-        {
-            Directory.CreateDirectory(DataPath.savePath);
-        }
-
-        var filePath = DataPath.savePath + level.levelName + ".json";
-
-        File.WriteAllText(filePath, str);
-
-        var levelText = new LevelTextAsset(level.levelName, str);
+        LevelTextAsset levelText = level.SaveLevel();
 
         //levelText.webText = levelText.text;
         //levelText.hasWebVersion = true;
 
         LevelSelector.AddLevel(levelText, true);
         levelSelector.RefreshList();
-
-        Debug.Log("Saved to: " + filePath);
 
         var webPath = DataPath.webPath + levelText.name + ".json";
 

@@ -11,6 +11,8 @@ public class LevelTextAsset
 
     public bool hasWebVersion;
 
+    public DateTime webDateModified;
+
     public LevelTextAsset(string name, string levelText)
     {
         this.name = name;
@@ -18,10 +20,11 @@ public class LevelTextAsset
         this.webText = null;
     }
 
-    public LevelTextAsset(string name)
+    public LevelTextAsset(string name, DateTime dateModified)
     {
         this.name = name;
         this.hasWebVersion = true;
         this.webText = null;
+        this.webDateModified = dateModified;
     }
 }

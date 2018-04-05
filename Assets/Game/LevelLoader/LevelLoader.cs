@@ -27,7 +27,7 @@ public class LevelLoader : MonoBehaviour
         level = null;
     }
 
-    public virtual void Load(LevelTextAsset levelText)
+    public Level Load(LevelTextAsset levelText)
     {
         Clear();
 
@@ -36,16 +36,26 @@ public class LevelLoader : MonoBehaviour
         {
             Debug.Log("Loading " + level.levelName);
 
+            LoadLevelFeatures(level);
+
             gridManager = new GridManager();
             gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
 
             SetLevelName(level.levelName);
+
         }
+
+        return level;
     }
 
     public void SetLevelName(string name)
     {
         levelNameField.text = name;
+    }
+
+    public virtual void LoadLevelFeatures(Level level)
+    {
+
     }
 
     public virtual bool isValidSlot(Slot slot)
