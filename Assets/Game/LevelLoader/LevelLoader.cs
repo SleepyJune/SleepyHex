@@ -48,6 +48,11 @@ public class LevelLoader : MonoBehaviour
         return level;
     }
 
+    public GridManager GetGridManager()
+    {
+        return gridManager;
+    }
+
     public void SetLevelName(string name)
     {
         levelNameField.text = name;

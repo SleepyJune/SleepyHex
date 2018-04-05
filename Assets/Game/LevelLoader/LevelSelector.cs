@@ -216,4 +216,9 @@ public class LevelSelector : MonoBehaviour
     {
         levelListParent.gameObject.SetActive(true);
     }
+
+    public void HideLevelList()
+    {
+        levelListParent.gameObject.SetActive(false);
+    }
 }
