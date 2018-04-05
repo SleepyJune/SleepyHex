@@ -20,7 +20,10 @@ public class LevelEditor : LevelLoader
 
     [NonSerialized]
     public UIEditorSlot selectedEditorSlot;
-    
+
+    public LineRenderer linePrefab;
+    LineRenderer line;
+
     void Start()
     {
         GenerateTemplateSlots();
@@ -102,15 +105,40 @@ public class LevelEditor : LevelLoader
     {
         level.MakeEmptyLevel();
     }
-
+    
     public void Solve()
     {
-        var solver = new LevelSolver2(level);
+        var solver = new LevelSolver(level);
 
         var bestPath = solver.Solve();
         if (bestPath != null)
         {
+            Debug.Log("Slots: " + bestPath.waypoints.Count);
             Debug.Log("Best Score: " + bestPath.GetSum());
+
+            if(line != null)
+            {
+                Destroy(line.gameObject);
+            }
+
+            line = Instantiate(linePrefab, slotListParent);
+
+            foreach(var pathSlot in bestPath.waypoints)
+            {
+                var uiSlot = gridManager.GetUISlot(pathSlot.slot);
+
+                if(uiSlot != null)
+                {
+                    line.positionCount += 1;
+                    line.SetPosition(line.positionCount - 1, uiSlot.transform.position);
+                }                
+            }
+            
+
+            /*foreach(var slot in bestPath.waypoints)
+            {
+                Debug.Log(slot.slot.number);
+            }*/
         }
         else
         {

@@ -8,117 +8,75 @@ using UnityEngine;
 public class LevelSolver
 {
     Level level;
+
+    List<Path> solvedPaths;
+
     DateTime startTime;
 
     int slotsVisited = 0;
 
-    List<Path> edges;
-                
+    Path bestPath;
+
     public LevelSolver(Level level)
     {
-        this.level = level;        
+        this.level = level;
+
+        this.solvedPaths = new List<Path>();
     }
 
-    public void GetEdges()
-    {
-        edges = new List<Path>();
-
-        var slots = level.map.Values;
-
-        foreach (var slot in slots)
-        {
-            if (slot.neighbours != null)
-            {
-                foreach (var neighbour in slot.neighbours)
-                {
-                    var newPath = new Path(slot);
-
-                    if (newPath.AddPoint(neighbour))
-                    {
-                        edges.Add(newPath);
-                    }
-                }
-            }
-        }
-
-        Debug.Log("Num Edges: " + edges.Count);
-    }
-
-    public void Solve()
+    public Path Solve()
     {
         startTime = DateTime.Now;
 
-        GetEdges();
-
-        foreach (var startPoint in level.map.Values)
+        foreach(var startPoint in level.map.Values)
         {
-            if (startPoint.number >= 0)
+            if(startPoint.number >= 0)
             {
-                CalculateShortestPaths(startPoint);
+                var path = new Path(startPoint);
+                ExploreNeighbour(path);
             }
         }
 
+        var numSlots = level.map.Values.Sum(s => s.number >= 0 ? 1 : 0);
+
+        solvedPaths = solvedPaths.OrderByDescending(p => p.waypoints.Count == numSlots)
+                                 .ThenByDescending(p => p.GetSum()).ToList();
+
         Debug.Log("Visited: " + slotsVisited);
+
+        Debug.Log("Max slots: " + numSlots);
+
+        bestPath = solvedPaths.FirstOrDefault();
+
+        return bestPath;
     }
 
-    public void CalculateShortestPaths(Slot start)
+    public void ExploreNeighbour(Path path)
     {
         if (DateTime.Now.Subtract(startTime).Seconds > 10)
         {
+            Debug.Log("Solving Timed out");
             return;
         }
 
-        Dictionary<Slot, int> dist = new Dictionary<Slot, int>();
-        Dictionary<Slot, Slot> prev = new Dictionary<Slot, Slot>();
-        
-        var slots = level.map.Values;
+        var lastPoint = path.GetLastPoint();
 
-        foreach (var slot in slots) //initialize
-        {
-            dist.Add(slot, 999);
-            prev.Add(slot, null);
-        }
-
-        dist[start] = -start.number;
-
-        for(int i=0;i< slots.Count; i++)
-        {
-            foreach(var edge in edges)
+        if (lastPoint != null && lastPoint.slot.neighbours != null)
+        {            
+            foreach (var neighbour in lastPoint.slot.neighbours)
             {
-                var weight = -edge.GetLastPoint().slot.number;
-
-                var alternativeDistance = dist[edge.startPoint.slot] + weight;
-
-                if (alternativeDistance < dist[edge.lastPoint.slot])
+                if (path.AddPoint(neighbour))
                 {
-                    dist[edge.lastPoint.slot] = alternativeDistance;
-                    prev[edge.lastPoint.slot] = edge.startPoint.slot;
+                    slotsVisited += 1;
+
+                    var newPath = new Path(path);
+                    solvedPaths.Add(newPath);
+
+                    path.GoBack();
+
+                    ExploreNeighbour(newPath);
                 }
-
-                slotsVisited++;
             }
-        }
-
-        var shortestSlot = dist.OrderBy(p => p.Value).FirstOrDefault();
-
-        if(shortestSlot.Value < 0)
-        {
-            Debug.Log(shortestSlot.Value);
-            //MakePath(start, shortestSlot.Key, prev.Values);
-        }        
-    }
-
-    public void MakePath(Slot start, Slot end, IEnumerable<Slot> prev)
-    {
-        Path path = new Path(start);
-
-        HashSet<Slot> visited = new HashSet<Slot>();
-
-        Slot current = end;
-        while(current != start)
-        {
-            path.AddPoint(current);
-            //current = prev[current];
         }
     }
 }

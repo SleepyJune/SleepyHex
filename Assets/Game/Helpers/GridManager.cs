@@ -14,8 +14,11 @@ public class GridManager
 
     List<UISlot> uiSlots;
 
+    Dictionary<Slot, UISlot> uiSlotDatabase;
+
     public GridManager()
     {
+        uiSlotDatabase = new Dictionary<Slot, UISlot>();
         uiSlots = new List<UISlot>();
 
         CalculateInitialPos();
@@ -50,9 +53,19 @@ public class GridManager
         }
     }
 
+    public UISlot GetUISlot(Slot slot)
+    {
+        return uiSlotDatabase[slot];
+    }
+
     public void MakeGrid(Level level, UISlot slotPrefab, Transform slotParent, LevelLoader levelLoader)
     {
-        foreach(var slot in level.map.Values)
+        foreach (Transform child in slotParent)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        foreach (var slot in level.map.Values)
         {
             if(levelLoader != null)
             {
@@ -68,6 +81,8 @@ public class GridManager
             newSlot.slot = slot;
 
             uiSlots.Add(newSlot);
+
+            uiSlotDatabase.Add(slot, newSlot);
 
             if (levelLoader != null)
             {

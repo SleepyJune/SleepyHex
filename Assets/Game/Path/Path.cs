@@ -38,7 +38,7 @@ public class Path
         lastPoint = pathClone.lastPoint;
         //lastPoint = new PathSlot(pathClone.GetLastPoint().slot);
 
-        waypoints.Add(lastPoint);
+        //waypoints.Add(lastPoint);
     }
 
     public bool AddPoint(Slot slot)
