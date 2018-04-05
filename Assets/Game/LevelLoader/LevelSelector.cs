@@ -105,7 +105,7 @@ public class LevelSelector : MonoBehaviour
         }
         
 
-        foreach (var level in levelDatabase.Values)
+        foreach (var level in levelDatabase.Values.OrderByDescending(level => level.webDateModified))
         {
             if(level != null)
             {

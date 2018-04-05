@@ -37,6 +37,8 @@ public class LevelEditor : LevelLoader
 
         gridManager = new GridManager();        
         gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
+
+        SetLevelName(level.levelName);
     }
 
     void GenerateTemplateSlots()

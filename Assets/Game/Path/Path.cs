@@ -28,6 +28,19 @@ public class Path
         waypoints.Add(pathSlot);
     }
 
+    public Path(Path pathClone)
+    {
+        waypoints = new List<PathSlot>();
+        waypoints.AddRange(pathClone.waypoints);        
+        //waypoints.RemoveAt(waypoints.Count - 1);
+
+        startPoint = pathClone.startPoint;
+        lastPoint = pathClone.lastPoint;
+        //lastPoint = new PathSlot(pathClone.GetLastPoint().slot);
+
+        waypoints.Add(lastPoint);
+    }
+
     public bool AddPoint(Slot slot)
     {
         var pathSlot = new PathSlot(slot);
