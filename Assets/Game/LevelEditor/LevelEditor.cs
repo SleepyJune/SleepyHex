@@ -129,8 +129,9 @@ public class LevelEditor : LevelLoader
     {
         LevelTextAsset levelText = level.SaveLevel();
 
-        //levelText.webText = levelText.text;
-        //levelText.hasWebVersion = true;
+        levelText.webText = levelText.text;
+        levelText.hasWebVersion = true;
+        levelText.webDateModified = DateTime.UtcNow;
 
         LevelSelector.AddLevel(levelText, true);
         levelSelector.RefreshList();

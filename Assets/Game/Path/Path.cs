@@ -102,6 +102,11 @@ public class Path
         return false;
     }
 
+    public bool GoBack()
+    {
+        return RemovePoint(GetLastPoint());
+    }
+
     public bool RemovePoint(PathSlot pathSlot)
     {
         if (waypoints.Contains(pathSlot))

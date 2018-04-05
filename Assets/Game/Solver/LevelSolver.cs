@@ -24,7 +24,7 @@ public class LevelSolver
         {
             var path = new Path(startPoint);
 
-            
+            ExploreNeighbour(path);
         }
     }
 
@@ -34,9 +34,15 @@ public class LevelSolver
         
         foreach(var neighbour in lastPoint.slot.neighbours)
         {
-            
+            if (path.AddPoint(neighbour))
+            {
+                var newPath = new Path(path);
+                solvedPaths.Add(newPath);
 
-            //if(path.AddPoint())
+                path.GoBack();
+
+                ExploreNeighbour(newPath);
+            }
         }
     }
 }
