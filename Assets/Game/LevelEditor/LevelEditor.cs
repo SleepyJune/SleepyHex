@@ -103,6 +103,21 @@ public class LevelEditor : LevelLoader
         level.MakeEmptyLevel();
     }
 
+    public void Solve()
+    {
+        var solver = new LevelSolver2(level);
+
+        var bestPath = solver.Solve();
+        if (bestPath != null)
+        {
+            Debug.Log("Best Score: " + bestPath.GetSum());
+        }
+        else
+        {
+            Debug.Log("Unsolvable");
+        }       
+    }
+
     public void DeleteLevel()
     {
         var levelText = levelSelector.GetLevel(level.levelName);

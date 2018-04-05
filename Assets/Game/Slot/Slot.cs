@@ -47,12 +47,7 @@ public class Slot
 
     public void AddNeighbour(Slot neighbour)
     {
-        if(neighbours == null)
-        {
-            neighbours = new HashSet<Slot>();
-        }
-
-        if (true) //!neighbours.Contains(neighbour) && this != neighbour)
+        if (neighbour.number >= 0) //!neighbours.Contains(neighbour) && this != neighbour)
         {
             neighbours.Add(neighbour);
         }

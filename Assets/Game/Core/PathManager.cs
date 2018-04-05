@@ -150,7 +150,7 @@ public class PathManager : MonoBehaviour
 
                     UpdateSumText();
 
-                    Debug.Log(path.GetLastPoint().number);
+                    //Debug.Log(path.GetLastPoint().number);
 
                     if (slot.number == (int)SpecialSlot.Reverse)
                     {

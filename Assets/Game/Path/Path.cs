@@ -7,8 +7,8 @@ public class Path
 {
     public List<PathSlot> waypoints;
     
-    PathSlot lastPoint;
-    PathSlot startPoint;
+    public PathSlot lastPoint;
+    public PathSlot startPoint;
 
     public Path(Slot startPoint)
     {

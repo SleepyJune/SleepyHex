@@ -94,6 +94,11 @@ public class Level
         //Add neighbours
         foreach(var slot in map.Values)
         {
+            if (slot.neighbours == null)
+            {
+                slot.neighbours = new HashSet<Slot>();
+            }
+
             foreach (var direction in VectorExtensions.directions)
             {
                 var pos = slot.position + direction;
