@@ -14,6 +14,9 @@ public class LevelSolverController : MonoBehaviour
 
     public GameObject progressPanel;
 
+    public GameObject startIconPrefab;
+    GameObject startIcon;
+
     LineRenderer line;
 
     LevelSolver solver;
@@ -80,6 +83,7 @@ public class LevelSolverController : MonoBehaviour
             }
 
             line = Instantiate(linePrefab, transform);
+            
 
             foreach (var pathSlot in bestPath.waypoints)
             {
@@ -89,6 +93,12 @@ public class LevelSolverController : MonoBehaviour
                 {
                     line.positionCount += 1;
                     line.SetPosition(line.positionCount - 1, uiSlot.transform.position);
+
+                    if(startIcon == null)
+                    {
+                        startIcon = Instantiate(startIconPrefab, transform);
+                        startIcon.transform.position = uiSlot.transform.position;
+                    }
                 }
             }
 
