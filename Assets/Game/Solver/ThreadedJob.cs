@@ -62,6 +62,12 @@ public class ThreadedJob
             yield return null;
         }
     }
+
+    public void JobFinished()
+    {
+        IsDone = true;
+    }
+
     private void Run()
     {
         ThreadFunction();
