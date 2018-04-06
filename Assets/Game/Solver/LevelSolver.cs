@@ -2,50 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
 using UnityEngine;
 
 public class LevelSolver : ThreadedJob
 {
-    public delegate void SubLevelSolver();
-
     Level level;
 
-    Queue<Path> solvedPaths;
+    List<Path> solvedPaths;
 
     DateTime startTime;
 
-    int slotsProcessed = 0;
     int slotsVisited = 0;
-    int numSlotsToProcess = 0;
-    int numSlots = 0;
 
     Path bestPath;
 
     float progressPercent = 0;
 
-    bool abort
-    {
-        get; set;
-    }
+    bool abort = false;
 
     public LevelSolver(Level level)
     {
         this.level = level;
 
-        this.solvedPaths = new Queue<Path>();
-    }
-
-    public void Solve()
-    {
-
+        this.solvedPaths = new List<Path>();
     }
 
     public override void Abort()
     {
         abort = true;
-        
+
         if (IsDone == false)
         {
             Debug.Log("Aborting");
@@ -56,116 +42,45 @@ public class LevelSolver : ThreadedJob
     {
         Debug.Log("Solver Start");
 
-        ThreadPool.SetMaxThreads(2, 2);
-
         startTime = DateTime.Now;
 
         var slots = level.map.Values.Where(s => s.number >= 0);
-        numSlots = slots.Count();
+        var numSlots = slots.Count();
 
         slots = slots.Where(s => s.isNumber);
+        var numSlotsToProcess = slots.Count();
 
-        numSlotsToProcess = slots.Count();
-        slotsProcessed = 0;
+        int slotsProcessed = 0;
 
         progressPercent = 0;
 
-        int resetEventCount = numSlotsToProcess;
-        var resetEvent = new ManualResetEvent(false);
-
-        if (numSlotsToProcess == 0)
-        {
-            return;
-        }
-        
         foreach (var startPoint in slots)
         {
-            var path = new Path(startPoint);
+            if (startPoint.isNumber)
+            {
+                var path = new Path(startPoint);
+                ExploreNeighbour(path);
 
-            ThreadPool.QueueUserWorkItem(new WaitCallback(
-                delegate (object state)
-                {
-                    try
-                    {                   
+                slotsProcessed += 1;
 
-                    ExploreNeighbour(path);
-                    Interlocked.Increment(ref slotsProcessed);
-                    progressPercent = (float)slotsProcessed / numSlotsToProcess;
-                    
-                    if (IsDone || Interlocked.Decrement(ref resetEventCount) == 0) resetEvent.Set();
-
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e);
-                    }
-                }), null);
-
-            //ExploreNeighbour(path);
+                progressPercent = (float)slotsProcessed / numSlotsToProcess;
+            }
         }
-                
-        resetEvent.WaitOne();
-        GetSolution();
-    }
 
-    /*public void MakeSubThread2()
-    {
-        //ThreadPool.SetMaxThreads(5, 5);
-    }
-
-    public void MakeSubThread()
-    {
-        var maxThreadCount = 8;
-        while (threads.Count < maxThreadCount)
-        {
-            var newThread = new Thread(SubThreadStart);
-            threads.Enqueue(newThread);
-
-            newThread.Start();
-        }
-    }
-
-    public void SubThreadStart()
-    {
-        Debug.Log("Subthread start: " + threads.Count);
-
-        var subSolver = subSolvers.Dequeue();
-
-        subSolver();
-        SubThreadEnded();
-    }
-
-    public void SubThreadEnded()
-    {
-        Debug.Log("Subthread ended: " + threads.Count);
-
-        slotsProcessed += 1;
-        progressPercent = (float)slotsProcessed / numSlotsToProcess;
-
-        if (abort || subSolvers.Count == 0)
-        {
-            GetSolution();
-        }
-        else
-        {
-            MakeSubThread();
-        }
-    }*/
-
-    public void GetSolution()
-    {
-        var solvedList = solvedPaths.Where(p => p.waypoints.Count == numSlots)
-                         .OrderByDescending(p => p.GetSum()).ToList();
+        solvedPaths = solvedPaths.Where(p => p.waypoints.Count == numSlots)
+                                 .OrderByDescending(p => p.GetSum()).ToList();
 
         TimeSpan solveTime = DateTime.Now.Subtract(startTime);
 
         Debug.Log("Solve time: " + solveTime.ToString());
+
         Debug.Log("Visited: " + slotsVisited);
+
         Debug.Log("Max slots: " + numSlots);
 
-        bestPath = solvedList.FirstOrDefault();
+        bestPath = solvedPaths.FirstOrDefault();
 
-        //JobFinished();
+        //return bestPath;
     }
 
     public void ExploreNeighbour(Path path)
@@ -173,11 +88,6 @@ public class LevelSolver : ThreadedJob
         if (abort)// || DateTime.Now.Subtract(startTime).Seconds > 10)
         {
             return;
-        }
-
-        if(slotsVisited % 10000 == 0)
-        {
-            Debug.Log("Exploring: " + slotsVisited);
         }
 
         var lastPoint = path.GetLastPoint();
@@ -201,11 +111,7 @@ public class LevelSolver : ThreadedJob
                         continue;
                     }
 
-                    lock (solvedPaths)
-                    {
-                        solvedPaths.Enqueue(newPath);
-                    }
-                    
+                    solvedPaths.Add(newPath);
                     ExploreNeighbour(newPath);
                 }
             }

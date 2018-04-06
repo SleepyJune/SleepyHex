@@ -63,11 +63,6 @@ public class ThreadedJob
         }
     }
 
-    public void JobFinished()
-    {
-        IsDone = true;
-    }
-
     private void Run()
     {
         ThreadFunction();
