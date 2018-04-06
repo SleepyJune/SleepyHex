@@ -176,7 +176,7 @@ MonoBehaviour:
     type: 2}
   slider: {fileID: 114044897768062794}
   progressPanel: {fileID: 1743792693573298}
-  startIconPrefab: {fileID: 1232599056300844, guid: 146c0f71ef01ce845948816edd207c1a,
+  startIconPrefab: {fileID: 1302188859142368, guid: 78e5ecf58ae443148895d8d5e978a3a4,
     type: 2}
 --- !u!114 &114044897768062794
 MonoBehaviour:

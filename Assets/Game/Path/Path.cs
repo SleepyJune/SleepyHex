@@ -6,13 +6,16 @@ using System.Text;
 public class Path
 {
     public List<PathSlot> waypoints;
-    
+
+    public HashSet<Slot> waypointsHash;
+
     public PathSlot lastPoint;
     public PathSlot startPoint;
 
     public Path(Slot startPoint)
     {
         waypoints = new List<PathSlot>();
+        waypointsHash = new HashSet<Slot>();
 
         var pathSlot = new PathSlot(startPoint);
 
@@ -26,12 +29,15 @@ public class Path
         }
 
         waypoints.Add(pathSlot);
+        waypointsHash.Add(startPoint);
     }
 
     public Path(Path pathClone)
     {
         waypoints = new List<PathSlot>();
-        waypoints.AddRange(pathClone.waypoints);        
+        waypoints.AddRange(pathClone.waypoints);
+
+        waypointsHash = new HashSet<Slot>(pathClone.waypointsHash);       
         //waypoints.RemoveAt(waypoints.Count - 1);
 
         startPoint = pathClone.startPoint;
@@ -94,6 +100,8 @@ public class Path
             pathSlot.previous = lastPoint;
 
             waypoints.Add(pathSlot);
+            waypointsHash.Add(pathSlot.slot);
+
             lastPoint = pathSlot;
 
             return true;
@@ -112,6 +120,7 @@ public class Path
         if (waypoints.Contains(pathSlot))
         {
             waypoints.Remove(pathSlot);
+            waypointsHash.Remove(pathSlot.slot);
             lastPoint = waypoints.LastOrDefault();
 
             return true;
