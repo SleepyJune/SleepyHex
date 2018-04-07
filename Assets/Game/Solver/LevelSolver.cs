@@ -28,21 +28,11 @@ public class LevelSolver : ThreadedJob
         this.solvedPaths = new List<Path>();
     }
 
-    public void Solve()
-    {
-
-    }
-
-    protected override void OnFinished()
-    {
-
-    }
-
     public override void Abort()
     {
         abort = true;
 
-        if(IsDone == false)
+        if (IsDone == false)
         {
             Debug.Log("Aborting");
         }
@@ -54,7 +44,7 @@ public class LevelSolver : ThreadedJob
 
         startTime = DateTime.Now;
 
-        var slots = level.map.Values.Where(s => s.number >= 0);        
+        var slots = level.map.Values.Where(s => s.number >= 0);
         var numSlots = slots.Count();
 
         slots = slots.Where(s => s.isNumber);
@@ -81,7 +71,7 @@ public class LevelSolver : ThreadedJob
                                  .OrderByDescending(p => p.GetSum()).ToList();
 
         TimeSpan solveTime = DateTime.Now.Subtract(startTime);
-                
+
         Debug.Log("Solve time: " + solveTime.ToString());
 
         Debug.Log("Visited: " + slotsVisited);
@@ -111,7 +101,7 @@ public class LevelSolver : ThreadedJob
                 neighbourVisted.Add(neighbour);
 
                 if (path.AddPoint(neighbour))
-                {                    
+                {
                     slotsVisited += 1;
                     var newPath = new Path(path);
                     path.GoBack();
@@ -133,7 +123,7 @@ public class LevelSolver : ThreadedJob
         foreach (var otherNeighbour in slot.neighbours)
         {
             if (otherNeighbour.neighbours != null
-                && !neighbourVisted.Contains(otherNeighbour) 
+                && !neighbourVisted.Contains(otherNeighbour)
                 && !newPath.waypointsHash.Contains(otherNeighbour))
             {
                 if (!otherNeighbour.neighbours.Any(n => !newPath.waypointsHash.Contains(n)))
