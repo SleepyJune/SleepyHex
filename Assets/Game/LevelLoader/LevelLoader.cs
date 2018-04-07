@@ -42,7 +42,6 @@ public class LevelLoader : MonoBehaviour
             gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
 
             SetLevelName(level.levelName);
-
         }
 
         return level;
