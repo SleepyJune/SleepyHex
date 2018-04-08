@@ -55,7 +55,7 @@ public class Level
         var gridRows = this.rows;
 
         var maxWidth = 350;
-        var maxHeight = 500;
+        var maxHeight = 450;
 
         for (int row = (int)Math.Round(-gridRows/2f); row < gridRows; row++)
         {
