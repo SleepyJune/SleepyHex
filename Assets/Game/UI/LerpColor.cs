@@ -8,39 +8,29 @@ using UnityEngine.UI;
 
 public class LerpColor : MonoBehaviour
 {
-    float m_Hue;
-    float m_Saturation;
-    float m_Value;
-    //These are the Sliders that control the values. Remember to attach them in the Inspector window.
-    public Slider m_SliderHue, m_SliderSaturation, m_SliderValue;
+    public Image image;
 
-    //Make sure your GameObject has a Renderer component in the Inspector window
-    Renderer m_Renderer;
+    public int startingHue;
 
-    void Start()
+    float hue = 0;
+    bool change = false;
+    
+    void Awake()
     {
-        //Fetch the Renderer component from the GameObject with this script attached
-        m_Renderer = GetComponent<Renderer>();
+        //renderer = GetComponent<Renderer>();
 
-        //Set the maximum and minimum values for the Sliders
-        m_SliderHue.maxValue = 1;
-        m_SliderSaturation.maxValue = 1;
-        m_SliderValue.maxValue = 1;
-
-        m_SliderHue.minValue = 0;
-        m_SliderSaturation.minValue = 0;
-        m_SliderValue.minValue = 0;
+        hue = (startingHue / 360.0f) * 100;
     }
 
     void Update()
     {
-        //These are the Sliders that determine the amount of the hue, saturation and value in the Color
-        m_Hue = m_SliderHue.value;
-        m_Saturation = m_SliderSaturation.value;
-        m_Value = m_SliderValue.value;
+        //renderer.material.color = Color.Lerp(c[0], c[1], t);
 
-        //Create an RGB color from the HSV values from the Sliders
-        //Change the Color of your GameObject to the new Color
-        m_Renderer.material.color = Color.HSVToRGB(m_Hue, m_Saturation, m_Value);
+        var color = Color.HSVToRGB((hue%100)/100f, .6f, 1);
+        //color.a = .2f;
+        
+        image.color = color;// Color.Lerp(currentColor, color, Time.deltaTime);
+
+        hue += 20 * Time.deltaTime;
     }
 }
