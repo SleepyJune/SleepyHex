@@ -24,10 +24,17 @@ public class LevelEditor : LevelLoader
 
     public LevelSolverController levelSolverPrefab;
 
+    public Button solveButton;
+
     void Start()
     {
         GenerateTemplateSlots();
         GenerateNewLevel();
+
+        if(Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            solveButton.gameObject.SetActive(true);
+        }
     }
 
     public void GenerateNewLevel()
