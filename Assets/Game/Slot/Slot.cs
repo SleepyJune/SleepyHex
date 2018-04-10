@@ -45,6 +45,11 @@ public class Slot
         this.position = position.ConvertCube();
     }
 
+    public Slot(Vector3 position)
+    {
+        this.position = position;
+    }
+
     public void AddNeighbour(Slot neighbour)
     {
         if (neighbour.number >= 0) //!neighbours.Contains(neighbour) && this != neighbour)

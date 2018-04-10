@@ -11,11 +11,17 @@ public class LevelSolver : ThreadedJob
 
     List<Path> solvedPaths;
 
-    DateTime startTime;
+    List<Slot> startingSlots;
+
+    public DateTime startTime;
 
     int slotsVisited = 0;
 
-    Path bestPath;
+    int numSlots;
+
+    //Path bestPath;
+
+    LevelSolution solution;
 
     float progressPercent = 0;
 
@@ -31,11 +37,6 @@ public class LevelSolver : ThreadedJob
     public override void Abort()
     {
         abort = true;
-
-        if (IsDone == false)
-        {
-            Debug.Log("Aborting");
-        }
     }
 
     protected override void ThreadFunction()
@@ -45,16 +46,16 @@ public class LevelSolver : ThreadedJob
         startTime = DateTime.Now;
 
         var slots = level.map.Values.Where(s => s.number >= 0);
-        var numSlots = slots.Count();
+        numSlots = slots.Count();
 
-        slots = slots.Where(s => s.isNumber);
-        var numSlotsToProcess = slots.Count();
+        startingSlots = slots.Where(s => s.isNumber).ToList();
+        var numSlotsToProcess = startingSlots.Count();
 
         int slotsProcessed = 0;
 
         progressPercent = 0;
 
-        foreach (var startPoint in slots)
+        foreach (var startPoint in startingSlots)
         {
             if (startPoint.isNumber)
             {
@@ -67,8 +68,14 @@ public class LevelSolver : ThreadedJob
             }
         }
 
+        if (abort)
+        {
+            Debug.Log("Aborted");
+            return;
+        }
+
         solvedPaths = solvedPaths.Where(p => p.waypoints.Count == numSlots)
-                                 .OrderByDescending(p => p.GetSum()).ToList();
+                                 .OrderByDescending(p => p.GetTotalPoints()).ToList();
 
         TimeSpan solveTime = DateTime.Now.Subtract(startTime);
 
@@ -76,9 +83,46 @@ public class LevelSolver : ThreadedJob
 
         Debug.Log("Visited: " + slotsVisited);
 
-        Debug.Log("Max slots: " + numSlots);
+        Debug.Log("Solutions: " + solvedPaths.Count);
 
-        bestPath = solvedPaths.FirstOrDefault();
+        var bestPath = solvedPaths.FirstOrDefault();
+        var worstPath = solvedPaths.LastOrDefault();
+
+        int bestScore = 0;
+        int worstScore = 0;
+
+        int numSolutions = solvedPaths.Count;
+
+        if (numSolutions > 0)
+        {
+            bestScore = bestPath.GetTotalPoints();
+            worstScore = bestPath.GetTotalPoints();
+
+            List<Vector3> waypoints = new List<Vector3>();
+            foreach(var point in bestPath.waypoints)
+            {
+                waypoints.Add(point.slot.position);
+            }
+
+            int twoStarScore = (int)Math.Floor((bestScore + worstScore) / 2.0f);
+
+            int numBestSolutions = solvedPaths.Where(p => p.GetTotalPoints() == bestScore).Count();
+
+            solution = new LevelSolution()
+            {
+                bestScore = bestScore,
+                twoStarScore = twoStarScore,
+                worstScore = worstScore,
+                numSolutions = numSolutions,
+                numBestSolutions = numBestSolutions,
+                bestPath = waypoints.ToArray(),
+                dateModified = DateTime.UtcNow.ToString(),
+            };
+
+            Debug.Log("Best Solutions: " + numBestSolutions);
+        }
+
+        solvedPaths = null;
 
         //return bestPath;
     }
@@ -90,32 +134,87 @@ public class LevelSolver : ThreadedJob
             return;
         }
 
-        var lastPoint = path.GetLastPoint();
+        if(path.waypoints.Count == numSlots)
+        {
+            var newPath = new Path(path);
+            solvedPaths.Add(newPath);
+            return;
+        }
+
+        var lastPoint = path.lastPoint;
+
+        /*if(CheckDeadStartingSlot(lastPoint.slot, path))
+        {
+            return;
+        }*/
 
         if (lastPoint != null && lastPoint.slot.neighbours != null)
         {
-            HashSet<Slot> neighbourVisted = new HashSet<Slot>();
+            //HashSet<Slot> neighbourVisted = new HashSet<Slot>();
 
             foreach (var neighbour in lastPoint.slot.neighbours)
             {
-                neighbourVisted.Add(neighbour);
+                //neighbourVisted.Add(neighbour);
 
                 if (path.AddPoint(neighbour))
                 {
                     slotsVisited += 1;
-                    var newPath = new Path(path);
-                    path.GoBack();
 
-                    if (CheckDeadNeighbour(lastPoint.slot, newPath, neighbourVisted))
+                    if (CheckDeadNeighbour2(lastPoint.slot, neighbour, path))
                     {
+                        path.GoBack();
                         continue;
                     }
 
-                    solvedPaths.Add(newPath);
-                    ExploreNeighbour(newPath);
+                    /*if (CheckDeadNeighbour(lastPoint.slot, path, neighbourVisted))
+                    {
+                        continue;
+                    }*/
+
+                    //solvedPaths.Add(newPath);
+                    ExploreNeighbour(path);
+
+                    path.GoBack();
                 }
             }
         }
+    }
+
+    public bool CheckDeadStartingSlot(Slot slot, Path newPath)
+    {
+        //contains all slots in path that is not the head
+
+        foreach(var start in startingSlots)
+        {
+            if(start.neighbours != null
+                && !newPath.waypointsHash.Contains(start))
+            {
+                if (!start.neighbours.Any(n => n == slot || !newPath.waypointsHash.Contains(n)))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool CheckDeadNeighbour2(Slot slot, Slot head, Path newPath)
+    {
+        foreach (var otherNeighbour in slot.neighbours)
+        {
+            if (otherNeighbour.neighbours != null
+                && !head.neighbours.Contains(otherNeighbour)
+                && !newPath.waypointsHash.Contains(otherNeighbour))
+            {
+                if (!otherNeighbour.neighbours.Any(n => !newPath.waypointsHash.Contains(n)))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public bool CheckDeadNeighbour(Slot slot, Path newPath, HashSet<Slot> neighbourVisted)
@@ -141,8 +240,8 @@ public class LevelSolver : ThreadedJob
         return progressPercent;
     }
 
-    public Path GetBestPath()
+    public LevelSolution GetSolution()
     {
-        return bestPath;
+        return solution;
     }
 }

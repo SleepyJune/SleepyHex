@@ -74,7 +74,7 @@ public class GridManager
         float xScaling = 270 / (maxColSize);
         float yScaling = 300 / (maxRowSize);
 
-        Debug.Log("Yscaling: " + yScaling);
+        //Debug.Log("Yscaling: " + yScaling);
 
         float boardScaling = Math.Min(xScaling, yScaling);
         boardScaling = Math.Max(minScaling, boardScaling);

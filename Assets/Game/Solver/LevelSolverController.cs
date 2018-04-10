@@ -15,6 +15,9 @@ public class LevelSolverController : MonoBehaviour
     public GameObject progressPanel;
 
     public GameObject startIconPrefab;
+
+    public Text timeText;
+
     GameObject startIcon;
 
     LineRenderer line;
@@ -29,6 +32,9 @@ public class LevelSolverController : MonoBehaviour
         if (progressPanel.activeInHierarchy)
         {
             slider.value = solver.GetProgress();
+
+            DateTime mydate = new DateTime((DateTime.Now.Subtract(solver.startTime)).Ticks);
+            timeText.text = mydate.ToString(("mm:ss"));
         }
     }
 
@@ -63,19 +69,33 @@ public class LevelSolverController : MonoBehaviour
 
     public IEnumerator SolverCoroutine()
     {
-        solver = new LevelSolver(level);
+        LevelSolution solution = level.solution;
 
-        solver.Start();
-
-        yield return StartCoroutine(solver.WaitFor());
-
-        progressPanel.SetActive(false);
-
-        var bestPath = solver.GetBestPath();
-        if (bestPath != null)
+        if (solution != null && solution.dateModified == level.dateModified)
         {
-            Debug.Log("Slots: " + bestPath.waypoints.Count);
-            Debug.Log("Best Score: " + bestPath.GetSum());
+            progressPanel.SetActive(false);
+        }
+        else
+        {
+            solver = new LevelSolver(level);
+            solver.Start();
+
+            yield return StartCoroutine(solver.WaitFor());
+
+            progressPanel.SetActive(false);
+
+            solution = solver.GetSolution();
+
+            if (solution != null)
+            {
+                level.solution = solution;
+                levelEditor.Save(); //save solution
+            }
+        }
+
+        if (solution != null)
+        {
+            Debug.Log("Best Score: " + solution.bestScore);            
 
             if (line != null)
             {
@@ -85,9 +105,11 @@ public class LevelSolverController : MonoBehaviour
             line = Instantiate(linePrefab, transform);
             
 
-            foreach (var pathSlot in bestPath.waypoints)
+            foreach (var position in solution.bestPath)
             {
-                var uiSlot = levelEditor.GetGridManager().GetUISlot(pathSlot.slot);
+                Slot dummySlot = new Slot(position);
+
+                var uiSlot = levelEditor.GetGridManager().GetUISlot(dummySlot);
 
                 if (uiSlot != null)
                 {

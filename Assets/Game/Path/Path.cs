@@ -47,11 +47,11 @@ public class Path
         //waypoints.Add(lastPoint);
     }
 
-    public bool AddPoint(Slot slot)
+    public bool AddPoint(Slot slot, bool mock = false)
     {
         var pathSlot = new PathSlot(slot);
 
-        if (!waypoints.Contains(pathSlot))
+        if (!waypointsHash.Contains(slot))
         {
             if (!lastPoint.slot.isNeighbour(slot))
             {
@@ -96,8 +96,9 @@ public class Path
                 }                
             }
 
-            lastPoint.next = pathSlot;
             pathSlot.previous = lastPoint;
+
+            lastPoint.next = pathSlot;
 
             waypoints.Add(pathSlot);
             waypointsHash.Add(pathSlot.slot);
@@ -110,6 +111,16 @@ public class Path
         return false;
     }
 
+    public void AddPoint(PathSlot pathSlot)
+    {
+        lastPoint.next = pathSlot;
+
+        waypoints.Add(pathSlot);
+        waypointsHash.Add(pathSlot.slot);
+
+        lastPoint = pathSlot;
+    }
+
     public bool GoBack()
     {
         return RemovePoint(GetLastPoint());
@@ -117,7 +128,7 @@ public class Path
 
     public bool RemovePoint(PathSlot pathSlot)
     {
-        if (waypoints.Contains(pathSlot))
+        if (waypointsHash.Contains(pathSlot.slot))
         {
             waypoints.Remove(pathSlot);
             waypointsHash.Remove(pathSlot.slot);
@@ -139,7 +150,7 @@ public class Path
         return lastPoint.previous;
     }
 
-    public int GetSum()
+    public int GetTotalPoints()
     {
         return lastPoint.sum;
     }

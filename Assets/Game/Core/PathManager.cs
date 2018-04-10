@@ -165,7 +165,7 @@ public class PathManager : MonoBehaviour
     {
         if(path != null)
         {
-            sumText.text = path.GetSum().ToString();
+            sumText.text = path.GetTotalPoints().ToString();
         }
         else
         {

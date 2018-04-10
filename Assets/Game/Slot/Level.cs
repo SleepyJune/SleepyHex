@@ -19,6 +19,8 @@ public class Level
     public string dateCreated;
     public string dateModified;
 
+    public LevelSolution solution;
+
     [NonSerialized]
     public Dictionary<Vector3, Slot> map;
 
