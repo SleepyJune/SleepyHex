@@ -17,5 +17,5 @@ public class LevelSolution
 
     public Vector3[] bestPath;
 
-    public string dateModified;
+    public int version;
 }
