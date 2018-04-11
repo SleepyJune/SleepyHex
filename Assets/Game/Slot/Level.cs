@@ -13,11 +13,6 @@ public class Level
 
     public int version;
 
-    [NonSerialized]
-    public int columns;
-    [NonSerialized]
-    public int rows;
-
     public string dateCreated;
     public string dateModified;
 
@@ -32,9 +27,6 @@ public class Level
     public Level(int columns, int rows)
     {
         map = new Dictionary<Vector3, Slot>();
-
-        this.columns = columns;
-        this.rows = rows;
 
         dateCreated = DateTime.UtcNow.ToString();
     }
@@ -58,8 +50,8 @@ public class Level
 
     public void MakeEmptyLevel()
     {
-        var gridColumns = this.columns;
-        var gridRows = this.rows;
+        var gridColumns = 12;
+        var gridRows = 12;
 
         var maxWidth = 350;
         var maxHeight = 450;
