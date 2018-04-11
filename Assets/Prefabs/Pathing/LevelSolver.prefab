@@ -189,13 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314b5d02f77f338428fe0e310d942d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 120671500451555026, guid: 843d9004a82a4c84baf7a4098a132782,
-    type: 2}
   slider: {fileID: 114044897768062794}
   progressPanel: {fileID: 1743792693573298}
-  startIconPrefab: {fileID: 1302188859142368, guid: 78e5ecf58ae443148895d8d5e978a3a4,
-    type: 2}
   timeText: {fileID: 114231453935665944}
+  solutionViewerPrefab: {fileID: 114567225349451044, guid: 3ed3b3d95e4f74e4fb097c4dbe4c7060,
+    type: 2}
 --- !u!114 &114044897768062794
 MonoBehaviour:
   m_ObjectHideFlags: 1
