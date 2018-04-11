@@ -133,10 +133,21 @@ public class LevelSelector : MonoBehaviour
 
                 var levelName = System.IO.Path.GetFileNameWithoutExtension(path);
 
+                Debug.Log("Processing " + levelName);
+
                 var levelTextAsset = new LevelTextAsset(levelName, 0, -1, file.LastWriteTimeUtc);
                 //levelDatabase.Add(level.name, levelTextAsset);
 
-                AddLevel(levelTextAsset);
+                levelTextAsset.text = str;
+
+                Level level = Level.LoadLevel(levelTextAsset);
+                if (level != null)
+                {
+                    levelTextAsset.localVersion = level.version;
+
+                    AddLevel(levelTextAsset);
+                }
+
             }
 
             SaveLevelList(false);
