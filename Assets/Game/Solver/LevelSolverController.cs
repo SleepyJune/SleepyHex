@@ -71,7 +71,7 @@ public class LevelSolverController : MonoBehaviour
     {
         LevelSolution solution = level.solution;
 
-        if (solution != null && solution.dateModified == level.dateModified)
+        if (solution != null && solution.version == level.version && solution.bestScore > 0)
         {
             progressPanel.SetActive(false);
         }
@@ -89,7 +89,7 @@ public class LevelSolverController : MonoBehaviour
             if (solution != null)
             {
                 level.solution = solution;
-                levelEditor.Save(); //save solution
+                levelEditor.Save(false); //save solution
             }
         }
 

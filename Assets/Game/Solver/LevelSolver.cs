@@ -23,6 +23,9 @@ public class LevelSolver : ThreadedJob
 
     LevelSolution solution;
 
+    int bestScore = 0;
+    int worstScore = 0;
+
     float progressPercent = 0;
 
     bool abort = false;
@@ -88,9 +91,6 @@ public class LevelSolver : ThreadedJob
         var bestPath = solvedPaths.FirstOrDefault();
         var worstPath = solvedPaths.LastOrDefault();
 
-        int bestScore = 0;
-        int worstScore = 0;
-
         int numSolutions = solvedPaths.Count;
 
         if (numSolutions > 0)
@@ -116,7 +116,7 @@ public class LevelSolver : ThreadedJob
                 numSolutions = numSolutions,
                 numBestSolutions = numBestSolutions,
                 bestPath = waypoints.ToArray(),
-                dateModified = DateTime.UtcNow.ToString(),
+                version = level.version,
             };
 
             Debug.Log("Best Solutions: " + numBestSolutions);
@@ -136,6 +136,8 @@ public class LevelSolver : ThreadedJob
 
         if(path.waypoints.Count == numSlots)
         {
+            var points = path.GetTotalPoints();
+
             var newPath = new Path(path);
             solvedPaths.Add(newPath);
             return;

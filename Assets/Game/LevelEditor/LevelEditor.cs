@@ -133,7 +133,7 @@ public class LevelEditor : LevelLoader
                 File.Delete(filePath);
             }
 
-            if (levelText.hasWebVersion)
+            if (levelText.webVersion >= 0)
             {
                 var webPath = DataPath.webPath + levelText.name + ".json";
                 amazonHelper.DeleteObject(level.levelName, webPath);
@@ -146,18 +146,23 @@ public class LevelEditor : LevelLoader
 
     public void Save()
     {
-        LevelTextAsset levelText = level.SaveLevel();
+        Save(true);
+    }
 
-        levelText.webText = levelText.text;
-        levelText.hasWebVersion = true;
-        levelText.webDateModified = DateTime.UtcNow;
-
+    public void Save(bool modified)
+    {
+        LevelTextAsset levelText = level.SaveLevel(modified);
+        
         LevelSelector.AddLevel(levelText, true);
         levelSelector.RefreshList();
 
         var webPath = DataPath.webPath + levelText.name + ".json";
-
         amazonHelper.PostObject(webPath, levelText.text);
+
+        if (modified)
+        {
+            levelSelector.SaveLevelList();
+        }
 
         //saveScreen.SetActive(false);
     }

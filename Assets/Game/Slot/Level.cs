@@ -11,13 +11,18 @@ public class Level
 {
     public string levelName = "New Level";
 
-    public Slot[] slots;
+    public int version;
 
+    [NonSerialized]
     public int columns;
+    [NonSerialized]
     public int rows;
 
     public string dateCreated;
     public string dateModified;
+
+
+    public Slot[] slots;
 
     public LevelSolution solution;
 
@@ -119,6 +124,7 @@ public class Level
         if (modified)
         {
             dateModified = DateTime.UtcNow.ToString();
+            version += 1;
         }
 
         slots = map.Values.Where(s => s.number >= 0).ToArray();
@@ -134,7 +140,7 @@ public class Level
 
         File.WriteAllText(filePath, levelStr);
 
-        var levelText = new LevelTextAsset(levelName, levelStr);
+        var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified));
 
         Debug.Log("Saved to: " + filePath);
 
@@ -146,11 +152,6 @@ public class Level
         if (levelText != null)
         {
             string str = levelText.text;
-
-            if(levelText.hasWebVersion && levelText.webText != null)
-            {
-                str = levelText.webText;
-            }
 
             var level = JsonUtility.FromJson<Level>(str);
             level.AddSlotsToMap();

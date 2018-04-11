@@ -7,24 +7,20 @@ public class LevelTextAsset
 {
     public string name;
     public string text;
-    public string webText;
 
-    public bool hasWebVersion;
+    public int localVersion;
+    public int webVersion;
 
-    public DateTime webDateModified;
+    public DateTime dateModified;
 
-    public LevelTextAsset(string name, string levelText)
+    public LevelTextAsset(string name, int localVersion, int webVersion, DateTime dateModified)
     {
         this.name = name;
-        this.text = levelText;
-        this.webText = null;
-    }
+        this.text = null;
 
-    public LevelTextAsset(string name, DateTime dateModified)
-    {
-        this.name = name;
-        this.hasWebVersion = true;
-        this.webText = null;
-        this.webDateModified = dateModified;
+        this.localVersion = localVersion;
+        this.webVersion = webVersion;
+
+        this.dateModified = dateModified;
     }
 }

@@ -9,6 +9,10 @@ public class DataPath : MonoBehaviour
 {
     public static string webPath = "SleepyHex/Resources/Levels/";
 
+    public static string fileListName = "fileList.data";
+
+    public static string fileListFolder = "Version/";
+
     public static string savePath
     {
         get
