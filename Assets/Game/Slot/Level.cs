@@ -141,6 +141,7 @@ public class Level
         File.WriteAllText(filePath, levelStr);
 
         var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified));
+        levelText.text = levelStr;
 
         Debug.Log("Saved to: " + filePath);
 
@@ -154,9 +155,16 @@ public class Level
             string str = levelText.text;
 
             var level = JsonUtility.FromJson<Level>(str);
-            level.AddSlotsToMap();
 
-            return level;
+            if (level != null)
+            {
+                level.AddSlotsToMap();
+                return level;
+            }
+            else
+            {
+                return null;
+            }            
         }
 
         return null;
