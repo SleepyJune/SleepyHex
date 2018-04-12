@@ -12,6 +12,13 @@ using Amazon.S3.Model;
 
 public class LevelSelector : MonoBehaviour
 {
+    public enum SortType
+    {
+        DateModified,
+        Name,
+        Difficulty,
+    }
+
     public Transform levelList;
     public Transform levelListParent;
 
@@ -23,12 +30,14 @@ public class LevelSelector : MonoBehaviour
 
     public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
 
+    public SortType sortType = SortType.DateModified;
+
     void Start()
     {
         LoadLevelNames();
 
         var filename = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-        amazonHelper.GetFile(filename, name, LoadLevelListWeb);
+        amazonHelper.GetFile(filename, DataPath.fileListName, LoadLevelListWeb);
 
         //amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
         //SaveLevelList(false);
@@ -83,6 +92,8 @@ public class LevelSelector : MonoBehaviour
             }
         }
 
+        Debug.Log("Downloaded file list");
+
         RefreshList();
     }
 
@@ -105,6 +116,7 @@ public class LevelSelector : MonoBehaviour
                 File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
             }
         }
+                
 
         var fileListPath = DataPath.savePath + DataPath.fileListFolder + DataPath.fileListName;
 
@@ -168,6 +180,12 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
+    public void SetSortType(int sortType)
+    {
+        this.sortType = (SortType)sortType;
+        RefreshList();
+    }
+
     public void RefreshList()
     {
         foreach (Transform child in levelList)
@@ -175,7 +193,25 @@ public class LevelSelector : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var level in levelDatabase.Values.OrderByDescending(level => level.dateModified))
+        IEnumerable<LevelTextAsset> levels;
+
+        if(sortType == SortType.Difficulty)
+        {
+            levels = levelDatabase.Values.OrderByDescending(level => level.dateModified);
+        }
+        else if(sortType == SortType.Name)
+        {            
+            levels = levelDatabase.Values
+                        .OrderByDescending(level => level.name.Any(char.IsDigit) ?
+                        Int32.Parse(System.Text.RegularExpressions.Regex.Match(level.name, @"\d+").Value) : 0
+                        );
+        }
+        else
+        {
+            levels = levelDatabase.Values.OrderByDescending(level => level.dateModified);
+        }
+
+        foreach (var level in levels)
         {
             if (level != null)
             {

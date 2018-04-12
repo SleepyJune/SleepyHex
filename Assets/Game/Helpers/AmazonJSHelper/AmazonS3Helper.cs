@@ -28,15 +28,15 @@ public class AmazonS3Helper : MonoBehaviour
         }
     }
     
-    public void PostObject(string fileName, string s)
+    public void PostObject(string fileName, string data, IDictionary<string, string> metadata = null)
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
-            unityHelper.PostObject(fileName, s);
+            unityHelper.PostObject(fileName, data, metadata);
         }
         else
         {
-            jsHelper.PostObject(fileName, s);
+            jsHelper.PostObject(fileName, data);
         }
     }
     

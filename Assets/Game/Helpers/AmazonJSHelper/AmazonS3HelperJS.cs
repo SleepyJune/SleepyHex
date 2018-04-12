@@ -25,6 +25,8 @@ public class AmazonS3HelperJS : MonoBehaviour
 
     public LevelSelector levelSelector;
 
+    string lastGetFileName = "";
+
     void Start()
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
@@ -58,14 +60,22 @@ public class AmazonS3HelperJS : MonoBehaviour
 
     public void GetFile(string filePath, string name)
     {
+        lastGetFileName = name;
         getObjectJS(filePath);
     }
 
     public void GetFileCallback(string data)
     {
-        var level = JsonUtility.FromJson<Level>(data);
+        if (lastGetFileName == DataPath.fileListName)
+        {
+            levelSelector.LoadLevelListWeb(lastGetFileName, data);
+        }
+        else
+        {
+            var level = JsonUtility.FromJson<Level>(data);
 
-        levelSelector.LoadLevelTextWeb(level.levelName, data);
+            levelSelector.LoadLevelTextWeb(level.levelName, data);
+        }
     }
 
     public void PostObject(string fileName, string s)

@@ -120,6 +120,17 @@ public class Level
         }
     }
 
+    public IDictionary<string, string> GetMetadata()
+    {
+        IDictionary<string, string> data = new Dictionary<string, string>()
+        {
+            { "name", levelName },
+            { "version", version.ToString() },
+        };
+
+        return data;
+    }
+
     public LevelTextAsset SaveLevel(bool modified = true)
     {
         if (modified)
