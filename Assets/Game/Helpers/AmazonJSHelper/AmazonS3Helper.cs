@@ -6,6 +6,7 @@ using UnityEngine;
 public class AmazonS3Helper : MonoBehaviour
 {
     public delegate void ListFilesCallback(List<AmazonS3Object> files);
+    public delegate void ListVersionCallback(List<LevelVersion> versions);
     public delegate void GetFileCallback(string name, string data);
 
     public AmazonS3HelperUnity unityHelper;
@@ -14,8 +15,8 @@ public class AmazonS3Helper : MonoBehaviour
     void Start()
     {
 
-    } 
-    
+    }
+
     public void GetFile(string filePath, string name, GetFileCallback callback)
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
@@ -27,7 +28,7 @@ public class AmazonS3Helper : MonoBehaviour
             jsHelper.GetFile(filePath, name);
         }
     }
-    
+
     public void PostObject(string fileName, string data, IDictionary<string, string> metadata = null)
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
@@ -39,7 +40,7 @@ public class AmazonS3Helper : MonoBehaviour
             jsHelper.PostObject(fileName, data);
         }
     }
-    
+
     public void ListFiles(string prefix, ListFilesCallback callback)
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
@@ -62,5 +63,20 @@ public class AmazonS3Helper : MonoBehaviour
         {
             jsHelper.DeleteObject(name, filePath);
         }
+    }
+
+    public void UploadLevelVersion(LevelVersion version)
+    {
+        unityHelper.UploadLevelVersion(version);
+    }
+
+    public void ListLevelVersions(ListVersionCallback callback)
+    {
+        unityHelper.ListLevelVersions(callback);
+    }
+
+    public void DeleteLevelVersion(string levelName)
+    {
+        unityHelper.DeleteLevelVersion(levelName);
     }
 }

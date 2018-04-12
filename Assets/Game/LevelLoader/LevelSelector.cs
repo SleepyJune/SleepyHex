@@ -36,8 +36,10 @@ public class LevelSelector : MonoBehaviour
     {
         LoadLevelNames();
 
-        var filename = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-        amazonHelper.GetFile(filename, DataPath.fileListName, LoadLevelListWeb);
+        amazonHelper.ListLevelVersions(LoadLevelListWeb);
+
+        //var filename = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
+        //amazonHelper.GetFile(filename, DataPath.fileListName, LoadLevelListWeb);
 
         //amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
         //SaveLevelList(false);
@@ -63,19 +65,17 @@ public class LevelSelector : MonoBehaviour
 
         RefreshList();
 
-        SaveLevelList(true);
+        //SaveLevelList(true);
     }
 
-    public void LoadLevelListWeb(string name, string data)
+    public void LoadLevelListWeb(List<LevelVersion> data)
     {
         if (data == null)
         {
             return;
         }
-
-        LevelFileList fileList = JsonUtility.FromJson<LevelFileList>(data);
-
-        foreach (var file in fileList.files)
+                
+        foreach (var file in data)
         {
             LevelTextAsset level;
             DateTime dateModified = DateTime.Parse(file.dateModified);
@@ -92,7 +92,7 @@ public class LevelSelector : MonoBehaviour
             }
         }
 
-        Debug.Log("Downloaded file list");
+        Debug.Log("Downloaded file list: " + data.Count);
 
         RefreshList();
     }
@@ -104,23 +104,23 @@ public class LevelSelector : MonoBehaviour
             Directory.CreateDirectory(DataPath.savePath);
         }
 
-        var levels = Resources.LoadAll("Levels", typeof(TextAsset));
-
-        foreach (var obj in levels)
+        if (Application.platform != RuntimePlatform.WindowsEditor) //overwrite files if mobile platform
         {
-            var level = obj as TextAsset;
+            var levels = Resources.LoadAll("Levels", typeof(TextAsset));
 
-            var path = DataPath.savePath + level.name + ".json";
-            if (!File.Exists(path)) //overwrite files if mobile platform
+            foreach (var obj in levels)
             {
+                var level = obj as TextAsset;
+
+                var path = DataPath.savePath + level.name + ".json";
+
                 File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
             }
         }
-                
 
         var fileListPath = DataPath.savePath + DataPath.fileListFolder + DataPath.fileListName;
 
-        if (File.Exists(fileListPath))
+        if (false)//File.Exists(fileListPath))
         {
             string data = File.ReadAllText(fileListPath);
 
@@ -145,7 +145,7 @@ public class LevelSelector : MonoBehaviour
 
                 var levelName = System.IO.Path.GetFileNameWithoutExtension(path);
 
-                Debug.Log("Processing " + levelName);
+                //Debug.Log("Processing " + levelName);
 
                 var levelTextAsset = new LevelTextAsset(levelName, 0, -1, file.LastWriteTimeUtc);
                 //levelDatabase.Add(level.name, levelTextAsset);
@@ -158,11 +158,22 @@ public class LevelSelector : MonoBehaviour
                     levelTextAsset.localVersion = level.version;
 
                     AddLevel(levelTextAsset);
+
+                    //upload versions
+                    /*LevelVersion version = new LevelVersion()
+                    {
+                        levelName = levelName,
+                        version = level.version,
+                        solved = level.hasSolution,
+                        dateModified = levelTextAsset.dateModified.ToString(),
+                    };
+
+                    amazonHelper.UploadLevelVersion(version);*/
                 }
 
             }
 
-            SaveLevelList(false);
+            SaveLevelList();
         }
 
         RefreshList();
@@ -174,7 +185,7 @@ public class LevelSelector : MonoBehaviour
         newButton.GetComponentInChildren<Text>().text = levelText.name;
         newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.name));
 
-        if(levelText.webVersion > levelText.localVersion)
+        if (levelText.webVersion > levelText.localVersion)
         {
             newButton.transform.Find("Panel").gameObject.SetActive(true);
         }
@@ -195,12 +206,12 @@ public class LevelSelector : MonoBehaviour
 
         IEnumerable<LevelTextAsset> levels;
 
-        if(sortType == SortType.Difficulty)
+        if (sortType == SortType.Difficulty)
         {
             levels = levelDatabase.Values.OrderByDescending(level => level.dateModified);
         }
-        else if(sortType == SortType.Name)
-        {            
+        else if (sortType == SortType.Name)
+        {
             levels = levelDatabase.Values
                         .OrderByDescending(level => level.name.Any(char.IsDigit) ?
                         Int32.Parse(System.Text.RegularExpressions.Regex.Match(level.name, @"\d+").Value) : 0
@@ -254,7 +265,7 @@ public class LevelSelector : MonoBehaviour
                 else
                 {
                     levelText.localVersion = -1;
-                    SaveLevelList(false);
+                    SaveLevelList();
                     return;
                 }
                 levelListParent.gameObject.SetActive(false);
@@ -279,8 +290,9 @@ public class LevelSelector : MonoBehaviour
 
             levelText.localVersion = levelText.webVersion;
             levelText.dateModified = DateTime.Parse(level.dateModified);
-            SaveLevelList(false);
-            
+
+            SaveLevelList();
+
             levelListParent.gameObject.SetActive(false);
             RefreshList();
         }
@@ -301,18 +313,10 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
-    public void SaveLevelList(bool saveWeb = true)
+    public void SaveLevelList()
     {
-        if (saveWeb)
-        {
-            SaveLevelListHelper(true);
-        }
+        bool saveWeb = false;
 
-        SaveLevelListHelper(false);
-    }
-
-    public void SaveLevelListHelper(bool saveWeb)
-    {
         List<LevelVersion> fileList = new List<LevelVersion>();
 
         foreach (var level in levelDatabase.Values.OrderByDescending(level => level.dateModified))
@@ -325,6 +329,7 @@ public class LevelSelector : MonoBehaviour
                     levelName = level.name,
                     version = saveWeb ? level.webVersion : level.localVersion,
                     dateModified = level.dateModified.ToString(),
+                    solved = level.hasSolution,
                 };
 
                 fileList.Add(version);
@@ -337,7 +342,7 @@ public class LevelSelector : MonoBehaviour
         if (saveWeb)
         {
             var webPath = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-            amazonHelper.PostObject(webPath, dataStr);
+            amazonHelper.PostObject(webPath, dataStr, null);
         }
         else
         {

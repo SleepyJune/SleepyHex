@@ -28,6 +28,8 @@ public class LevelEditor : LevelLoader
 
     public LevelSolutionViewer levelSolutionViewer;
 
+    public DialogWindow overwritePanel;
+
     void Start()
     {
         GenerateTemplateSlots();
@@ -99,6 +101,8 @@ public class LevelEditor : LevelLoader
         {
             var number = selectedTemplate.uiSlot.slot.number;
 
+            level.modified = true;
+
             if (number >= -1)
             {
                 slot.uiSlot.SetNumber(number);
@@ -149,7 +153,7 @@ public class LevelEditor : LevelLoader
     {
         LevelSolution solution = level.solution;
 
-        if (solution != null && solution.version == level.version && solution.bestScore > 0)
+        if (level.hasSolution && !level.modified)
         {
             levelSolutionViewer.ShowSolution(solution);
         }
@@ -157,8 +161,15 @@ public class LevelEditor : LevelLoader
         {
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                var solver = Instantiate(levelSolverPrefab, slotListParent);
-                solver.Solve(level, this, levelSolutionViewer);
+                if (level.modified)
+                {
+                    Save();
+                }
+                else
+                {
+                    var solver = Instantiate(levelSolverPrefab, slotListParent);
+                    solver.Solve(level, this, levelSolutionViewer);
+                }                
             }
         }
     }
@@ -188,7 +199,14 @@ public class LevelEditor : LevelLoader
 
     public void Save()
     {
-        Save(true);
+        if (level.modified)
+        {
+            overwritePanel.Show();
+        }
+        else
+        {
+            Save(false);
+        }        
     }
 
     public void Save(bool modified)
@@ -203,11 +221,23 @@ public class LevelEditor : LevelLoader
         var webPath = DataPath.webPath + levelText.name + ".json";
         amazonHelper.PostObject(webPath, levelText.text, metadata);
 
+        LevelVersion version = new LevelVersion()
+        {
+            levelName = level.levelName,
+            version = level.version,
+            dateModified = level.dateModified.ToString(),
+            solved = level.hasSolution,
+        };
+
+        amazonHelper.UploadLevelVersion(version);
+
         if (modified)
         {
             levelSelector.SaveLevelList();
         }
 
         //saveScreen.SetActive(false);
+
+        SoftLoad(levelText);
     }
 }
