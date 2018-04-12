@@ -68,7 +68,7 @@ public class AmazonS3HelperJS : MonoBehaviour
     {
         if (lastGetFileName == DataPath.fileListName)
         {
-            levelSelector.LoadLevelListWeb(lastGetFileName, data);
+            //levelSelector.LoadLevelListWeb(lastGetFileName, data);
         }
         else
         {

@@ -47,6 +47,13 @@ public class LevelLoader : MonoBehaviour
         return level;
     }
 
+    public Level SoftLoad(LevelTextAsset levelText)
+    {
+        level = Level.LoadLevel(levelText);
+
+        return level;
+    }
+
     public GridManager GetGridManager()
     {
         return gridManager;

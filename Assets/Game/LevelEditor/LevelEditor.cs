@@ -153,7 +153,7 @@ public class LevelEditor : LevelLoader
     {
         LevelSolution solution = level.solution;
 
-        if (level.hasSolution)
+        if (level.hasSolution && !level.modified)
         {
             levelSolutionViewer.ShowSolution(solution);
         }
@@ -161,8 +161,15 @@ public class LevelEditor : LevelLoader
         {
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                var solver = Instantiate(levelSolverPrefab, slotListParent);
-                solver.Solve(level, this, levelSolutionViewer);
+                if (level.modified)
+                {
+                    Save();
+                }
+                else
+                {
+                    var solver = Instantiate(levelSolverPrefab, slotListParent);
+                    solver.Solve(level, this, levelSolutionViewer);
+                }                
             }
         }
     }
@@ -214,11 +221,23 @@ public class LevelEditor : LevelLoader
         var webPath = DataPath.webPath + levelText.name + ".json";
         amazonHelper.PostObject(webPath, levelText.text, metadata);
 
+        LevelVersion version = new LevelVersion()
+        {
+            levelName = level.levelName,
+            version = level.version,
+            dateModified = level.dateModified.ToString(),
+            solved = level.hasSolution,
+        };
+
+        amazonHelper.UploadLevelVersion(version);
+
         if (modified)
         {
             levelSelector.SaveLevelList();
         }
 
         //saveScreen.SetActive(false);
+
+        SoftLoad(levelText);
     }
 }
