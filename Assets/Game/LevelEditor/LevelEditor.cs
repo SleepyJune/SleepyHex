@@ -26,6 +26,8 @@ public class LevelEditor : LevelLoader
 
     public Button solveButton;
 
+    public LevelSolutionViewer levelSolutionViewer;
+
     void Start()
     {
         GenerateTemplateSlots();
@@ -53,7 +55,7 @@ public class LevelEditor : LevelLoader
 
     void GenerateTemplateSlots()
     {
-        for (int i = -1; i < 11; i++)
+        for (int i = -2; i < 11; i++)
         {
             var newSlot = Instantiate(slotPrefab, templateSlotParent);
             var template = newSlot.gameObject.AddComponent<UITemplateSlot>();
@@ -96,8 +98,20 @@ public class LevelEditor : LevelLoader
         if (selectedTemplate)
         {
             var number = selectedTemplate.uiSlot.slot.number;
-            slot.uiSlot.SetNumber(number);
-            level.ChangeSlotNumber(slot.uiSlot.slot);
+
+            if (number >= -1)
+            {
+                slot.uiSlot.SetNumber(number);
+                level.ChangeSlotNumber(slot.uiSlot.slot);
+            }
+            else
+            {
+                if(number == -2)
+                {
+                    slot.uiSlot.ToggleText();
+                    level.ChangeHideText(slot.uiSlot.slot);
+                }
+            }
         }
     }
 
@@ -111,14 +125,41 @@ public class LevelEditor : LevelLoader
     public override void LoadLevelFeatures(Level level)
     {
         level.MakeEmptyLevel();
+
+        LevelSolution solution = level.solution;
+
+        if (Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            solveButton.interactable = true;
+        }
+        else
+        {
+            if (solution != null && solution.version == level.version && solution.bestScore > 0)
+            {
+                solveButton.interactable = true;
+            }
+            else
+            {
+                solveButton.interactable = false;
+            }
+        }
     }
 
     public void Solve()
     {
-        if(Application.platform == RuntimePlatform.WindowsEditor)
+        LevelSolution solution = level.solution;
+
+        if (solution != null && solution.version == level.version && solution.bestScore > 0)
         {
-            var solver = Instantiate(levelSolverPrefab, slotListParent);
-            solver.Solve(level, this);
+            levelSolutionViewer.ShowSolution(solution);
+        }
+        else
+        {
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                var solver = Instantiate(levelSolverPrefab, slotListParent);
+                solver.Solve(level, this, levelSolutionViewer);
+            }
         }
     }
 

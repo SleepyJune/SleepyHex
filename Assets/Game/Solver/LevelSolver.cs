@@ -96,7 +96,7 @@ public class LevelSolver : ThreadedJob
         if (numSolutions > 0)
         {
             bestScore = bestPath.GetTotalPoints();
-            worstScore = bestPath.GetTotalPoints();
+            worstScore = worstPath.GetTotalPoints();
 
             List<Vector3> waypoints = new List<Vector3>();
             foreach(var point in bestPath.waypoints)

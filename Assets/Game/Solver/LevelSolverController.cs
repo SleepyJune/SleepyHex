@@ -8,24 +8,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSolverController : MonoBehaviour
-{
-    public LineRenderer linePrefab;
+{    
     public Slider slider;
 
     public GameObject progressPanel;
-
-    public GameObject startIconPrefab;
-
+        
     public Text timeText;
-
-    GameObject startIcon;
-
-    LineRenderer line;
 
     LevelSolver solver;
 
     LevelEditor levelEditor;
     Level level;
+
+    LevelSolutionViewer solutionViewer;
 
     void Update()
     {
@@ -38,10 +33,11 @@ public class LevelSolverController : MonoBehaviour
         }
     }
 
-    public void Solve(Level level, LevelEditor levelEditor)
+    public void Solve(Level level, LevelEditor levelEditor, LevelSolutionViewer levelSolutionViewer)
     {
         this.levelEditor = levelEditor;
         this.level = level;
+        this.solutionViewer = levelSolutionViewer;
 
         StartCoroutine("SolverCoroutine");
     }
@@ -95,40 +91,9 @@ public class LevelSolverController : MonoBehaviour
 
         if (solution != null)
         {
-            Debug.Log("Best Score: " + solution.bestScore);            
-
-            if (line != null)
-            {
-                Destroy(line.gameObject);
-            }
-
-            line = Instantiate(linePrefab, transform);
+            Debug.Log("Best Score: " + solution.bestScore);
             
-
-            foreach (var position in solution.bestPath)
-            {
-                Slot dummySlot = new Slot(position);
-
-                var uiSlot = levelEditor.GetGridManager().GetUISlot(dummySlot);
-
-                if (uiSlot != null)
-                {
-                    line.positionCount += 1;
-                    line.SetPosition(line.positionCount - 1, uiSlot.transform.position);
-
-                    if(startIcon == null)
-                    {
-                        startIcon = Instantiate(startIconPrefab, transform);
-                        startIcon.transform.position = uiSlot.transform.position;
-                    }
-                }
-            }
-
-
-            /*foreach(var slot in bestPath.waypoints)
-            {
-                Debug.Log(slot.slot.number);
-            }*/
+            solutionViewer.ShowSolution(solution);
         }
         else
         {

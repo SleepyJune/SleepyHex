@@ -16,7 +16,7 @@ public class UISlot : MonoBehaviour
     public Slot slot;
 
     public Image buttonImage;
-    
+
     void Start()
     {
         buttonImage.alphaHitTestMinimumThreshold = .5f;
@@ -24,6 +24,7 @@ public class UISlot : MonoBehaviour
         if (slot != null)
         {
             SetNumber(slot.number);
+            ToggleText(false);
         }
     }
 
@@ -41,5 +42,22 @@ public class UISlot : MonoBehaviour
         }
 
         anim.SetInteger("number", number);
+    }
+
+    public void ToggleText(bool toggle = true)
+    {
+        if (toggle)
+        {
+            slot.hideNumber = !slot.hideNumber;
+        }
+
+        if (slot.hideNumber || slot.number <= 0)
+        {
+            text.text = "";
+        }
+        else
+        {
+            text.text = slot.number.ToString();
+        }
     }
 }

@@ -17,6 +17,8 @@ public class Slot
 {    
     public int number;
 
+    public bool hideNumber;
+
     public Hex hexPosition;
     public Vector3 position;
 

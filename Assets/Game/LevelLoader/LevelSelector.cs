@@ -161,6 +161,11 @@ public class LevelSelector : MonoBehaviour
         var newButton = Instantiate(levelSelectionButton, levelList);
         newButton.GetComponentInChildren<Text>().text = levelText.name;
         newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.name));
+
+        if(levelText.webVersion > levelText.localVersion)
+        {
+            newButton.transform.Find("Panel").gameObject.SetActive(true);
+        }
     }
 
     public void RefreshList()
@@ -239,8 +244,9 @@ public class LevelSelector : MonoBehaviour
             levelText.localVersion = levelText.webVersion;
             levelText.dateModified = DateTime.Parse(level.dateModified);
             SaveLevelList(false);
-
+            
             levelListParent.gameObject.SetActive(false);
+            RefreshList();
         }
     }
 
