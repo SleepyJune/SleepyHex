@@ -80,6 +80,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
             InputStream = stream,
             CannedACL = S3CannedACL.Private,
             Region = RegionEndpoint.USWest2,
+
         };
 
         Client.PostObjectAsync(request, (responseObj) =>
