@@ -28,7 +28,7 @@ public class LevelSelector : MonoBehaviour
         LoadLevelNames();
 
         var filename = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-        amazonHelper.GetFile(filename, name, LoadLevelListWeb);
+        amazonHelper.GetFile(filename, DataPath.fileListName, LoadLevelListWeb);
 
         //amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
         //SaveLevelList(false);
@@ -83,6 +83,8 @@ public class LevelSelector : MonoBehaviour
             }
         }
 
+        Debug.Log("Downloaded file list");
+
         RefreshList();
     }
 
@@ -105,6 +107,7 @@ public class LevelSelector : MonoBehaviour
                 File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
             }
         }
+                
 
         var fileListPath = DataPath.savePath + DataPath.fileListFolder + DataPath.fileListName;
 

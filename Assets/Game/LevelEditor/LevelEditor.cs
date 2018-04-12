@@ -181,6 +181,7 @@ public class LevelEditor : LevelLoader
             }
 
             LevelSelector.DeleteLevel(level.levelName);
+            levelSelector.SaveLevelList();
             levelSelector.RefreshList();
         }
     }
