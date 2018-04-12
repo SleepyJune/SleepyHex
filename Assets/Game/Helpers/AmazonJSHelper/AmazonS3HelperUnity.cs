@@ -67,7 +67,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
         });
     }
 
-    public void PostObject(string fileName, string s)
+    public void PostObject(string fileName, string s, IDictionary<string, string> metadata)
     {
         //string fileName = GetFileHelper();
 
@@ -80,7 +80,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
             InputStream = stream,
             CannedACL = S3CannedACL.Private,
             Region = RegionEndpoint.USWest2,
-
+            Metadata = metadata,
         };
 
         Client.PostObjectAsync(request, (responseObj) =>

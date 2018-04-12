@@ -194,12 +194,14 @@ public class LevelEditor : LevelLoader
     public void Save(bool modified)
     {
         LevelTextAsset levelText = level.SaveLevel(modified);
-        
+
+        var metadata = level.GetMetadata();
+
         LevelSelector.AddLevel(levelText, true);
         levelSelector.RefreshList();
 
         var webPath = DataPath.webPath + levelText.name + ".json";
-        amazonHelper.PostObject(webPath, levelText.text);
+        amazonHelper.PostObject(webPath, levelText.text, metadata);
 
         if (modified)
         {
