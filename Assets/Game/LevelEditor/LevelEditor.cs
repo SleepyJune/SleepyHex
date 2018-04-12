@@ -28,6 +28,8 @@ public class LevelEditor : LevelLoader
 
     public LevelSolutionViewer levelSolutionViewer;
 
+    public DialogWindow overwritePanel;
+
     void Start()
     {
         GenerateTemplateSlots();
@@ -99,6 +101,8 @@ public class LevelEditor : LevelLoader
         {
             var number = selectedTemplate.uiSlot.slot.number;
 
+            level.modified = true;
+
             if (number >= -1)
             {
                 slot.uiSlot.SetNumber(number);
@@ -149,7 +153,7 @@ public class LevelEditor : LevelLoader
     {
         LevelSolution solution = level.solution;
 
-        if (solution != null && solution.version == level.version && solution.bestScore > 0)
+        if (level.hasSolution)
         {
             levelSolutionViewer.ShowSolution(solution);
         }
@@ -188,7 +192,14 @@ public class LevelEditor : LevelLoader
 
     public void Save()
     {
-        Save(true);
+        if (level.modified)
+        {
+            overwritePanel.Show();
+        }
+        else
+        {
+            Save(false);
+        }        
     }
 
     public void Save(bool modified)

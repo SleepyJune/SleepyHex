@@ -24,6 +24,9 @@ public class Level
     [NonSerialized]
     public Dictionary<Vector3, Slot> map;
 
+    [NonSerialized]
+    public bool modified;
+
     public Level(int columns, int rows)
     {
         map = new Dictionary<Vector3, Slot>();
@@ -120,6 +123,14 @@ public class Level
         }
     }
 
+    public bool hasSolution
+    {
+        get
+        {
+            return solution != null && solution.version == version && solution.bestScore > 0;
+        }
+    }
+
     public IDictionary<string, string> GetMetadata()
     {
         IDictionary<string, string> data = new Dictionary<string, string>()
@@ -154,6 +165,7 @@ public class Level
 
         var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified));
         levelText.text = levelStr;
+        levelText.hasSolution = hasSolution;
 
         Debug.Log("Saved to: " + filePath);
 
