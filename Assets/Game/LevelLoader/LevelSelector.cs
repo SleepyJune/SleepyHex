@@ -161,6 +161,7 @@ public class LevelSelector : MonoBehaviour
                 if (level != null)
                 {
                     levelTextAsset.localVersion = level.version;
+                    levelTextAsset.hasSolution = level.hasSolution;
 
                     AddLevel(levelTextAsset);
 
@@ -195,6 +196,11 @@ public class LevelSelector : MonoBehaviour
             (levelText.webVersionFile != null && !levelText.hasSolution && levelText.webVersionFile.solved))
         {
             newButton.transform.Find("Panel").gameObject.SetActive(true);
+        }
+
+        if (!levelText.hasSolution)
+        {
+            newButton.transform.Find("Unsolved").gameObject.SetActive(true);
         }
     }
 
