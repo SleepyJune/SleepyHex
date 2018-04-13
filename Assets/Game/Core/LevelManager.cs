@@ -4,9 +4,20 @@ using System.Linq;
 using System.Text;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : LevelLoader
 {
+    public Button solveButton;
+
+    public Button checkButton;
+
+    public LevelSolutionViewer levelSolutionViewer;
+
+    public Transform dialogParent;
+
+    public SolutionPopup solutionPopupPrefab;
+
     public override bool isValidSlot(Slot slot)
     {
         return slot.number >= 0;
@@ -19,13 +30,52 @@ public class LevelManager : LevelLoader
         gameSlot.pathManager = GameManager.instance.pathManager;
     }
 
-    /*public override void Load(string path)
+    public override void LoadLevelFeatures(Level level)
     {
-        base.Load(path);
+        solveButton.interactable = level.hasSolution;
+        checkButton.interactable = level.hasSolution;
+    }
 
-        if(level != null)
+    public void Solve()
+    {
+        if (level.hasSolution)
         {
-
+            levelSolutionViewer.ShowSolution(level.solution);
         }
-    }*/
+    }
+
+    public void Check()
+    {
+        if(level.hasSolution)
+        {
+            var path = GameManager.instance.pathManager.GetPath();
+            if(path != null)
+            {
+                var solution = level.solution;
+                var score = path.GetTotalPoints();
+
+                var popup = Instantiate(solutionPopupPrefab, dialogParent);
+
+                if (path.isSolution(level))
+                {
+                    if (score == solution.bestScore)
+                    {
+                        popup.SetType(SolutionType.BestSolution);
+                    }
+                    else if (score == solution.worstScore)
+                    {
+                        popup.SetType(SolutionType.WorstSolution);
+                    }
+                    else
+                    {
+                        popup.SetType(SolutionType.Solution);
+                    }
+                }
+                else
+                {
+                    popup.SetType(SolutionType.NoSolution);
+                }
+            }
+        }
+    }
 }

@@ -5,6 +5,14 @@ using System.Text;
 
 using UnityEngine;
 
+public enum SolutionType
+{
+    NoSolution,
+    WorstSolution,
+    Solution,
+    BestSolution,
+}
+
 [Serializable]
 public class LevelSolution
 {
