@@ -184,10 +184,12 @@ public class AmazonS3HelperUnity : MonoBehaviour
                 {
                     var newVersion = new LevelVersion()
                     {
+                        //category = item["levelName"].S,
                         levelName = item["levelName"].S,
                         version = Int32.Parse(item["version"].N),
                         solved = item["version"].BOOL,
                         dateModified = item["dateModified"].S,
+                        //timestamp = Int32.Parse(item["version"].N),
                     };
 
                     versions.Add(newVersion);
@@ -214,7 +216,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
 
     public void DeleteLevelVersion(string key)
     {
-        Context.DeleteAsync(key, (result) => {
+        Context.DeleteAsync<LevelVersion>(key, (result) => {
             if (result.Exception == null)
             {
                 Debug.Log("Deleted version: " + key);

@@ -11,6 +11,8 @@ public class LevelTextAsset
     public int localVersion;
     public int webVersion;
 
+    public LevelVersion webVersionFile;
+
     public bool hasSolution;
 
     public DateTime dateModified;

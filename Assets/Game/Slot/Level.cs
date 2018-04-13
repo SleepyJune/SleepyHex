@@ -162,7 +162,7 @@ public class Level
         var filePath = DataPath.savePath + levelName + ".json";
 
         File.WriteAllText(filePath, levelStr);
-
+                
         var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified));
         levelText.text = levelStr;
         levelText.hasSolution = hasSolution;

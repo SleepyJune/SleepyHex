@@ -84,10 +84,15 @@ public class LevelSelector : MonoBehaviour
             {
                 level.webVersion = file.version;
                 level.dateModified = dateModified;
+
+                level.webVersionFile = file;
             }
             else
             {
                 var levelTextAsset = new LevelTextAsset(file.levelName, -1, file.version, dateModified);
+
+                levelTextAsset.webVersionFile = file;
+
                 AddLevel(levelTextAsset);
             }
         }
@@ -162,18 +167,19 @@ public class LevelSelector : MonoBehaviour
                     //upload versions
                     /*LevelVersion version = new LevelVersion()
                     {
+                        //category = "Default",
                         levelName = levelName,
                         version = level.version,
                         solved = level.hasSolution,
                         dateModified = levelTextAsset.dateModified.ToString(),
+                        //timestamp = levelTextAsset.dateModified.GetUnixEpoch(),
+                        
                     };
 
                     amazonHelper.UploadLevelVersion(version);*/
                 }
 
             }
-
-            SaveLevelList();
         }
 
         RefreshList();
@@ -185,7 +191,8 @@ public class LevelSelector : MonoBehaviour
         newButton.GetComponentInChildren<Text>().text = levelText.name;
         newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.name));
 
-        if (levelText.webVersion > levelText.localVersion)
+        if (levelText.webVersion > levelText.localVersion ||
+            (levelText.webVersionFile != null && !levelText.hasSolution && levelText.webVersionFile.solved))
         {
             newButton.transform.Find("Panel").gameObject.SetActive(true);
         }
@@ -216,6 +223,9 @@ public class LevelSelector : MonoBehaviour
                         .OrderByDescending(level => level.name.Any(char.IsDigit) ?
                         Int32.Parse(System.Text.RegularExpressions.Regex.Match(level.name, @"\d+").Value) : 0
                         );
+
+            var comparer = new NaturalComparer();
+            levels = levelDatabase.Values.OrderByDescending(level => level.name, comparer);
         }
         else
         {
@@ -247,7 +257,8 @@ public class LevelSelector : MonoBehaviour
         LevelTextAsset levelText;
         if (levelDatabase.TryGetValue(name, out levelText))
         {
-            if (levelText.webVersion > levelText.localVersion)
+            if (levelText.webVersion > levelText.localVersion ||
+            (levelText.webVersionFile != null && !levelText.hasSolution && levelText.webVersionFile.solved))
             {
                 var filename = DataPath.webPath + levelText.name + ".json";
                 amazonHelper.GetFile(filename, name, LoadLevelTextWeb);
@@ -265,7 +276,6 @@ public class LevelSelector : MonoBehaviour
                 else
                 {
                     levelText.localVersion = -1;
-                    SaveLevelList();
                     return;
                 }
                 levelListParent.gameObject.SetActive(false);
@@ -290,9 +300,7 @@ public class LevelSelector : MonoBehaviour
 
             levelText.localVersion = levelText.webVersion;
             levelText.dateModified = DateTime.Parse(level.dateModified);
-
-            SaveLevelList();
-
+            
             levelListParent.gameObject.SetActive(false);
             RefreshList();
         }
@@ -310,49 +318,6 @@ public class LevelSelector : MonoBehaviour
         else
         {
             levelDatabase.Add(newLevel.name, newLevel);
-        }
-    }
-
-    public void SaveLevelList()
-    {
-        bool saveWeb = false;
-
-        List<LevelVersion> fileList = new List<LevelVersion>();
-
-        foreach (var level in levelDatabase.Values.OrderByDescending(level => level.dateModified))
-        {
-            if ((saveWeb && level.webVersion >= 0)
-                || (!saveWeb && level.localVersion >= 0))
-            {
-                LevelVersion version = new LevelVersion()
-                {
-                    levelName = level.name,
-                    version = saveWeb ? level.webVersion : level.localVersion,
-                    dateModified = level.dateModified.ToString(),
-                    solved = level.hasSolution,
-                };
-
-                fileList.Add(version);
-            }
-        }
-
-        var levelFileList = new LevelFileList(fileList.ToArray());
-        var dataStr = JsonUtility.ToJson(levelFileList);
-
-        if (saveWeb)
-        {
-            var webPath = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-            amazonHelper.PostObject(webPath, dataStr, null);
-        }
-        else
-        {
-            if (!Directory.Exists(DataPath.savePath + DataPath.fileListFolder))
-            {
-                Directory.CreateDirectory(DataPath.savePath + DataPath.fileListFolder);
-            }
-
-            var filePath = DataPath.savePath + DataPath.fileListFolder + DataPath.fileListName;
-            File.WriteAllText(filePath, dataStr);
         }
     }
 

@@ -189,10 +189,10 @@ public class LevelEditor : LevelLoader
             {
                 var webPath = DataPath.webPath + levelText.name + ".json";
                 amazonHelper.DeleteObject(level.levelName, webPath);
+                amazonHelper.DeleteLevelVersion(level.levelName);
             }
 
             LevelSelector.DeleteLevel(level.levelName);
-            levelSelector.SaveLevelList();
             levelSelector.RefreshList();
         }
     }
@@ -222,22 +222,30 @@ public class LevelEditor : LevelLoader
         amazonHelper.PostObject(webPath, levelText.text, metadata);
 
         LevelVersion version = new LevelVersion()
-        {
+        {            
             levelName = level.levelName,
             version = level.version,
-            dateModified = level.dateModified.ToString(),
+            dateModified = level.dateModified,
             solved = level.hasSolution,
         };
 
-        amazonHelper.UploadLevelVersion(version);
+        //Debug.Log(levelText.dateModified.GetUnixEpoch());
 
-        if (modified)
-        {
-            levelSelector.SaveLevelList();
-        }
+        amazonHelper.UploadLevelVersion(version);
 
         //saveScreen.SetActive(false);
 
         SoftLoad(levelText);
+    }
+}
+
+public static class DateTimeExtension
+{
+    public static int GetUnixEpoch(this DateTime dateTime)
+    {
+        var unixTime = dateTime.ToUniversalTime() -
+            new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        return (int)unixTime.TotalSeconds;
     }
 }
