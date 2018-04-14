@@ -161,6 +161,11 @@ public class PathManager : MonoBehaviour
         }
     }
 
+    public Path GetPath()
+    {
+        return path;
+    }
+
     public void UpdateSumText()
     {
         if(path != null)

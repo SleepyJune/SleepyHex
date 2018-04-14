@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [NonSerialized]
     public PathManager pathManager;
 
+    [NonSerialized]
+    public LevelManager levelManager;
+
     void Awake()
     {
         if (instance == null)
@@ -25,6 +28,6 @@ public class GameManager : MonoBehaviour
         }
 
         pathManager = GetComponent<PathManager>();
-    }     
-
+        levelManager = GetComponent<LevelManager>();
+    }
 }

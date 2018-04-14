@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class LevelSolutionViewer : MonoBehaviour
 {
-    public LevelEditor levelEditor;
+    public LevelLoader levelLoader;
 
     public LineRenderer linePrefab;
     public GameObject startIconPrefab;
@@ -24,9 +24,7 @@ public class LevelSolutionViewer : MonoBehaviour
     public void ShowSolution(LevelSolution solution)
     {
         if (solution != null)
-        {
-            Debug.Log("Best Score: " + solution.bestScore);
-
+        {            
             SetSolutionText(solution);
 
             if (line != null)
@@ -34,14 +32,14 @@ public class LevelSolutionViewer : MonoBehaviour
                 Destroy(line.gameObject);
             }
 
-            line = Instantiate(linePrefab, levelEditor.slotListParent);
+            line = Instantiate(linePrefab, levelLoader.slotListParent);
 
 
             foreach (var position in solution.bestPath)
             {
                 Slot dummySlot = new Slot(position);
 
-                var uiSlot = levelEditor.GetGridManager().GetUISlot(dummySlot);
+                var uiSlot = levelLoader.GetGridManager().GetUISlot(dummySlot);
 
                 if (uiSlot != null)
                 {
@@ -50,7 +48,7 @@ public class LevelSolutionViewer : MonoBehaviour
 
                     if (startIcon == null)
                     {
-                        startIcon = Instantiate(startIconPrefab, levelEditor.slotListParent);
+                        startIcon = Instantiate(startIconPrefab, levelLoader.slotListParent);
                         startIcon.transform.position = uiSlot.transform.position;
                     }
                 }
@@ -77,6 +75,23 @@ public class LevelSolutionViewer : MonoBehaviour
 
     public void Close()
     {
+        solutionPanel.SetActive(false);
+    }
+
+    public void Clear()
+    {
+        if (line != null)
+        {
+            Destroy(line.gameObject);
+        }
+
+        if (startIcon != null)
+        {
+            Destroy(startIcon);
+        }
+
+        solutionText.text = "";
+
         solutionPanel.SetActive(false);
     }
 }

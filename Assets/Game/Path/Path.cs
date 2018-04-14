@@ -150,6 +150,11 @@ public class Path
         return lastPoint.previous;
     }
 
+    public bool isSolution(Level level)
+    {
+        return waypoints.Count == level.slots.Length;
+    }
+
     public int GetTotalPoints()
     {
         return lastPoint.sum;

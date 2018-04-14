@@ -130,32 +130,21 @@ public class LevelEditor : LevelLoader
     {
         level.MakeEmptyLevel();
 
-        LevelSolution solution = level.solution;
-
         if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             solveButton.interactable = true;
         }
         else
         {
-            if (solution != null && solution.version == level.version && solution.bestScore > 0)
-            {
-                solveButton.interactable = true;
-            }
-            else
-            {
-                solveButton.interactable = false;
-            }
+            solveButton.interactable = level.hasSolution;
         }
     }
 
     public void Solve()
     {
-        LevelSolution solution = level.solution;
-
         if (level.hasSolution && !level.modified)
         {
-            levelSolutionViewer.ShowSolution(solution);
+            levelSolutionViewer.ShowSolution(level.solution);
         }
         else
         {
