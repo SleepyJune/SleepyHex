@@ -11,7 +11,7 @@ public class Path
 
     public PathSlot lastPoint;
     public PathSlot startPoint;
-
+        
     public Path(Slot startPoint)
     {
         waypoints = new List<PathSlot>();
@@ -110,17 +110,7 @@ public class Path
 
         return false;
     }
-
-    public void AddPoint(PathSlot pathSlot)
-    {
-        lastPoint.next = pathSlot;
-
-        waypoints.Add(pathSlot);
-        waypointsHash.Add(pathSlot.slot);
-
-        lastPoint = pathSlot;
-    }
-
+    
     public bool GoBack()
     {
         return RemovePoint(GetLastPoint());
