@@ -28,8 +28,12 @@ public class PathManager : MonoBehaviour
 
     bool isMouseDown = false;
 
+    LevelManager levelManager;
+
     void Start()
     {
+        levelManager = GameManager.instance.levelManager;
+
         TouchInputManager.instance.touchStart += OnTouchStart;
         TouchInputManager.instance.touchEnd += OnTouchEnd;
     }
@@ -63,6 +67,7 @@ public class PathManager : MonoBehaviour
 
         path = null;
 
+        ResetAllBlanks();
         UpdateSumText();
     }
 
@@ -86,6 +91,8 @@ public class PathManager : MonoBehaviour
 
         selectedSlot = gameSlot;
         selectedSlot.uiSlot.anim.SetBool("selected", true);
+
+        ResetAllBlanks();
 
         path = new Path(slot);
 
@@ -136,7 +143,10 @@ public class PathManager : MonoBehaviour
 
             if (slot != null && previous != null && previous.slot == slot) //retracting
             {
-                path.RemovePoint(path.GetLastPoint());
+                var lastPoint = path.GetLastPoint();
+                RemovePoint(lastPoint, lastPoint.previous);
+
+                path.RemovePoint(lastPoint);
                 line.positionCount -= 1;
 
                 UpdateSumText();
@@ -145,6 +155,9 @@ public class PathManager : MonoBehaviour
             {
                 if (path.AddPoint(slot))
                 {
+                    var lastPoint = path.GetLastPoint();
+                    AddPoint(lastPoint.previous, lastPoint);
+
                     line.positionCount += 1;
                     line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
 
@@ -175,6 +188,67 @@ public class PathManager : MonoBehaviour
         else
         {
             sumText.text = "0";
+        }
+
+        UpdateFill();
+    }
+
+    public void UpdateFill()
+    {
+        var gridManager = levelManager.GetGridManager();
+
+        if (path != null && gridManager != null)
+        {            
+            foreach (var slot in gridManager.GetUISlots())
+            {
+                var filled = path.waypointsHash.Contains(slot.slot);
+
+                slot.SetFilled(filled);
+            }
+        }
+    }
+
+    void ResetAllBlanks()
+    {
+        var gridManager = levelManager.GetGridManager();
+
+        if (gridManager != null)
+        {
+            foreach (var slot in gridManager.GetUISlots())
+            {
+                if (slot.slot.number == (int)SpecialSlot.Blank)
+                {
+                    slot.SetBlankNumber((int)SpecialSlot.Blank);
+                }
+            }
+        }
+    }
+
+    void AddPoint(PathSlot start, PathSlot end)
+    {
+        var gridManager = levelManager.GetGridManager();
+        var slot = gridManager.GetUISlot(end.slot.position);
+
+        if (slot != null)
+        {
+            if (end.slot.number == (int)SpecialSlot.Blank)
+            {
+                slot.SetBlankNumber(end.number);
+            }
+        }
+    }
+
+    void RemovePoint(PathSlot start, PathSlot end)
+    {
+        var gridManager = levelManager.GetGridManager();
+        var slot = gridManager.GetUISlot(start.slot.position);
+
+        if (slot != null)
+        {
+            if (start.slot.number == (int)SpecialSlot.Blank)
+            {
+                slot.SetBlankNumber((int)SpecialSlot.Blank);
+            }
         }
     }
 }

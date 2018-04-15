@@ -7,14 +7,9 @@ using UnityEngine;
 
 public class GridManager
 {
-    float slotHeight = 44;
-    float slotWidth = 50;
-
-    Vector3 initialPos;
-
     List<UISlot> uiSlots;
 
-    Dictionary<Slot, UISlot> uiSlotDatabase;
+    Dictionary<Vector3, UISlot> uiSlotDatabase;
 
     Level level;
 
@@ -24,7 +19,7 @@ public class GridManager
 
     public GridManager()
     {
-        uiSlotDatabase = new Dictionary<Slot, UISlot>();
+        uiSlotDatabase = new Dictionary<Vector3, UISlot>();
         uiSlots = new List<UISlot>();
     }
 
@@ -36,9 +31,14 @@ public class GridManager
         }
     }
 
-    public UISlot GetUISlot(Slot slot)
+    public UISlot GetUISlot(Vector3 pos)
     {
-        return uiSlotDatabase[slot];
+        return uiSlotDatabase[pos];
+    }
+
+    public IEnumerable<UISlot> GetUISlots()
+    {
+        return uiSlotDatabase.Values;
     }
 
     void SetBoardDimension(UISlot slot)
@@ -134,7 +134,7 @@ public class GridManager
 
             uiSlots.Add(newSlot);
 
-            uiSlotDatabase.Add(slot, newSlot);
+            uiSlotDatabase.Add(slot.position, newSlot);
 
             if (levelLoader != null)
             {

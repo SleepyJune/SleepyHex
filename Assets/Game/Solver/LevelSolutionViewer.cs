@@ -37,9 +37,7 @@ public class LevelSolutionViewer : MonoBehaviour
 
             foreach (var position in solution.bestPath)
             {
-                Slot dummySlot = new Slot(position);
-
-                var uiSlot = levelLoader.GetGridManager().GetUISlot(dummySlot);
+                var uiSlot = levelLoader.GetGridManager().GetUISlot(position);
 
                 if (uiSlot != null)
                 {

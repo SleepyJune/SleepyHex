@@ -12,14 +12,21 @@ public class UISlot : MonoBehaviour
 
     public Animator anim;
 
+    public Image background;
+
     [NonSerialized]
     public Slot slot;
 
+    [NonSerialized]
+    public int blankNumber;
+
     public Image buttonImage;
+    
+    bool isFilled;
 
     void Start()
     {
-        buttonImage.alphaHitTestMinimumThreshold = .5f;
+        buttonImage.alphaHitTestMinimumThreshold = .05f;
 
         if (slot != null)
         {
@@ -28,8 +35,17 @@ public class UISlot : MonoBehaviour
         }
     }
 
+    public void SetFilled(bool filled)
+    {        
+        if(isFilled != filled)
+        {
+            anim.SetBool("filled", filled);
+            this.isFilled = filled;
+        }
+    }
+
     public void SetNumber(int number)
-    {
+    {        
         slot.number = number;
 
         if (number > 0)// && number <= 9)
@@ -41,6 +57,12 @@ public class UISlot : MonoBehaviour
             text.text = "";
         }
 
+        anim.SetInteger("number", number);
+    }
+
+    public void SetBlankNumber(int number)
+    {
+        blankNumber = number;
         anim.SetInteger("number", number);
     }
 
