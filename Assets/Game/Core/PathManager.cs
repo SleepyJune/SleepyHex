@@ -92,30 +92,20 @@ public class PathManager : MonoBehaviour
         selectedSlot = gameSlot;
         selectedSlot.uiSlot.anim.SetBool("selected", true);
 
-        ResetAllBlanks();
+        ClearPath();
+
+        if (!slot.isNumber)
+        {
+            return;
+        }
 
         path = new Path(slot);
 
         UpdateSumText();
 
-        if(line != null)
-        {
-            Destroy(line.gameObject);
-        }
-
         line = Instantiate(linePrefab, slotListTop);
         line.positionCount += 1;
         line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
-
-        if(startIcon != null)
-        {
-            Destroy(startIcon);
-        }
-
-        if(endIcon != null)
-        {
-            Destroy(endIcon);
-        }
 
         startIcon = Instantiate(startPrefab, slotListTop);
         startIcon.transform.position = gameSlot.transform.position;
@@ -197,11 +187,16 @@ public class PathManager : MonoBehaviour
     {
         var gridManager = levelManager.GetGridManager();
 
-        if (path != null && gridManager != null)
+        if (gridManager != null)
         {            
             foreach (var slot in gridManager.GetUISlots())
             {
-                var filled = path.waypointsHash.Contains(slot.slot);
+                var filled = false;
+
+                if (path != null)
+                {
+                    filled = path.waypointsHash.Contains(slot.slot);
+                }
 
                 slot.SetFilled(filled);
             }
