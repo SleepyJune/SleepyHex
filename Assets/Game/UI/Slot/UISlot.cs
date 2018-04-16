@@ -48,7 +48,7 @@ public class UISlot : MonoBehaviour
     {        
         slot.number = number;
 
-        if (number > 0)// && number <= 9)
+        if (slot.isNumber)
         {
             text.text = number.ToString();
         }
@@ -73,7 +73,7 @@ public class UISlot : MonoBehaviour
             slot.hideNumber = !slot.hideNumber;
         }
 
-        if (slot.hideNumber || slot.number <= 0)
+        if (slot.hideNumber || !slot.isNumber)
         {
             text.text = "";
         }

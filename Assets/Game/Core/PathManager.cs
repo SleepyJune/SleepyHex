@@ -230,6 +230,15 @@ public class PathManager : MonoBehaviour
             {
                 slot.SetBlankNumber(end.number);
             }
+
+            var startSlot = gridManager.GetUISlot(start.slot.position);
+            
+            Vector3 dir = slot.transform.position - startSlot.transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
+            slot.background.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            //Quaternion rotation = Quaternion.LookRotation(relativePos);
+            //slot.background.transform.rotation = rotation;
         }
     }
 
