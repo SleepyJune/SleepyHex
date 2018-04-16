@@ -41,7 +41,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5c8a40cdbcbcbd349aff4aa0683aaefb, type: 2}
+  - {fileID: 2100000, guid: da57fb2f55c932140af0c38d0bc8061f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -64,7 +64,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.15
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:

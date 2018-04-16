@@ -163,6 +163,15 @@ public class LevelSelector : MonoBehaviour
                     levelTextAsset.localVersion = level.version;
                     levelTextAsset.hasSolution = level.hasSolution;
 
+                    if (level.hasSolution)
+                    {
+                        if(level.solution.bestScore == level.solution.worstScore
+                            && level.solution.numBestSolutions != level.solution.numSolutions)
+                        {
+                            levelTextAsset.hasSolution = false;
+                        }
+                    }
+
                     AddLevel(levelTextAsset);
 
                     //upload versions
@@ -202,6 +211,7 @@ public class LevelSelector : MonoBehaviour
         {
             newButton.transform.Find("Unsolved").gameObject.SetActive(true);
         }
+
     }
 
     public void SetSortType(int sortType)

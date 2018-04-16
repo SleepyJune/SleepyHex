@@ -1072,7 +1072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotListTop: {fileID: 1534246732}
-  linePrefab: {fileID: 120671500451555026, guid: 8e5409d523bd4b745be6d8ce67e70731,
+  linePrefab: {fileID: 120671500451555026, guid: 843d9004a82a4c84baf7a4098a132782,
     type: 2}
   startPrefab: {fileID: 1232599056300844, guid: 146c0f71ef01ce845948816edd207c1a,
     type: 2}

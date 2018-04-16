@@ -26,9 +26,11 @@ public class LevelEditor : LevelLoader
 
     public Button solveButton;
 
-    public LevelSolutionViewer levelSolutionViewer;
+    public EditorSolutionViewer levelSolutionViewer;
 
     public DialogWindow overwritePanel;
+
+    public DialogWindow resolvePanel;
 
     void Start()
     {
@@ -65,6 +67,8 @@ public class LevelEditor : LevelLoader
             template.uiSlot = newSlot;
             template.uiSlot.slot = new Slot(i);
             template.levelEditor = this;
+
+            newSlot.SetFilled(true);
         }
     }
 
@@ -124,6 +128,8 @@ public class LevelEditor : LevelLoader
         var editorSlot = newSlot.gameObject.AddComponent<UIEditorSlot>();
         editorSlot.uiSlot = newSlot;
         editorSlot.levelEditor = this;
+
+        newSlot.SetFilled(true);
     }
 
     public override void LoadLevelFeatures(Level level)
@@ -142,25 +148,38 @@ public class LevelEditor : LevelLoader
 
     public void Solve()
     {
-        if (level.hasSolution && !level.modified)
+        if (Application.platform == RuntimePlatform.WindowsEditor)
         {
-            levelSolutionViewer.ShowSolution(level.solution);
-        }
-        else
-        {
-            if (Application.platform == RuntimePlatform.WindowsEditor)
+            if (level.modified)
             {
-                if (level.modified)
+                Save();
+            }
+            else
+            {
+                if (level.hasSolution)
                 {
-                    Save();
+                    resolvePanel.Show();
                 }
                 else
                 {
                     var solver = Instantiate(levelSolverPrefab, slotListParent);
                     solver.Solve(level, this, levelSolutionViewer);
-                }                
+                }
             }
         }
+        else
+        {
+            if (level.hasSolution && !level.modified)
+            {
+                levelSolutionViewer.ShowSolution(level.solution);
+            }
+        }
+    }
+
+    public void Solve(int type)
+    {
+        var solver = Instantiate(levelSolverPrefab, slotListParent);
+        solver.Solve(level, this, levelSolutionViewer, type);
     }
 
     public void DeleteLevel()
