@@ -215,6 +215,10 @@ public class PathManager : MonoBehaviour
                 {
                     slot.SetBlankNumber((int)SpecialSlot.Blank);
                 }
+                else if(slot.slot.number == (int)SpecialSlot.Reverse)
+                {
+                    slot.SetIconState(0);
+                }
             }
         }
     }
@@ -229,6 +233,17 @@ public class PathManager : MonoBehaviour
             if (end.slot.number == (int)SpecialSlot.Blank)
             {
                 slot.SetBlankNumber(end.number);
+            }
+            else if(slot.slot.number == (int)SpecialSlot.Reverse)
+            {
+                if (end.isDescending)
+                {
+                    slot.SetIconState(1);
+                }
+                else
+                {
+                    slot.SetIconState(2);
+                }
             }
 
             var startSlot = gridManager.GetUISlot(start.slot.position);
@@ -252,6 +267,10 @@ public class PathManager : MonoBehaviour
             if (start.slot.number == (int)SpecialSlot.Blank)
             {
                 slot.SetBlankNumber((int)SpecialSlot.Blank);
+            }
+            else if (slot.slot.number == (int)SpecialSlot.Reverse)
+            {
+                slot.SetIconState(0);
             }
         }
     }
