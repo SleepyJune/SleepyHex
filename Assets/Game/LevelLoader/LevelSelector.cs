@@ -36,13 +36,10 @@ public class LevelSelector : MonoBehaviour
     {
         LoadLevelNames();
 
-        amazonHelper.ListLevelVersions(LoadLevelListWeb);
-
-        //var filename = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-        //amazonHelper.GetFile(filename, DataPath.fileListName, LoadLevelListWeb);
-
-        //amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
-        //SaveLevelList(false);
+        if(Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            amazonHelper.ListLevelVersions(LoadLevelListWeb);
+        }                
     }
 
     public void LoadLevelNamesWeb(List<AmazonS3Object> files)
@@ -163,6 +160,15 @@ public class LevelSelector : MonoBehaviour
                     levelTextAsset.localVersion = level.version;
                     levelTextAsset.hasSolution = level.hasSolution;
 
+                    if (level.hasSolution)
+                    {
+                        if(level.solution.bestScore == level.solution.worstScore
+                            && level.solution.numBestSolutions != level.solution.numSolutions)
+                        {
+                            levelTextAsset.hasSolution = false;
+                        }
+                    }
+
                     AddLevel(levelTextAsset);
 
                     //upload versions
@@ -202,6 +208,7 @@ public class LevelSelector : MonoBehaviour
         {
             newButton.transform.Find("Unsolved").gameObject.SetActive(true);
         }
+
     }
 
     public void SetSortType(int sortType)

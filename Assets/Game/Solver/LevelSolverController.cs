@@ -9,6 +9,13 @@ using UnityEngine.UI;
 
 public class LevelSolverController : MonoBehaviour
 {    
+    public enum SolveType
+    {
+        Ovewrite,
+        Solve,
+        FromData
+    }
+
     public Slider slider;
 
     public GameObject progressPanel;
@@ -20,7 +27,9 @@ public class LevelSolverController : MonoBehaviour
     LevelEditor levelEditor;
     Level level;
 
-    LevelSolutionViewer solutionViewer;
+    EditorSolutionViewer solutionViewer;
+
+    int solveType;
 
     void Update()
     {
@@ -33,11 +42,12 @@ public class LevelSolverController : MonoBehaviour
         }
     }
 
-    public void Solve(Level level, LevelEditor levelEditor, LevelSolutionViewer levelSolutionViewer)
+    public void Solve(Level level, LevelEditor levelEditor, EditorSolutionViewer levelSolutionViewer, int solveType = 0)
     {
         this.levelEditor = levelEditor;
         this.level = level;
         this.solutionViewer = levelSolutionViewer;
+        this.solveType = solveType;
 
         StartCoroutine("SolverCoroutine");
     }
@@ -67,7 +77,7 @@ public class LevelSolverController : MonoBehaviour
     {
         LevelSolution solution = level.solution;
 
-        if (solution != null && solution.version == level.version && solution.bestScore > 0)
+        if (solution != null && level.hasSolution && solveType == (int)SolveType.FromData)
         {
             progressPanel.SetActive(false);
         }
@@ -84,8 +94,14 @@ public class LevelSolverController : MonoBehaviour
 
             if (solution != null)
             {
+                solutionViewer.SetSolvedPaths(solver.GetSolvedPaths());
+
                 level.solution = solution;
-                levelEditor.Save(false); //save solution
+
+                if (solveType == (int)SolveType.Ovewrite)
+                {
+                    levelEditor.Save(false); //save solution
+                }
             }
         }
 

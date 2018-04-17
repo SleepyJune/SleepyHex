@@ -122,8 +122,6 @@ public class LevelSolver : ThreadedJob
             Debug.Log("Best Solutions: " + numBestSolutions);
         }
 
-        solvedPaths = null;
-
         //return bestPath;
     }
 
@@ -245,5 +243,14 @@ public class LevelSolver : ThreadedJob
     public LevelSolution GetSolution()
     {
         return solution;
+    }
+
+    public List<Path> GetSolvedPaths()
+    {
+        var ret = solvedPaths.Where(p => p.GetTotalPoints() == bestScore).ToList();
+
+        solvedPaths = null; //release from memory
+        
+        return ret;
     }
 }

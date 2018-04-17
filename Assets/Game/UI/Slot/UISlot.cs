@@ -24,6 +24,8 @@ public class UISlot : MonoBehaviour
     
     bool isFilled;
 
+    int iconState;
+
     void Start()
     {
         buttonImage.alphaHitTestMinimumThreshold = .05f;
@@ -35,12 +37,21 @@ public class UISlot : MonoBehaviour
         }
     }
 
+    public void SetIconState(int state)
+    {
+        if(iconState != state)
+        {
+            anim.SetInteger("iconState", state);
+            iconState = state;
+        }
+    }
+
     public void SetFilled(bool filled)
     {        
         if(isFilled != filled)
         {
             anim.SetBool("filled", filled);
-            this.isFilled = filled;
+            isFilled = filled;
         }
     }
 
@@ -48,7 +59,7 @@ public class UISlot : MonoBehaviour
     {        
         slot.number = number;
 
-        if (number > 0)// && number <= 9)
+        if (slot.isNumber)
         {
             text.text = number.ToString();
         }
@@ -73,7 +84,7 @@ public class UISlot : MonoBehaviour
             slot.hideNumber = !slot.hideNumber;
         }
 
-        if (slot.hideNumber || slot.number <= 0)
+        if (slot.hideNumber || !slot.isNumber)
         {
             text.text = "";
         }

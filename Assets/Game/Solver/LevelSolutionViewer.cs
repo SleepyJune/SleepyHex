@@ -27,28 +27,39 @@ public class LevelSolutionViewer : MonoBehaviour
         {            
             SetSolutionText(solution);
 
-            if (line != null)
+            DrawPathLine(solution.bestPath);
+        }
+    }
+
+    public void DrawPathLine(IEnumerable<Vector3> path)
+    {
+        if (startIcon != null)
+        {
+            Destroy(startIcon);
+
+            startIcon = null;
+        }
+
+        if (line != null)
+        {
+            Destroy(line.gameObject);
+        }
+
+        line = Instantiate(linePrefab, levelLoader.slotListParent);
+
+        foreach (var position in path)
+        {
+            var uiSlot = levelLoader.GetGridManager().GetUISlot(position);
+
+            if (uiSlot != null)
             {
-                Destroy(line.gameObject);
-            }
+                line.positionCount += 1;
+                line.SetPosition(line.positionCount - 1, uiSlot.transform.position);
 
-            line = Instantiate(linePrefab, levelLoader.slotListParent);
-
-
-            foreach (var position in solution.bestPath)
-            {
-                var uiSlot = levelLoader.GetGridManager().GetUISlot(position);
-
-                if (uiSlot != null)
+                if (startIcon == null)
                 {
-                    line.positionCount += 1;
-                    line.SetPosition(line.positionCount - 1, uiSlot.transform.position);
-
-                    if (startIcon == null)
-                    {
-                        startIcon = Instantiate(startIconPrefab, levelLoader.slotListParent);
-                        startIcon.transform.position = uiSlot.transform.position;
-                    }
+                    startIcon = Instantiate(startIconPrefab, levelLoader.slotListParent);
+                    startIcon.transform.position = uiSlot.transform.position;
                 }
             }
         }
