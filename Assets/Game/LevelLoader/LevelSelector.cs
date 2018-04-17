@@ -36,13 +36,10 @@ public class LevelSelector : MonoBehaviour
     {
         LoadLevelNames();
 
-        amazonHelper.ListLevelVersions(LoadLevelListWeb);
-
-        //var filename = DataPath.webPath + DataPath.fileListFolder + DataPath.fileListName;
-        //amazonHelper.GetFile(filename, DataPath.fileListName, LoadLevelListWeb);
-
-        //amazonHelper.ListFiles(DataPath.webPath, LoadLevelNamesWeb);
-        //SaveLevelList(false);
+        if(Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            amazonHelper.ListLevelVersions(LoadLevelListWeb);
+        }                
     }
 
     public void LoadLevelNamesWeb(List<AmazonS3Object> files)

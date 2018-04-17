@@ -33,6 +33,13 @@ public class LevelSolutionViewer : MonoBehaviour
 
     public void DrawPathLine(IEnumerable<Vector3> path)
     {
+        if (startIcon != null)
+        {
+            Destroy(startIcon);
+
+            startIcon = null;
+        }
+
         if (line != null)
         {
             Destroy(line.gameObject);
