@@ -41,7 +41,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: da57fb2f55c932140af0c38d0bc8061f, type: 2}
+  - {fileID: 2100000, guid: 5c8a40cdbcbcbd349aff4aa0683aaefb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -64,7 +64,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.3
+    widthMultiplier: 0.2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -79,8 +79,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0, b: 0, a: 0.77254903}
-      key1: {r: 0, g: 0, b: 0, a: 0.78431374}
+      key0: {r: 0.30882353, g: 0.30882353, b: 0.30882353, a: 0.77254903}
+      key1: {r: 0.30882353, g: 0.30882353, b: 0.30882353, a: 0.78431374}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
