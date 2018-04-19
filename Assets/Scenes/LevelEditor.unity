@@ -1945,7 +1945,7 @@ MonoBehaviour:
     type: 2}
   slotListParent: {fileID: 1580811430}
   levelNameField: {fileID: 247633637}
-  levelSelector: {fileID: 0}
+  levelSelector: {fileID: 1602600243}
   amazonHelper: {fileID: 303243886}
   templateSlotParent: {fileID: 514904876}
   levelSolverPrefab: {fileID: 114005651266331026, guid: 52f8b4039a864134ca4353674e595dfc,
