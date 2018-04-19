@@ -71,24 +71,31 @@ public class LevelSelector : MonoBehaviour
         {
             return;
         }
-                
+        
         foreach (var file in data)
         {
             LevelTextAsset level;
             DateTime dateModified = DateTime.Parse(file.dateModified);
 
+            if(file.levelName == "test")
+            {
+
+                Debug.Log(file.difficulty);
+            }
+
             if (levelDatabase.TryGetValue(file.levelName, out level))
             {
                 level.webVersion = file.version;
                 level.dateModified = dateModified;
-
                 level.webVersionFile = file;
+                level.difficulty = file.difficulty;
             }
             else
             {
                 var levelTextAsset = new LevelTextAsset(file.levelName, -1, file.version, dateModified);
 
                 levelTextAsset.webVersionFile = file;
+                levelTextAsset.difficulty = file.difficulty;
 
                 AddLevel(levelTextAsset);
             }
@@ -159,6 +166,7 @@ public class LevelSelector : MonoBehaviour
                 {
                     levelTextAsset.localVersion = level.version;
                     levelTextAsset.hasSolution = level.hasSolution;
+                    levelTextAsset.difficulty = level.difficulty;
 
                     if (level.hasSolution)
                     {
@@ -209,6 +217,15 @@ public class LevelSelector : MonoBehaviour
             newButton.transform.Find("Unsolved").gameObject.SetActive(true);
         }
 
+        if(levelText.difficulty > 0)
+        {            
+            PuzzleDifficulty difficulty = (PuzzleDifficulty)levelText.difficulty;
+
+            var ratingTransform = newButton.transform.Find("Rating");
+            ratingTransform.gameObject.SetActive(true);
+            ratingTransform.Find("Text").GetComponent<Text>().text = difficulty.ToString();
+        }
+
     }
 
     public void SetSortType(int sortType)
@@ -228,7 +245,7 @@ public class LevelSelector : MonoBehaviour
 
         if (sortType == SortType.Difficulty)
         {
-            levels = levelDatabase.Values.OrderByDescending(level => level.dateModified);
+            levels = levelDatabase.Values.OrderByDescending(level => level.difficulty);
         }
         else if (sortType == SortType.Name)
         {

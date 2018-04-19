@@ -16,6 +16,10 @@ public class LevelLoader : MonoBehaviour
 
     public InputField levelNameField;
 
+    public LevelSelector levelSelector;
+
+    public AmazonS3Helper amazonHelper;
+
     void Clear()
     {
         if (gridManager != null)
@@ -47,6 +51,39 @@ public class LevelLoader : MonoBehaviour
         return level;
     }
 
+    public void Save(bool modified, bool softLoad)
+    {
+        LevelTextAsset levelText = level.SaveLevel(modified);
+
+        var metadata = level.GetMetadata();
+
+        LevelSelector.AddLevel(levelText, true);
+        levelSelector.RefreshList();
+
+        var webPath = DataPath.webPath + levelText.name + ".json";
+        amazonHelper.PostObject(webPath, levelText.text, metadata);
+
+        LevelVersion version = new LevelVersion()
+        {
+            levelName = level.levelName,
+            version = level.version,
+            dateModified = level.dateModified,
+            solved = level.hasSolution,
+            difficulty = level.difficulty,
+        };
+
+        //Debug.Log(levelText.dateModified.GetUnixEpoch());
+
+        amazonHelper.UploadLevelVersion(version);
+
+        //saveScreen.SetActive(false);
+
+        if (softLoad)
+        {
+            SoftLoad(levelText);
+        }
+    }
+
     public Level SoftLoad(LevelTextAsset levelText)
     {
         level = Level.LoadLevel(levelText);
@@ -62,6 +99,11 @@ public class LevelLoader : MonoBehaviour
     public void SetLevelName(string name)
     {
         levelNameField.text = name;
+    }
+
+    public Level GetCurrentLevel()
+    {
+        return level;
     }
 
     public virtual void LoadLevelFeatures(Level level)

@@ -189,7 +189,8 @@ public class AmazonS3HelperUnity : MonoBehaviour
                         version = Int32.Parse(item["version"].N),
                         solved = item["version"].BOOL,
                         dateModified = item["dateModified"].S,
-                        //timestamp = Int32.Parse(item["version"].N),
+                        difficulty = item.ContainsKey("difficulty") ? float.Parse(item["difficulty"].N) : 0,
+                        //timestamp = Int32.Parse(item["version"].N),                        
                     };
 
                     versions.Add(newVersion);

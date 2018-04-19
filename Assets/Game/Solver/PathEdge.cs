@@ -5,12 +5,12 @@ using System.Text;
 
 public class PathEdge
 {
-    Slot start;
-    Slot end;
+    PathSlot start;
+    PathSlot end;
 
     Path path;
 
-    public PathEdge(Slot start, Slot end, Path path)
+    public PathEdge(PathSlot start, PathSlot end, Path path)
     {
         this.start = start;
         this.end = end;

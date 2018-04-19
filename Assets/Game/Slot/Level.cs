@@ -6,16 +6,26 @@ using System.IO;
 
 using UnityEngine;
 
+public enum PuzzleDifficulty
+{
+    Unrated,
+    Easy,
+    Medium,
+    Hard,
+    Insane,
+}
+
 [Serializable]
 public class Level
 {
     public string levelName = "New Level";
 
     public int version;
+    
+    public float difficulty;
 
     public string dateCreated;
     public string dateModified;
-
 
     public Slot[] slots;
 
@@ -166,6 +176,7 @@ public class Level
         var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified));
         levelText.text = levelStr;
         levelText.hasSolution = hasSolution;
+        levelText.difficulty = difficulty;
 
         Debug.Log("Saved to: " + filePath);
 

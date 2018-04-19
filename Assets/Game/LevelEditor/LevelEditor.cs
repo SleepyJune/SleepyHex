@@ -11,10 +11,6 @@ using System.Collections;
 public class LevelEditor : LevelLoader
 {
     public Transform templateSlotParent;
-
-    public LevelSelector levelSelector;
-
-    public AmazonS3Helper amazonHelper;
    
     [NonSerialized]
     public UITemplateSlot selectedTemplate;
@@ -219,31 +215,7 @@ public class LevelEditor : LevelLoader
 
     public void Save(bool modified)
     {
-        LevelTextAsset levelText = level.SaveLevel(modified);
-
-        var metadata = level.GetMetadata();
-
-        LevelSelector.AddLevel(levelText, true);
-        levelSelector.RefreshList();
-
-        var webPath = DataPath.webPath + levelText.name + ".json";
-        amazonHelper.PostObject(webPath, levelText.text, metadata);
-
-        LevelVersion version = new LevelVersion()
-        {            
-            levelName = level.levelName,
-            version = level.version,
-            dateModified = level.dateModified,
-            solved = level.hasSolution,
-        };
-
-        //Debug.Log(levelText.dateModified.GetUnixEpoch());
-
-        amazonHelper.UploadLevelVersion(version);
-
-        //saveScreen.SetActive(false);
-
-        SoftLoad(levelText);
+        Save(modified, true);
     }
 }
 

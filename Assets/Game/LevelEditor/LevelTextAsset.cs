@@ -17,6 +17,8 @@ public class LevelTextAsset
 
     public DateTime dateModified;
 
+    public float difficulty;
+
     public LevelTextAsset(string name, int localVersion, int webVersion, DateTime dateModified)
     {
         this.name = name;
