@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class LevelManager : LevelLoader
 {
     public Button solveButton;
-
     public Button checkButton;
+    public Button rateButton;
 
     public LevelSolutionViewer levelSolutionViewer;
 

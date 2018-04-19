@@ -13,6 +13,8 @@ public class PathSlot
     public int number = 0;
     public int sum = 0;
 
+    public int reverseUsed = 0;
+
     public bool isDescending = true;
 
     public PathSlot(Slot slot)

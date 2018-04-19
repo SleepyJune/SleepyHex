@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 0}
-  linePrefab: {fileID: 120671500451555026, guid: 843d9004a82a4c84baf7a4098a132782,
+  linePrefab: {fileID: 120671500451555026, guid: f9673ff7735f80c449f960ea86b40606,
     type: 2}
   startIconPrefab: {fileID: 1302188859142368, guid: 78e5ecf58ae443148895d8d5e978a3a4,
     type: 2}

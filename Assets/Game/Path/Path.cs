@@ -47,7 +47,7 @@ public class Path
         //waypoints.Add(lastPoint);
     }
 
-    public bool AddPoint(Slot slot, bool mock = false)
+    public bool AddPoint(Slot slot)
     {
         var pathSlot = new PathSlot(slot);
 
@@ -71,10 +71,12 @@ public class Path
             }
 
             pathSlot.isDescending = lastPoint.isDescending;
+            pathSlot.reverseUsed = lastPoint.reverseUsed;
 
             if (slot.number == (int)SpecialSlot.Reverse)
             {
                 pathSlot.isDescending = !pathSlot.isDescending;
+                pathSlot.reverseUsed = pathSlot.reverseUsed + 1;
             }
 
             if (slot.isNumber)

@@ -16,8 +16,10 @@ public class LevelSolver : ThreadedJob
     public DateTime startTime;
 
     int slotsVisited = 0;
+    int pathsDenied = 0;
 
     int numSlots;
+    int numReverses;
 
     //Path bestPath;
 
@@ -26,8 +28,9 @@ public class LevelSolver : ThreadedJob
     int bestScore = 0;
     int worstScore = 0;
 
+    int slotsProcessed = 0;
     float progressPercent = 0;
-
+    
     bool abort = false;
 
     public LevelSolver(Level level)
@@ -50,12 +53,11 @@ public class LevelSolver : ThreadedJob
 
         var slots = level.map.Values.Where(s => s.number >= 0);
         numSlots = slots.Count();
+        numReverses = slots.Where(s => s.number == 10).Count();
 
-        startingSlots = slots.Where(s => s.isNumber).ToList();
+        startingSlots = slots.Where(s => s.isNumber).OrderBy(s=> s.number).ToList();
         var numSlotsToProcess = startingSlots.Count();
-
-        int slotsProcessed = 0;
-
+                
         progressPercent = 0;
 
         foreach (var startPoint in startingSlots)
@@ -85,6 +87,8 @@ public class LevelSolver : ThreadedJob
         Debug.Log("Solve time: " + solveTime.ToString());
 
         Debug.Log("Visited: " + slotsVisited);
+
+        Debug.Log("Denied: " + pathsDenied);
 
         Debug.Log("Solutions: " + solvedPaths.Count);
 
@@ -143,53 +147,100 @@ public class LevelSolver : ThreadedJob
 
         var lastPoint = path.lastPoint;
 
-        /*if(CheckDeadStartingSlot(lastPoint.slot, path))
-        {
-            return;
-        }*/
-
         if (lastPoint != null && lastPoint.slot.neighbours != null)
         {
-            //HashSet<Slot> neighbourVisted = new HashSet<Slot>();
-
             foreach (var neighbour in lastPoint.slot.neighbours)
             {
-                //neighbourVisted.Add(neighbour);
-
-                if (path.AddPoint(neighbour))
+                if (!path.waypointsHash.Contains(neighbour))
                 {
                     slotsVisited += 1;
 
-                    if (CheckDeadNeighbour2(lastPoint.slot, neighbour, path))
+                    if (path.AddPoint(neighbour))
                     {
+                        if (CheckDeadNeighbour2(lastPoint.slot, neighbour, path))
+                        {
+                            path.GoBack();
+                            continue;
+                        }                  
+
+                        if (!neighbour.isBlank && CheckDeadNumSlot(path))
+                        {
+                            path.GoBack();
+                            continue;
+                        }
+
+                        ExploreNeighbour(path);
+
                         path.GoBack();
-                        continue;
                     }
-
-                    /*if (CheckDeadNeighbour(lastPoint.slot, path, neighbourVisted))
+                    else
                     {
-                        continue;
-                    }*/
-
-                    //solvedPaths.Add(newPath);
-                    ExploreNeighbour(path);
-
-                    path.GoBack();
+                        pathsDenied += 1;
+                    }
                 }
             }
         }
     }
 
-    public bool CheckDeadStartingSlot(Slot slot, Path newPath)
+    public bool CheckDeadNumSlot(Path newPath)
     {
-        //contains all slots in path that is not the head
+        var slot = newPath.lastPoint;
+        int currentNumber = newPath.lastPoint.number;
 
-        foreach(var start in startingSlots)
+        if (newPath.lastPoint.isDescending)
         {
-            if(start.neighbours != null
-                && !newPath.waypointsHash.Contains(start))
+            for (int i = startingSlots.Count-1; i >= slotsProcessed; i--) //counting down
             {
-                if (!start.neighbours.Any(n => n == slot || !newPath.waypointsHash.Contains(n)))
+                var numSlot = startingSlots[i];
+
+                if (numSlot.number <= currentNumber)
+                {
+                    break;
+                }
+
+                if (!newPath.waypointsHash.Contains(numSlot))
+                {
+                    if (numReverses <= slot.reverseUsed)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = slotsProcessed; i < startingSlots.Count; i++) //counting up
+            {
+                var numSlot = startingSlots[i];
+
+                if (numSlot.number >= currentNumber)
+                {
+                    break;
+                }
+
+                if (!newPath.waypointsHash.Contains(numSlot))
+                {
+                    if (numReverses <= slot.reverseUsed)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool CheckDeadNeighbour3(Slot slot, Slot head, Path path)
+    {
+        foreach (var otherNeighbour in slot.neighbours)
+        {
+            if (!head.neighbours.Contains(otherNeighbour)
+                && !path.waypointsHash.Contains(otherNeighbour))
+            {
+                HashSet<Slot> checkedSlots = new HashSet<Slot>();
+
+                if (CheckDeadNeighbour3_Helper(otherNeighbour, checkedSlots, path))
                 {
                     return true;
                 }
@@ -197,6 +248,36 @@ public class LevelSolver : ThreadedJob
         }
 
         return false;
+    }
+
+    public bool CheckDeadNeighbour3_Helper(Slot otherNeighbour, HashSet<Slot> checkedSlots, Path path)
+    {
+        Slot first = null;
+        bool hasOneNeighbour = false;
+
+        foreach(var neighbour in otherNeighbour.neighbours)
+        {
+            if (!checkedSlots.Contains(neighbour) && !path.waypointsHash.Contains(neighbour))
+            {
+                first = neighbour;
+                hasOneNeighbour = true;
+            }
+
+            if (hasOneNeighbour) //has two now
+            {
+                return false;
+            }
+        }
+
+        if (hasOneNeighbour) //has only one, check that one
+        {
+            checkedSlots.Add(otherNeighbour);
+            return CheckDeadNeighbour3_Helper(first, checkedSlots, path);
+        }
+        else //has no neighbours
+        {
+            return true;
+        }
     }
 
     public bool CheckDeadNeighbour2(Slot slot, Slot head, Path newPath)
@@ -205,24 +286,6 @@ public class LevelSolver : ThreadedJob
         {
             if (otherNeighbour.neighbours != null
                 && !head.neighbours.Contains(otherNeighbour)
-                && !newPath.waypointsHash.Contains(otherNeighbour))
-            {
-                if (!otherNeighbour.neighbours.Any(n => !newPath.waypointsHash.Contains(n)))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public bool CheckDeadNeighbour(Slot slot, Path newPath, HashSet<Slot> neighbourVisted)
-    {
-        foreach (var otherNeighbour in slot.neighbours)
-        {
-            if (otherNeighbour.neighbours != null
-                && !neighbourVisted.Contains(otherNeighbour)
                 && !newPath.waypointsHash.Contains(otherNeighbour))
             {
                 if (!otherNeighbour.neighbours.Any(n => !newPath.waypointsHash.Contains(n)))

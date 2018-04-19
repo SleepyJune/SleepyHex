@@ -21,4 +21,7 @@ public class LevelVersion
 
     [DynamoDBProperty]
     public string dateModified;
+
+    [DynamoDBProperty]
+    public float difficulty;
 }

@@ -33,6 +33,22 @@ public class Slot
         }
     }
 
+    public bool isBlank
+    {
+        get
+        {
+            return number == 0;
+        }
+    }
+
+    public bool isReverse
+    {
+        get
+        {
+            return number == 10;
+        }
+    }
+
     public Slot(int number)
     {
         this.number = number;
