@@ -157,6 +157,7 @@ public class Level
         if (modified)
         {
             dateModified = DateTime.UtcNow.ToString();
+            difficulty = 0;
             version += 1;
         }
 
