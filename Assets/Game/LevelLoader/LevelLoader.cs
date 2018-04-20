@@ -98,7 +98,10 @@ public class LevelLoader : MonoBehaviour
 
     public void SetLevelName(string name)
     {
-        levelNameField.text = name;
+        if (levelNameField)
+        {
+            levelNameField.text = name;
+        }
     }
 
     public Level GetCurrentLevel()

@@ -36,6 +36,8 @@ public class PathManager : MonoBehaviour
 
         TouchInputManager.instance.touchStart += OnTouchStart;
         TouchInputManager.instance.touchEnd += OnTouchEnd;
+
+        sumText.text = "";
     }
 
     private void OnTouchStart(Touch touch)
@@ -84,13 +86,7 @@ public class PathManager : MonoBehaviour
             }
         }
 
-        if (selectedSlot)
-        {
-            selectedSlot.uiSlot.anim.SetBool("selected", false);
-        }
-
         selectedSlot = gameSlot;
-        selectedSlot.uiSlot.anim.SetBool("selected", true);
 
         ClearPath();
 
@@ -118,13 +114,7 @@ public class PathManager : MonoBehaviour
             return;
         }
 
-        if (selectedSlot)
-        {
-            selectedSlot.uiSlot.anim.SetBool("selected", false);
-        }
-
         selectedSlot = gameSlot;
-        selectedSlot.uiSlot.anim.SetBool("selected", true);
 
         if (path != null)
         {
@@ -152,16 +142,19 @@ public class PathManager : MonoBehaviour
                     line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
 
                     UpdateSumText();
-
-                    //Debug.Log(path.GetLastPoint().number);
-
-                    if (slot.number == (int)SpecialSlot.Reverse)
+                    
+                    if(path.waypoints.Count == levelManager.GetCurrentLevel().map.Values.Count)
                     {
-                        Debug.Log("Reverse");
-                    }
+                        Invoke("CheckSolution", .25f);
+                    }                   
                 }
             }
         }
+    }
+
+    void CheckSolution()
+    {
+        levelManager.Check();
     }
 
     public Path GetPath()
@@ -177,7 +170,7 @@ public class PathManager : MonoBehaviour
         }
         else
         {
-            sumText.text = "0";
+            sumText.text = "";
         }
 
         UpdateFill();
@@ -245,15 +238,6 @@ public class PathManager : MonoBehaviour
                     slot.SetIconState(2);
                 }
             }
-
-            var startSlot = gridManager.GetUISlot(start.slot.position);
-            
-            Vector3 dir = slot.transform.position - startSlot.transform.position;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
-            slot.background.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            //Quaternion rotation = Quaternion.LookRotation(relativePos);
-            //slot.background.transform.rotation = rotation;
         }
     }
 

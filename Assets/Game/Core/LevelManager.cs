@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class LevelManager : LevelLoader
 {
     public Button solveButton;
-    public Button checkButton;
     public Button rateButton;
 
     public LevelSolutionViewer levelSolutionViewer;
@@ -45,7 +44,6 @@ public class LevelManager : LevelLoader
     public override void LoadLevelFeatures(Level level)
     {
         solveButton.interactable = level.hasSolution;
-        checkButton.interactable = level.hasSolution;
     }
 
     public void Solve()
