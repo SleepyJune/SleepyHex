@@ -15,8 +15,8 @@ public class LevelSolver : ThreadedJob
 
     public DateTime startTime;
 
-    int slotsVisited = 0;
-    int pathsDenied = 0;
+    public int slotsVisited = 0;
+    public int pathsDenied = 0;
 
     int numSlots;
     int numReverses;
