@@ -36,6 +36,8 @@ public class PathManager : MonoBehaviour
 
         TouchInputManager.instance.touchStart += OnTouchStart;
         TouchInputManager.instance.touchEnd += OnTouchEnd;
+
+        sumText.text = "";
     }
 
     private void OnTouchStart(Touch touch)
@@ -168,7 +170,7 @@ public class PathManager : MonoBehaviour
         }
         else
         {
-            sumText.text = "0";
+            sumText.text = "";
         }
 
         UpdateFill();
