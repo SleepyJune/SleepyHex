@@ -549,12 +549,12 @@ Prefab:
     - target: {fileID: 224188537140907646, guid: 6889af4c3cbaa6646828a20596a76942,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 1000.5
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 224188537140907646, guid: 6889af4c3cbaa6646828a20596a76942,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 480
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 224188537140907646, guid: 6889af4c3cbaa6646828a20596a76942,
         type: 2}
@@ -1108,6 +1108,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1548395851 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1944470328445582, guid: 6889af4c3cbaa6646828a20596a76942,
+    type: 2}
+  m_PrefabInternal: {fileID: 1022601930}
+--- !u!95 &1548395852
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1548395851}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6c4bb7611cc5696429bff4b9f3cc6ab3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1642676069
 GameObject:
   m_ObjectHideFlags: 0
