@@ -10,10 +10,26 @@ public class EditorSolutionViewer : LevelSolutionViewer
     List<Path> paths;
 
     int currentIndex = 0;
+    int slotsVisited = 0;
+
+    public void SetAdditionalStats(int slotsVisited)
+    {
+        this.slotsVisited = slotsVisited;
+    }
 
     public void SetSolvedPaths(List<Path> solvedPaths)
     {
         this.paths = solvedPaths;
+    }
+
+    public void SetPuzzleRating(Level level)
+    {
+        if(slotsVisited > 0)
+        {
+            var rating = PuzzleRating.RatePuzzle(level, slotsVisited);
+
+            solutionText.text += "\nRating: " + rating;
+        }
     }
 
     public void Next()

@@ -28,18 +28,31 @@ public class LevelSelector : MonoBehaviour
 
     public AmazonS3Helper amazonHelper;
 
+    public Button[] difficultyButtons;
+
     public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
 
     public SortType sortType = SortType.DateModified;
+
+    [NonSerialized]
+    public int difficultyFilter = -1;
 
     void Start()
     {
         LoadLevelNames();
 
-        if(Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             amazonHelper.ListLevelVersions(LoadLevelListWeb);
-        }                
+        }
+
+        difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
+    }
+
+    public void SetDifficultyFilter(int difficulty)
+    {
+        difficultyFilter = difficultyFilter == difficulty ? -1 : difficulty;
+        PlayerPrefs.SetInt("difficultyFilter", difficultyFilter);
     }
 
     public void LoadLevelNamesWeb(List<AmazonS3Object> files)
@@ -71,17 +84,11 @@ public class LevelSelector : MonoBehaviour
         {
             return;
         }
-        
+
         foreach (var file in data)
         {
             LevelTextAsset level;
             DateTime dateModified = DateTime.Parse(file.dateModified);
-
-            if(file.levelName == "test")
-            {
-
-                Debug.Log(file.difficulty);
-            }
 
             if (levelDatabase.TryGetValue(file.levelName, out level))
             {
@@ -170,7 +177,7 @@ public class LevelSelector : MonoBehaviour
 
                     if (level.hasSolution)
                     {
-                        if(level.solution.bestScore == level.solution.worstScore
+                        if (level.solution.bestScore == level.solution.worstScore
                             && level.solution.numBestSolutions != level.solution.numSolutions)
                         {
                             levelTextAsset.hasSolution = false;
@@ -217,8 +224,8 @@ public class LevelSelector : MonoBehaviour
             newButton.transform.Find("Unsolved").gameObject.SetActive(true);
         }
 
-        if(levelText.difficulty > 0)
-        {            
+        if (levelText.difficulty > 0)
+        {
             PuzzleDifficulty difficulty = (PuzzleDifficulty)levelText.difficulty;
 
             var ratingTransform = newButton.transform.Find("Rating");
@@ -240,26 +247,43 @@ public class LevelSelector : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+                
+        for (int i = 0; i < difficultyButtons.Length; i++)
+        {
+            if(difficultyFilter == -1)
+            {
+                difficultyButtons[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                if(difficultyFilter-1 != i)
+                {
+                    difficultyButtons[i].gameObject.SetActive(false);
+                }
+                else
+                {
+                    difficultyButtons[i].gameObject.SetActive(true);
+                }
+            }
+        }
 
         IEnumerable<LevelTextAsset> levels;
 
+        IEnumerable<LevelTextAsset> filteredLevels =
+            difficultyFilter > 0 ? levelDatabase.Values.Where(level => level.difficulty == difficultyFilter) : levelDatabase.Values;
+
         if (sortType == SortType.Difficulty)
         {
-            levels = levelDatabase.Values.OrderByDescending(level => level.difficulty);
+            levels = filteredLevels.OrderByDescending(level => level.difficulty);
         }
         else if (sortType == SortType.Name)
         {
-            levels = levelDatabase.Values
-                        .OrderByDescending(level => level.name.Any(char.IsDigit) ?
-                        Int32.Parse(System.Text.RegularExpressions.Regex.Match(level.name, @"\d+").Value) : 0
-                        );
-
             var comparer = new NaturalComparer();
-            levels = levelDatabase.Values.OrderByDescending(level => level.name, comparer);
+            levels = filteredLevels.OrderByDescending(level => level.name, comparer);
         }
         else
         {
-            levels = levelDatabase.Values.OrderByDescending(level => level.dateModified);
+            levels = filteredLevels.OrderByDescending(level => level.dateModified);
         }
 
         foreach (var level in levels)
@@ -330,7 +354,7 @@ public class LevelSelector : MonoBehaviour
 
             levelText.localVersion = levelText.webVersion;
             levelText.dateModified = DateTime.Parse(level.dateModified);
-            
+
             levelListParent.gameObject.SetActive(false);
             RefreshList();
         }

@@ -12,6 +12,13 @@ public enum SpecialSlot
     Reverse = 10,
 }
 
+public enum SlotType
+{
+    Blank,
+    Number,
+    Reverse,
+}
+
 [System.Serializable]
 public class Slot
 {    
@@ -24,31 +31,7 @@ public class Slot
 
     [NonSerialized]
     public HashSet<Slot> neighbours;
-    
-    public bool isNumber
-    {
-        get
-        {
-            return number > 0 && number < 10;
-        }
-    }
-
-    public bool isBlank
-    {
-        get
-        {
-            return number == 0;
-        }
-    }
-
-    public bool isReverse
-    {
-        get
-        {
-            return number == 10;
-        }
-    }
-
+   
     public Slot(int number)
     {
         this.number = number;
@@ -119,5 +102,48 @@ public class Slot
     public override int GetHashCode()
     {
         return position.GetHashCode();
+    }
+
+    public bool isNumber
+    {
+        get
+        {
+            return number > 0 && number < 10;
+        }
+    }
+
+    public bool isBlank
+    {
+        get
+        {
+            return number == 0;
+        }
+    }
+
+    public bool isReverse
+    {
+        get
+        {
+            return number == 10;
+        }
+    }
+
+    public SlotType slotType
+    {
+        get
+        {
+            if (isNumber)
+            {
+                return SlotType.Number;
+            }
+            else if(isReverse)
+            {
+                return SlotType.Reverse;
+            }
+            else
+            {
+                return SlotType.Blank;
+            }
+        }
     }
 }

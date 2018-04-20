@@ -18,6 +18,18 @@ public class LevelManager : LevelLoader
 
     public SolutionPopup solutionPopupPrefab;
 
+    void Start()
+    {
+        if(Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            rateButton.interactable = true;
+        }
+        else
+        {
+            rateButton.interactable = false;
+        }
+    }
+
     public override bool isValidSlot(Slot slot)
     {
         return slot.number >= 0;

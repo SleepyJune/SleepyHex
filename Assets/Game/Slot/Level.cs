@@ -37,6 +37,9 @@ public class Level
     [NonSerialized]
     public bool modified;
 
+    [NonSerialized]
+    public bool isInitialized;
+
     public Level(int columns, int rows)
     {
         map = new Dictionary<Vector3, Slot>();
@@ -102,6 +105,11 @@ public class Level
 
     public void AddSlotsToMap()
     {
+        if (isInitialized)
+        {
+            return;
+        }
+
         if(map == null)
         {
             map = new Dictionary<Vector3, Slot>();
@@ -131,6 +139,8 @@ public class Level
                 }                
             }            
         }
+
+        isInitialized = true;
     }
 
     public bool hasSolution

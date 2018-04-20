@@ -95,6 +95,7 @@ public class LevelSolverController : MonoBehaviour
             if (solution != null)
             {
                 solutionViewer.SetSolvedPaths(solver.GetSolvedPaths());
+                //solutionViewer.SetAdditionalStats(solver.slotsVisited);
 
                 level.solution = solution;
 
@@ -110,6 +111,7 @@ public class LevelSolverController : MonoBehaviour
             Debug.Log("Best Score: " + solution.bestScore);
             
             solutionViewer.ShowSolution(solution);
+            //solutionViewer.SetPuzzleRating(level);
         }
         else
         {
