@@ -21,6 +21,7 @@ public class LevelManager : LevelLoader
     {
         if(Application.platform == RuntimePlatform.WindowsEditor)
         {
+            amazonHelper = AmazonS3Helper.instance;
             rateButton.interactable = true;
         }
         else

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AmazonS3Helper : MonoBehaviour
 {
+    public static AmazonS3Helper instance = null;
+
     public delegate void ListFilesCallback(List<AmazonS3Object> files);
     public delegate void ListVersionCallback(List<LevelVersion> versions);
     public delegate void GetFileCallback(string name, string data);
@@ -12,9 +14,17 @@ public class AmazonS3Helper : MonoBehaviour
     public AmazonS3HelperUnity unityHelper;
     public AmazonS3HelperJS jsHelper;
 
-    void Start()
+    void Awake()
     {
-
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     public void GetFile(string filePath, string name, GetFileCallback callback)

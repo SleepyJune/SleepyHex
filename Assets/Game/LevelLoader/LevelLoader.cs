@@ -18,7 +18,7 @@ public class LevelLoader : MonoBehaviour
 
     public LevelSelector levelSelector;
 
-    public AmazonS3Helper amazonHelper;
+    protected AmazonS3Helper amazonHelper;
 
     void Clear()
     {

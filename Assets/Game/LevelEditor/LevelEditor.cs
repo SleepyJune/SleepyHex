@@ -30,6 +30,8 @@ public class LevelEditor : LevelLoader
 
     void Start()
     {
+        amazonHelper = AmazonS3Helper.instance;
+
         GenerateTemplateSlots();
         GenerateNewLevel();
 

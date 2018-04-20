@@ -26,11 +26,13 @@ public class LevelSelector : MonoBehaviour
 
     public LevelLoader levelLoader;
 
-    public AmazonS3Helper amazonHelper;
+    AmazonS3Helper amazonHelper;
 
     public Button[] difficultyButtons;
 
     public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
+
+    public static bool isLoaded = false;
 
     public SortType sortType = SortType.DateModified;
 
@@ -39,14 +41,32 @@ public class LevelSelector : MonoBehaviour
 
     void Start()
     {
-        LoadLevelNames();
-
-        if (Application.platform == RuntimePlatform.WindowsEditor)
-        {
-            amazonHelper.ListLevelVersions(LoadLevelListWeb);
-        }
-
+        amazonHelper = AmazonS3Helper.instance;
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
+        LoadLevels();
+    }
+
+    void LoadLevels()
+    {
+        if (!isLoaded)
+        {
+            LoadLevelNames();
+
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                amazonHelper.ListLevelVersions(LoadLevelListWeb);
+            }
+            else
+            {
+                RefreshList();
+            }
+
+            isLoaded = true;
+        }
+        else
+        {
+            RefreshList();
+        }
     }
 
     public void SetDifficultyFilter(int difficulty)
@@ -203,8 +223,6 @@ public class LevelSelector : MonoBehaviour
 
             }
         }
-
-        RefreshList();
     }
 
     void AddButton(LevelTextAsset levelText)
