@@ -715,7 +715,7 @@ Prefab:
     - target: {fileID: 224899531020534216, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -105
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 224899531020534216, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
         type: 2}
@@ -2239,11 +2239,11 @@ RectTransform:
   m_Father: {fileID: 1045564940}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!224 &1634376163 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224507981685833768, guid: e435e9427b77075498f66a285627a644,
