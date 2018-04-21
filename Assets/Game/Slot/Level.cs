@@ -184,7 +184,7 @@ public class Level
 
         File.WriteAllText(filePath, levelStr);
                 
-        var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified));
+        var levelText = new LevelTextAsset(levelName, version, version, DateTime.Parse(dateModified), DateTime.Parse(dateCreated));
         levelText.text = levelStr;
         levelText.hasSolution = hasSolution;
         levelText.difficulty = difficulty;

@@ -16,10 +16,11 @@ public class LevelTextAsset
     public bool hasSolution;
 
     public DateTime dateModified;
+    public DateTime dateCreated;
 
     public float difficulty;
 
-    public LevelTextAsset(string name, int localVersion, int webVersion, DateTime dateModified)
+    public LevelTextAsset(string name, int localVersion, int webVersion, DateTime dateModified, DateTime dateCreated)
     {
         this.name = name;
         this.text = null;
@@ -28,5 +29,6 @@ public class LevelTextAsset
         this.webVersion = webVersion;
 
         this.dateModified = dateModified;
+        this.dateCreated = dateCreated;
     }
 }

@@ -55,7 +55,7 @@ public class AmazonS3HelperJS : MonoBehaviour
 
         //setAlert(fileList.FirstOrDefault().LastModified.ToString());
 
-        levelSelector.LoadLevelNamesWeb(fileList);
+        //levelSelector.LoadLevelNamesWeb(fileList);
     }
 
     public void GetFile(string filePath, string name)

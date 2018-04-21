@@ -37,6 +37,25 @@ public class UISlot : MonoBehaviour
         }
     }
 
+    public void SetBackgroundSaturation(float saturation)
+    {
+        float h;
+        float s;
+        float v;
+
+        Color.RGBToHSV(background.color, out h, out s, out v);
+
+        s = saturation / 255;
+
+        Debug.Log(s);
+
+        var color = Color.HSVToRGB(h, s, v);
+        
+        //color.a = .4f;
+
+        background.color = color;
+    }
+
     public void SetIconState(int state)
     {
         if(iconState != state)

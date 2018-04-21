@@ -12,6 +12,10 @@ using Amazon.S3.Model;
 
 public class LevelSelector : MonoBehaviour
 {
+    public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
+    public static List<LevelTextAsset> levelListDatabase = new List<LevelTextAsset>();
+    public static bool isLoaded = false;
+
     public enum SortType
     {
         DateModified,
@@ -30,11 +34,7 @@ public class LevelSelector : MonoBehaviour
 
     public Button[] difficultyButtons;
 
-    public static Dictionary<string, LevelTextAsset> levelDatabase = new Dictionary<string, LevelTextAsset>();
-
-    public static bool isLoaded = false;
-
-    public SortType sortType = SortType.DateModified;
+    public SortType sortType = SortType.Difficulty;
 
     [NonSerialized]
     public int difficultyFilter = -1;
@@ -75,29 +75,6 @@ public class LevelSelector : MonoBehaviour
         PlayerPrefs.SetInt("difficultyFilter", difficultyFilter);
     }
 
-    public void LoadLevelNamesWeb(List<AmazonS3Object> files)
-    {
-        foreach (var file in files)
-        {
-            string levelName = System.IO.Path.GetFileNameWithoutExtension(file.Key);
-
-            LevelTextAsset level;
-            if (levelDatabase.TryGetValue(levelName, out level))
-            {
-                level.webVersion = 0;
-            }
-            else
-            {
-                var levelTextAsset = new LevelTextAsset(levelName, -1, 0, file.LastModified);
-                AddLevel(levelTextAsset);
-            }
-        }
-
-        RefreshList();
-
-        //SaveLevelList(true);
-    }
-
     public void LoadLevelListWeb(List<LevelVersion> data)
     {
         if (data == null)
@@ -109,6 +86,7 @@ public class LevelSelector : MonoBehaviour
         {
             LevelTextAsset level;
             DateTime dateModified = DateTime.Parse(file.dateModified);
+            DateTime dateCreated = DateTime.Parse(file.dateCreated);
 
             if (levelDatabase.TryGetValue(file.levelName, out level))
             {
@@ -119,7 +97,7 @@ public class LevelSelector : MonoBehaviour
             }
             else
             {
-                var levelTextAsset = new LevelTextAsset(file.levelName, -1, file.version, dateModified);
+                var levelTextAsset = new LevelTextAsset(file.levelName, -1, file.version, dateModified, dateCreated);
 
                 levelTextAsset.webVersionFile = file;
                 levelTextAsset.difficulty = file.difficulty;
@@ -156,71 +134,58 @@ public class LevelSelector : MonoBehaviour
 
         var fileListPath = DataPath.savePath + DataPath.fileListFolder + DataPath.fileListName;
 
-        if (false)//File.Exists(fileListPath))
+        DirectoryInfo d = new DirectoryInfo(DataPath.savePath);
+        foreach (var file in d.GetFiles("*.json"))
         {
-            string data = File.ReadAllText(fileListPath);
+            var path = file.FullName;
 
-            LevelFileList fileList = JsonUtility.FromJson<LevelFileList>(data);
+            string str = File.ReadAllText(path);
 
-            foreach (var file in fileList.files)
+            var levelName = System.IO.Path.GetFileNameWithoutExtension(path);
+
+            //Debug.Log("Processing " + levelName);
+
+            var levelTextAsset = new LevelTextAsset(levelName, 0, -1, file.LastWriteTimeUtc, file.CreationTimeUtc);
+            //levelDatabase.Add(level.name, levelTextAsset);
+
+            levelTextAsset.text = str;
+
+            Level level = Level.LoadLevel(levelTextAsset);
+            if (level != null)
             {
-                DateTime dateModified = DateTime.Parse(file.dateModified);
+                levelTextAsset.localVersion = level.version;
+                levelTextAsset.hasSolution = level.hasSolution;
+                levelTextAsset.difficulty = level.difficulty;
 
-                var levelTextAsset = new LevelTextAsset(file.levelName, file.version, -1, dateModified);
-                AddLevel(levelTextAsset);
-            }
-        }
-        else
-        {
-            DirectoryInfo d = new DirectoryInfo(DataPath.savePath);
-            foreach (var file in d.GetFiles("*.json"))
-            {
-                var path = file.FullName;
+                levelTextAsset.dateCreated = DateTime.Parse(level.dateCreated);
+                levelTextAsset.dateModified = DateTime.Parse(level.dateModified);
 
-                string str = File.ReadAllText(path);
-
-                var levelName = System.IO.Path.GetFileNameWithoutExtension(path);
-
-                //Debug.Log("Processing " + levelName);
-
-                var levelTextAsset = new LevelTextAsset(levelName, 0, -1, file.LastWriteTimeUtc);
-                //levelDatabase.Add(level.name, levelTextAsset);
-
-                levelTextAsset.text = str;
-
-                Level level = Level.LoadLevel(levelTextAsset);
-                if (level != null)
+                if (level.hasSolution)
                 {
-                    levelTextAsset.localVersion = level.version;
-                    levelTextAsset.hasSolution = level.hasSolution;
-                    levelTextAsset.difficulty = level.difficulty;
-
-                    if (level.hasSolution)
+                    if (level.solution.bestScore == level.solution.worstScore
+                        && level.solution.numBestSolutions != level.solution.numSolutions)
                     {
-                        if (level.solution.bestScore == level.solution.worstScore
-                            && level.solution.numBestSolutions != level.solution.numSolutions)
-                        {
-                            levelTextAsset.hasSolution = false;
-                        }
+                        levelTextAsset.hasSolution = false;
                     }
-
-                    AddLevel(levelTextAsset);
-
-                    //upload versions
-                    /*LevelVersion version = new LevelVersion()
-                    {
-                        //category = "Default",
-                        levelName = levelName,
-                        version = level.version,
-                        solved = level.hasSolution,
-                        dateModified = levelTextAsset.dateModified.ToString(),
-                        //timestamp = levelTextAsset.dateModified.GetUnixEpoch(),
-                        
-                    };
-
-                    amazonHelper.UploadLevelVersion(version);*/
                 }
 
+                AddLevel(levelTextAsset);
+
+                //upload versions
+                /*LevelVersion version = new LevelVersion()
+                {
+                    //category = "Default",
+                    levelName = levelName,
+                    version = level.version,
+                    solved = level.hasSolution,
+                    difficulty = level.difficulty,
+                    dateCreated = level.dateCreated,
+                    dateModified = levelTextAsset.dateModified.ToString(),
+                    //timestamp = levelTextAsset.dateModified.GetUnixEpoch(),
+
+                };
+
+                amazonHelper.UploadLevelVersion(version);*/
             }
         }
     }
@@ -265,16 +230,16 @@ public class LevelSelector : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-                
+
         for (int i = 0; i < difficultyButtons.Length; i++)
         {
-            if(difficultyFilter == -1)
+            if (difficultyFilter == -1)
             {
                 difficultyButtons[i].gameObject.SetActive(true);
             }
             else
             {
-                if(difficultyFilter-1 != i)
+                if (difficultyFilter - 1 != i)
                 {
                     difficultyButtons[i].gameObject.SetActive(false);
                 }
@@ -285,26 +250,30 @@ public class LevelSelector : MonoBehaviour
             }
         }
 
-        IEnumerable<LevelTextAsset> levels;
-
         IEnumerable<LevelTextAsset> filteredLevels =
             difficultyFilter > 0 ? levelDatabase.Values.Where(level => level.difficulty == difficultyFilter) : levelDatabase.Values;
 
         if (sortType == SortType.Difficulty)
         {
-            levels = filteredLevels.OrderByDescending(level => level.difficulty);
+            var comparer = new NaturalComparer();
+            levelListDatabase = filteredLevels
+                        .OrderByDescending(level => level.difficulty)
+                        .ThenByDescending(level => level.name, comparer)
+                        .ToList();
         }
         else if (sortType == SortType.Name)
         {
             var comparer = new NaturalComparer();
-            levels = filteredLevels.OrderByDescending(level => level.name, comparer);
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
         }
         else
         {
-            levels = filteredLevels.OrderByDescending(level => level.dateModified);
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.dateCreated).ToList();
         }
 
-        foreach (var level in levels)
+        Debug.Log("Num levels: " + levelListDatabase.Count());
+
+        foreach (var level in levelListDatabase)
         {
             if (level != null)
             {
