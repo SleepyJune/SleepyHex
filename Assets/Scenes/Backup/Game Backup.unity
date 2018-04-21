@@ -655,12 +655,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eb46597a787e2be42bdde13c58661876, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &232288831 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114718418756999156, guid: eb46597a787e2be42bdde13c58661876,
-    type: 2}
-  m_PrefabInternal: {fileID: 232288830}
-  m_Script: {fileID: 11500000, guid: 56c34d9ac015b34418ac8ffe095d753e, type: 3}
 --- !u!224 &232288832 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224052795266327136, guid: eb46597a787e2be42bdde13c58661876,
@@ -2008,9 +2002,7 @@ MonoBehaviour:
   slotListParent: {fileID: 1580811430}
   levelNameField: {fileID: 247633637}
   levelSelector: {fileID: 1296265489}
-  amazonHelper: {fileID: 232288831}
   solveButton: {fileID: 1058699369}
-  checkButton: {fileID: 1717900052}
   rateButton: {fileID: 908789705}
   levelSolutionViewer: {fileID: 950044073}
   dialogParent: {fileID: 621615830}
@@ -3734,7 +3726,6 @@ MonoBehaviour:
   levelSelectionButton: {fileID: 1829426961096514, guid: 8a9df860acb9caf49ba80c98f7a400b1,
     type: 2}
   levelLoader: {fileID: 756398037}
-  amazonHelper: {fileID: 232288831}
   difficultyButtons:
   - {fileID: 166767950}
   - {fileID: 2036375055}

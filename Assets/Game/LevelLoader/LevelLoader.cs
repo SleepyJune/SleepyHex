@@ -40,6 +40,10 @@ public class LevelLoader : MonoBehaviour
         {
             Debug.Log("Loading " + level.levelName);
 
+            PlayerPrefs.SetString("currentLevel", level.levelName);
+            LevelManager.levelNameToLoad = level.levelName;
+            LevelManager.currentLevel = level;
+
             LoadLevelFeatures(level);
 
             gridManager = new GridManager();
@@ -68,6 +72,7 @@ public class LevelLoader : MonoBehaviour
             levelName = level.levelName,
             version = level.version,
             dateModified = level.dateModified,
+            dateCreated = level.dateCreated,
             solved = level.hasSolution,
             difficulty = level.difficulty,
         };

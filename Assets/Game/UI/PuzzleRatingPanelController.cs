@@ -24,17 +24,6 @@ public class PuzzleRatingPanelController : MonoBehaviour
             level.difficulty = (float)Math.Round(difficulty, 2);
 
             levelManager.Save(false, false);
-
-            /*LevelVersion version = new LevelVersion()
-            {
-                levelName = level.levelName,
-                version = level.version,
-                dateModified = level.dateModified,
-                solved = level.hasSolution,
-                difficulty = level.difficulty,
-            };
-
-            amazonHelper.UploadLevelVersion(version);*/
         }
     }
 }

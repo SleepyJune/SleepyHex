@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,16 +18,33 @@ public class LevelManager : LevelLoader
 
     public SolutionPopup solutionPopupPrefab;
 
+    public Image backgroundImage;
+
+    public static Level currentLevel = null;
+    public static string levelNameToLoad = null;
+
     void Start()
     {
         if(Application.platform == RuntimePlatform.WindowsEditor)
         {
             amazonHelper = AmazonS3Helper.instance;
-            rateButton.interactable = true;
+
+            if (rateButton)
+            {
+                rateButton.interactable = true;
+            }
         }
         else
         {
-            rateButton.interactable = false;
+            if (rateButton)
+            {
+                rateButton.interactable = false;
+            }
+        }
+
+        if(levelNameToLoad != null)
+        {
+            levelSelector.LoadLevel(levelNameToLoad);
         }
     }
 
@@ -45,6 +63,24 @@ public class LevelManager : LevelLoader
     public override void LoadLevelFeatures(Level level)
     {
         solveButton.interactable = level.hasSolution;
+        
+        ChangeRandomColor();
+    }
+
+    void ChangeRandomColor()
+    {
+        float h;
+        float s;
+        float v;
+
+        Color.RGBToHSV(backgroundImage.color, out h, out s, out v);
+
+        h = UnityEngine.Random.Range(0f, 1f);
+
+        var color = Color.HSVToRGB(h, s, v);
+        color.a = .4f;
+
+        backgroundImage.color = color;
     }
 
     public void Solve()
@@ -64,6 +100,11 @@ public class LevelManager : LevelLoader
             {
                 var solution = level.solution;
                 var score = path.GetTotalPoints();
+
+                Score.current = new Score(level, score);
+                SceneChanger.ChangeScene("Score");
+
+                return;
 
                 var popup = Instantiate(solutionPopupPrefab, dialogParent);
 

@@ -12,6 +12,11 @@ public class HelperFunctions : MonoBehaviour
         SceneChanger.ChangeScene(str);
     }
 
+    public void LoadSettingScene(string currentScene)
+    {
+        SettingsManager.LoadScene(currentScene);
+    }
+
     public void GameManagerExecute(string functionName)
     {
         GameManager.instance.SendMessage(functionName);
