@@ -53,6 +53,7 @@ public class LevelEditor : LevelLoader
         gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
 
         SetLevelName(level.levelName);
+        SetLevelID(level.levelID);
     }
 
     void GenerateTemplateSlots()
@@ -75,6 +76,19 @@ public class LevelEditor : LevelLoader
         if (level != null)
         {
             level.levelName = name;
+        }
+    }
+
+    public void OnChangeLevelID(string id)
+    {
+        if (level != null)
+        {
+            int num = 0;
+
+            if(int.TryParse(id, out num))
+            {
+                level.levelID = num;
+            }
         }
     }
 

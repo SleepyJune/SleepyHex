@@ -15,6 +15,7 @@ public class LevelLoader : MonoBehaviour
     protected GridManager gridManager;
 
     public InputField levelNameField;
+    public InputField levelIDField;
 
     public LevelSelector levelSelector;
 
@@ -59,6 +60,7 @@ public class LevelLoader : MonoBehaviour
             gridManager.MakeGrid(level, slotPrefab, slotListParent, this);
 
             SetLevelName(level.levelName);
+            SetLevelID(level.levelID);
         }
 
         return level;
@@ -116,6 +118,14 @@ public class LevelLoader : MonoBehaviour
         if (levelNameField)
         {
             levelNameField.text = name;
+        }
+    }
+
+    public void SetLevelID(int id)
+    {
+        if (levelIDField)
+        {
+            levelIDField.text = id.ToString();
         }
     }
 

@@ -8,16 +8,16 @@ using UnityEngine.UI;
 
 public class PuzzleRatingPanelController : MonoBehaviour
 {
-    LevelManager levelManager;
+    public LevelLoader levelLoader;
     
     void Start()
     {
-        levelManager = GameManager.instance.levelManager;
+        
     }
 
     public void SetLevelDifficulty(float difficulty)
     {
-        var level = levelManager.GetCurrentLevel();
+        var level = levelLoader.GetCurrentLevel();
 
         if(level != null)
         {
@@ -55,9 +55,11 @@ public class PuzzleRatingPanelController : MonoBehaviour
                 }
 
                 Debug.Log("Changed level id: " + level.levelID);
+
+                levelLoader.SetLevelID(level.levelID);
             }
 
-            levelManager.Save(false, false);
+            levelLoader.Save(false, false);
         }
     }
 }

@@ -2001,6 +2001,7 @@ MonoBehaviour:
     type: 2}
   slotListParent: {fileID: 1580811430}
   levelNameField: {fileID: 247633637}
+  levelIDField: {fileID: 0}
   levelSelector: {fileID: 1296265489}
   solveButton: {fileID: 1058699369}
   rateButton: {fileID: 908789705}
@@ -2008,6 +2009,7 @@ MonoBehaviour:
   dialogParent: {fileID: 621615830}
   solutionPopupPrefab: {fileID: 114902626294094348, guid: 4a9b79850c2fbfc4c931500f71a2bbb3,
     type: 2}
+  backgroundImage: {fileID: 0}
 --- !u!114 &756398038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4610,6 +4612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79229d03bffe3ae42b5aa723b42fbe96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelLoader: {fileID: 756398037}
 --- !u!114 &1564644218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4892,6 +4895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb67e46970371349a936ebaa7b3e451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingsPrefab: {fileID: 0}
 --- !u!1 &1670026059
 GameObject:
   m_ObjectHideFlags: 0
