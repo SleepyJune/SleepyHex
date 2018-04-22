@@ -299,10 +299,10 @@ public class LevelSelector : MonoBehaviour
         }
         else if (sortType == SortType.Name)
         {
-            //var comparer = new NaturalComparer();
-            //levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
+            var comparer = new NaturalComparer();
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
 
-            levelListDatabase = filteredLevels.OrderByDescending(level => level.levelID).ToList();
+            //levelListDatabase = filteredLevels.OrderByDescending(level => level.levelID).ToList();
         }
         else
         {
