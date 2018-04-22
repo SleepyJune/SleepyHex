@@ -20,7 +20,9 @@ public class ScoreManager : MonoBehaviour
 
             scoreText.text = score.points.ToString();
 
-            for(int i = 0; i < score.stars; i++)
+            score.SetStoredStars();
+
+            for (int i = 0; i < score.stars; i++)
             {
                 var star = stars[i];
                 star.SetBool("isEmpty", false);

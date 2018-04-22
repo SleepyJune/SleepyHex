@@ -24,6 +24,33 @@ public class Score
         GetStars();
     }
 
+    public static string GetStarsPrefKey(string levelName)
+    {
+        return "Level_" + levelName + "_Stars";
+    }
+
+    public static int GetStoredStars(string levelName)
+    {
+        return PlayerPrefs.GetInt(GetStarsPrefKey(levelName), 0);
+    }
+
+    public int GetStoredStars()
+    {
+        var storedStars = PlayerPrefs.GetInt(GetStarsPrefKey(level.levelName), 0);
+
+        return storedStars;
+    }
+
+    public void SetStoredStars()
+    {
+        var storedStars = GetStoredStars();
+
+        if (stars > storedStars)
+        {
+            PlayerPrefs.SetInt(GetStarsPrefKey(level.levelName), stars);
+        }
+    }
+
     public void GetStars()
     {
         if (level.hasSolution)

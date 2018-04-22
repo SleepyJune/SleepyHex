@@ -64,7 +64,7 @@ public class LevelSelector2 : MonoBehaviour
         
     public void SetDifficultyFilter(int difficulty)
     {
-        difficultyFilter = difficultyFilter == difficulty ? -1 : difficulty;
+        difficultyFilter = difficulty;
         PlayerPrefs.SetInt("difficultyFilter", difficultyFilter);
 
         RefreshList();

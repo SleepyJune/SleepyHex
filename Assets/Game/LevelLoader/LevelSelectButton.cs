@@ -23,6 +23,14 @@ public class LevelSelectButton : MonoBehaviour
         this.level = level;
 
         levelName.text = level.levelID.ToString();
+
+        var numStars = Score.GetStoredStars(level.name);
+
+        for (int i = 0; i < numStars; i++)
+        {
+            var star = stars[i];
+            star.SetActive(true);
+        }
     }
 
     public void LoadLevel()

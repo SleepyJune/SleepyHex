@@ -7,14 +7,16 @@ using UnityEngine;
 
 public class HelperFunctions : MonoBehaviour
 {
+    public SettingsManager settingsPrefab;
+
     public void LoadScene(string str)
     {
         SceneChanger.ChangeScene(str);
     }
 
-    public void LoadSettingScene(string currentScene)
+    public void LoadSettings()
     {
-        SettingsManager.LoadScene(currentScene);
+        var settings = Instantiate(settingsPrefab, transform);
     }
 
     public void GameManagerExecute(string functionName)

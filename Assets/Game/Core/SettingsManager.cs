@@ -5,18 +5,12 @@ using System.Text;
 
 using UnityEngine;
 
-public class SettingsManager : DialogWindow
+public class SettingsManager : MonoBehaviour
 {
-    public static string lastScene;
-
-    public static void LoadScene(string currentScene)
-    {
-        lastScene = currentScene;
-        SceneChanger.ChangeScene("Settings");
-    }
+    public Transform parent;
 
     public void Back()
     {
-        SceneChanger.ChangeScene(lastScene);
+        Destroy(parent.gameObject);
     }
 }
