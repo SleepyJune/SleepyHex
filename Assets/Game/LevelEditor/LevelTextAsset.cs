@@ -8,6 +8,8 @@ public class LevelTextAsset
     public string name;
     public string text;
 
+    public int levelID;
+
     public int localVersion;
     public int webVersion;
 

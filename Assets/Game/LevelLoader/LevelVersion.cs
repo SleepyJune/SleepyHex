@@ -14,6 +14,9 @@ public class LevelVersion
     public string levelName;
 
     [DynamoDBProperty]
+    public int levelID;
+
+    [DynamoDBProperty]
     public int version;
 
     [DynamoDBProperty]

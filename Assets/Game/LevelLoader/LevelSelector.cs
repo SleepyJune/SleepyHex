@@ -44,6 +44,8 @@ public class LevelSelector : MonoBehaviour
         amazonHelper = AmazonS3Helper.instance;
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
         LoadLevels();
+
+        //WriteLevelID();
     }
 
     void LoadLevels()
@@ -66,6 +68,29 @@ public class LevelSelector : MonoBehaviour
         else
         {
             RefreshList();
+        }
+    }
+
+    void WriteLevelID()
+    {
+        for (int i = 1; i <= 4; i++)
+        {
+            int levelID = 1;
+
+            IEnumerable<LevelTextAsset> filteredLevels =
+                levelDatabase.Values.Where(level => level.difficulty == i);
+
+            var comparer = new NaturalComparer();
+
+            foreach (var levelText in filteredLevels.OrderBy(level => level.name, comparer))
+            {
+                var level = Level.LoadLevel(levelText);
+                if (level != null)
+                {
+                    level.levelID = levelID++;
+                    level.SaveLevel(false);
+                }
+            }
         }
     }
 
@@ -94,6 +119,7 @@ public class LevelSelector : MonoBehaviour
                 level.dateModified = dateModified;
                 level.webVersionFile = file;
                 level.difficulty = file.difficulty;
+                level.levelID = file.levelID;
             }
             else
             {
@@ -101,6 +127,7 @@ public class LevelSelector : MonoBehaviour
 
                 levelTextAsset.webVersionFile = file;
                 levelTextAsset.difficulty = file.difficulty;
+                levelTextAsset.levelID = file.levelID;
 
                 AddLevel(levelTextAsset);
             }
@@ -156,6 +183,7 @@ public class LevelSelector : MonoBehaviour
                 levelTextAsset.localVersion = level.version;
                 levelTextAsset.hasSolution = level.hasSolution;
                 levelTextAsset.difficulty = level.difficulty;
+                levelTextAsset.levelID = level.levelID;
 
                 levelTextAsset.dateCreated = DateTime.Parse(level.dateCreated);
                 levelTextAsset.dateModified = DateTime.Parse(level.dateModified);
@@ -176,6 +204,7 @@ public class LevelSelector : MonoBehaviour
                 {
                     //category = "Default",
                     levelName = levelName,
+                    levelID = level.levelID,
                     version = level.version,
                     solved = level.hasSolution,
                     difficulty = level.difficulty,
@@ -263,8 +292,10 @@ public class LevelSelector : MonoBehaviour
         }
         else if (sortType == SortType.Name)
         {
-            var comparer = new NaturalComparer();
-            levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
+            //var comparer = new NaturalComparer();
+            //levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
+
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.levelID).ToList();
         }
         else
         {

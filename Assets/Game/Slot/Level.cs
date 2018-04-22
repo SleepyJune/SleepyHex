@@ -20,6 +20,8 @@ public class Level
 {
     public string levelName = "New Level";
 
+    public int levelID;
+
     public int version;
     
     public float difficulty;
@@ -188,7 +190,8 @@ public class Level
         levelText.text = levelStr;
         levelText.hasSolution = hasSolution;
         levelText.difficulty = difficulty;
-
+        levelText.levelID = levelID;
+        
         Debug.Log("Saved to: " + filePath);
 
         return levelText;
