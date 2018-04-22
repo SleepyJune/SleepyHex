@@ -44,7 +44,7 @@ public class LevelManager : LevelLoader
 
         if(levelNameToLoad != null)
         {
-            levelSelector.LoadLevel(levelNameToLoad);
+            LoadLevel(levelNameToLoad);
         }
     }
 

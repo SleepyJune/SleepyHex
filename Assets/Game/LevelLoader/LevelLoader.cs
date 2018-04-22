@@ -31,6 +31,15 @@ public class LevelLoader : MonoBehaviour
         level = null;
     }
 
+    public void LoadLevel(string name)
+    {
+        LevelTextAsset levelText;
+        if (LevelSelector.levelDatabase.TryGetValue(name, out levelText))
+        {
+            Load(levelText);
+        }
+    }
+
     public Level Load(LevelTextAsset levelText)
     {
         Clear();

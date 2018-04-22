@@ -38,7 +38,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
         get { return RegionEndpoint.GetBySystemName(DynamoRegion); }
     }
 
-    void Start()
+    void Awake()
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
