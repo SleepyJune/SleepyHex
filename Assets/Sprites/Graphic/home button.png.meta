@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cabe67c366de66b4ba2aa7fd31f4a3ab
-timeCreated: 1524249162
+guid: 2d3c2de57802d194dbf9f351bf7e7ba7
+timeCreated: 1524346560
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: home button 1_0
+    21300000: home button_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -91,7 +91,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: home button 1_0
+      name: home button_0
       rect:
         serializedVersion: 2
         x: 11
