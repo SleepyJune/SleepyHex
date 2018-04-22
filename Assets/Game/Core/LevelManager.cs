@@ -69,6 +69,11 @@ public class LevelManager : LevelLoader
 
     void ChangeRandomColor()
     {
+        if(backgroundImage == null)
+        {
+            return;
+        }
+
         float h;
         float s;
         float v;
