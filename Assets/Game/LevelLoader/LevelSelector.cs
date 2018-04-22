@@ -7,8 +7,10 @@ using System.IO;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 using Amazon.S3.Model;
+
 
 public class LevelSelector : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class LevelSelector : MonoBehaviour
 
     public LevelLoader levelLoader;
 
-    AmazonS3Helper amazonHelper;
+    protected AmazonS3Helper amazonHelper;
 
     public Button[] difficultyButtons;
 
@@ -40,6 +42,11 @@ public class LevelSelector : MonoBehaviour
     public int difficultyFilter = -1;
 
     void Start()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
     {
         amazonHelper = AmazonS3Helper.instance;
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
@@ -254,7 +261,7 @@ public class LevelSelector : MonoBehaviour
     }
 
     public void RefreshList()
-    {
+    {        
         foreach (Transform child in levelList)
         {
             Destroy(child.gameObject);
@@ -299,7 +306,7 @@ public class LevelSelector : MonoBehaviour
         }
         else
         {
-            levelListDatabase = filteredLevels.OrderByDescending(level => level.dateCreated).ToList();
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.dateModified).ToList();
         }
 
         Debug.Log("Num levels: " + levelListDatabase.Count());
