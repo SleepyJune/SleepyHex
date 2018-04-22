@@ -2770,7 +2770,7 @@ MonoBehaviour:
   - {fileID: 2036375055}
   - {fileID: 884564179}
   - {fileID: 683056942}
-  sortType: 2
+  sortType: 1
 --- !u!1 &1321620712
 GameObject:
   m_ObjectHideFlags: 0
@@ -3398,7 +3398,7 @@ Prefab:
     - target: {fileID: 114405895024356436, guid: f528e805be75f8b41939ab12435e568c,
         type: 2}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114405895024356436, guid: f528e805be75f8b41939ab12435e568c,
         type: 2}

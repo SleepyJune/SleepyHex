@@ -23,6 +23,12 @@ public class PuzzleRatingPanelController : MonoBehaviour
         {
             level.difficulty = (float)Math.Round(difficulty, 2);
 
+            if(level.levelID == 0)
+            {
+                var index = LevelSelector.levelDatabase.Values.Where(other => other.difficulty == level.difficulty).Count();
+                level.levelID = index + 1;
+            }
+
             levelManager.Save(false, false);
         }
     }

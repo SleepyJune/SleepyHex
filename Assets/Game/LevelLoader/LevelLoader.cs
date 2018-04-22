@@ -70,6 +70,7 @@ public class LevelLoader : MonoBehaviour
         LevelVersion version = new LevelVersion()
         {
             levelName = level.levelName,
+            levelID = level.levelID,
             version = level.version,
             dateModified = level.dateModified,
             dateCreated = level.dateCreated,

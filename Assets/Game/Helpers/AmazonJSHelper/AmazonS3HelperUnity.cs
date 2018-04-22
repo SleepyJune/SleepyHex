@@ -186,6 +186,7 @@ public class AmazonS3HelperUnity : MonoBehaviour
                     {
                         //category = item["levelName"].S,
                         levelName = item["levelName"].S,
+                        levelID = Int32.Parse(item["levelID"].N),
                         version = Int32.Parse(item["version"].N),
                         solved = item["version"].BOOL,
                         dateModified = item["dateModified"].S,
