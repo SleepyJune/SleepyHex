@@ -29,12 +29,13 @@ public class PathManager : MonoBehaviour
     bool isMouseDown = false;
 
     LevelManager levelManager;
-
+    
     void Start()
     {
         levelManager = GameManager.instance.levelManager;
 
         TouchInputManager.instance.touchStart += OnTouchStart;
+        TouchInputManager.instance.touchMove += OnTouchMove;
         TouchInputManager.instance.touchEnd += OnTouchEnd;
 
         sumText.text = "";
@@ -43,6 +44,50 @@ public class PathManager : MonoBehaviour
     private void OnTouchStart(Touch touch)
     {
         isMouseDown = true;
+    }
+
+    private void OnTouchMove(Touch touch)
+    {
+        if (isMouseDown && path != null)
+        {
+            var grid = levelManager.GetGridManager();
+
+            var lastSlot = path.GetLastPoint();
+
+            var uiSlot = grid.GetUISlot(lastSlot.slot.position);
+            if (uiSlot != null)
+            {               
+                if(uiSlot.gameSlot != null && uiSlot.gameSlot.isSelected)
+                {
+                    return;
+                }
+
+                var touchPos = new Vector3(touch.position.x, touch.position.y, 0);
+                var slotPos = Camera.main.WorldToScreenPoint(uiSlot.transform.position);
+                slotPos.z = 0;
+
+                var dir = (touchPos - slotPos).normalized;
+
+                foreach(var neighbour in uiSlot.slot.neighbours)
+                {
+                    var neighbourUiSlot = grid.GetUISlot(neighbour.position);
+                    if (neighbourUiSlot != null)
+                    {
+                        var neighbourDir = (neighbourUiSlot.transform.position - uiSlot.transform.position).normalized;
+
+                        var dot = Vector3.Dot(neighbourDir, dir);
+
+                        if (dot >= .99)
+                        {
+                            var gameSlot = neighbourUiSlot.GetComponent<UIGameSlot>();
+                            OnGameSlotEnter(gameSlot);
+                            
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void OnTouchEnd(Touch touch)

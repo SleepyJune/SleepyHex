@@ -72,8 +72,6 @@ public class Score
 
                 stars = percent >= .5f ? 2 : 1;
             }
-
-            Debug.Log(stars);
         }
     }
 }

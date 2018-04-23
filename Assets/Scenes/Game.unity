@@ -734,11 +734,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 621615829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb67e46970371349a936ebaa7b3e451, type: 3}
+  m_Script: {fileID: 11500000, guid: 1070c6f15e61fe44d8a1d4743d13a775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsPrefab: {fileID: 114221889083334250, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+  dialoguePrefab: {fileID: 1293244506385630, guid: 14401e6baac709d4ea5b7bfb69f2466e,
     type: 2}
+  parent: {fileID: 0}
 --- !u!1 &745086740
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,6 +948,7 @@ MonoBehaviour:
     type: 2}
   slotListParent: {fileID: 1580811430}
   levelNameField: {fileID: 0}
+  levelIDField: {fileID: 0}
   levelSelector: {fileID: 0}
   solveButton: {fileID: 359160866}
   rateButton: {fileID: 0}
@@ -1652,7 +1654,7 @@ Prefab:
     - target: {fileID: 114591521553551878, guid: 38a87dc3cb1f0a445bb149bb23f6704e,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadSettings
+      value: Show
       objectReference: {fileID: 0}
     - target: {fileID: 114591521553551878, guid: 38a87dc3cb1f0a445bb149bb23f6704e,
         type: 2}
@@ -2129,6 +2131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79229d03bffe3ae42b5aa723b42fbe96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelLoader: {fileID: 0}
 --- !u!114 &1564644218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2408,7 +2411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb67e46970371349a936ebaa7b3e451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsPrefab: {fileID: 0}
 --- !u!1 &1673992543
 GameObject:
   m_ObjectHideFlags: 0
