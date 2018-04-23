@@ -302,7 +302,7 @@ Prefab:
     - target: {fileID: 114249677393382662, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114249677393382662, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
         type: 2}
@@ -313,16 +313,21 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1479018879}
+      objectReference: {fileID: 737568487}
     - target: {fileID: 114249677393382662, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
+      value: LoadScene
       objectReference: {fileID: 0}
     - target: {fileID: 114249677393382662, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114249677393382662, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Home
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b3dc2d98a964854b8e0ccecc9fde6b3, type: 2}
@@ -517,6 +522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 737568485}
   - component: {fileID: 737568486}
+  - component: {fileID: 737568487}
   m_Layer: 5
   m_Name: LevelSelector
   m_TagString: Untagged
@@ -561,6 +567,17 @@ MonoBehaviour:
   levelLoader: {fileID: 0}
   difficultyButtons: []
   sortType: 1
+--- !u!114 &737568487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 737568484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb67e46970371349a936ebaa7b3e451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &875724467
 Prefab:
   m_ObjectHideFlags: 0
@@ -1207,7 +1224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1479018878
 RectTransform:
   m_ObjectHideFlags: 0
