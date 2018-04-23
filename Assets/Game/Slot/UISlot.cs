@@ -26,15 +26,32 @@ public class UISlot : MonoBehaviour
 
     int iconState;
 
+    Canvas canvas;
+    RectTransform rect;
+
+    [NonSerialized]
+    public UIGameSlot gameSlot;
+
     void Start()
     {
         buttonImage.alphaHitTestMinimumThreshold = .05f;
+
+        rect = GetComponent<RectTransform>();
+        canvas = transform.root.GetComponent<Canvas>();
+
+        gameSlot = GetComponent<UIGameSlot>();
 
         if (slot != null)
         {
             SetNumber(slot.number);
             ToggleText(false);
         }
+    }
+
+    public Vector2 GetScreenPosition()
+    {        
+        var pos = rect.anchoredPosition;
+        return RectTransformUtility.PixelAdjustPoint(pos, canvas.transform, canvas);
     }
 
     public void SetBackgroundSaturation(float saturation)

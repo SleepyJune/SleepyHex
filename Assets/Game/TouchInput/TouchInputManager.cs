@@ -84,7 +84,7 @@ public class TouchInputManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButton(0) && Input.mousePosition != lastMousePosition)
+            if (Input.GetMouseButton(0))// && Input.mousePosition != lastMousePosition)
             {
                 var touchData = new Touch();
                 touchData.fingerId = -1;
@@ -142,8 +142,8 @@ public class TouchInputManager : MonoBehaviour
                         }
                     }
                 }
-
-                if (touch.phase == TouchPhase.Moved)
+                                
+                if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
                 {
                     if (UpdateTouchPosition(touch.fingerId, touch.position) && touchMove != null)
                     {
