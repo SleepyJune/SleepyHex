@@ -23,6 +23,7 @@ public class LevelSelector : MonoBehaviour
         DateModified,
         Name,
         Difficulty,
+        ID,
     }
 
     public Transform levelList;
@@ -240,9 +241,17 @@ public class LevelSelector : MonoBehaviour
 
     void AddButton(LevelTextAsset levelText)
     {
-        var newButton = Instantiate(levelSelectionButton, levelList);
-        newButton.GetComponentInChildren<Text>().text = levelText.name;
+        var newButton = Instantiate(levelSelectionButton, levelList);        
         newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.name));
+
+        if(sortType == SortType.ID)
+        {
+            newButton.GetComponentInChildren<Text>().text = levelText.levelID.ToString();
+        }
+        else
+        {
+            newButton.GetComponentInChildren<Text>().text = levelText.name;
+        }
 
         if (levelText.webVersion > levelText.localVersion ||
             (levelText.webVersionFile != null && !levelText.hasSolution && levelText.webVersionFile.solved))
@@ -315,6 +324,10 @@ public class LevelSelector : MonoBehaviour
             levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
 
             //levelListDatabase = filteredLevels.OrderByDescending(level => level.levelID).ToList();
+        }
+        else if(sortType == SortType.ID)
+        {
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.levelID).ToList();
         }
         else
         {
