@@ -34,6 +34,8 @@ public class LevelSelector2 : MonoBehaviour
     [NonSerialized]
     public int difficultyFilter = -1;
 
+    public DialogWindow difficultyPanel;
+
     void Start()
     {
         Initialize();
@@ -42,6 +44,12 @@ public class LevelSelector2 : MonoBehaviour
     public void Initialize()
     {
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
+
+        if(difficultyFilter != -1)
+        {
+            difficultyPanel.Close();
+        }
+
         LoadLevels();
 
         //WriteLevelID();
@@ -177,7 +185,7 @@ public class LevelSelector2 : MonoBehaviour
         }
 
         IEnumerable<LevelTextAsset> filteredLevels =
-            difficultyFilter > 0 ? LevelSelector.levelDatabase.Values.Where(level => level.difficulty == difficultyFilter) 
+            difficultyFilter > 0 ? LevelSelector.levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == difficultyFilter) 
                                         : new List<LevelTextAsset>();
 
         if (sortType == SortType.Difficulty)
