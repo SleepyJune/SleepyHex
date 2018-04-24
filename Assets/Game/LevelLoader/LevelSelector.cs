@@ -102,6 +102,27 @@ public class LevelSelector : MonoBehaviour
         }
     }
 
+    void WriteLevelDifficulty()
+    {
+        for (int i = 1; i <= 4; i++)
+        {
+            IEnumerable<LevelTextAsset> filteredLevels =
+                levelDatabase.Values.Where(level => level.difficulty == i);
+
+            var comparer = new NaturalComparer();
+
+            foreach (var levelText in filteredLevels.OrderBy(level => level.name, comparer))
+            {
+                var level = Level.LoadLevel(levelText);
+                if (level != null)
+                {
+                    level.difficulty += .5f;
+                    level.SaveLevel(false);
+                }
+            }
+        }
+    }
+
     public void SetDifficultyFilter(int difficulty)
     {
         difficultyFilter = difficultyFilter == difficulty ? -1 : difficulty;
@@ -194,15 +215,13 @@ public class LevelSelector : MonoBehaviour
             //upload versions
             /*LevelVersion version = new LevelVersion()
             {
-                //category = "Default",
-                levelName = levelName,
+                levelName = level.levelName,
                 levelID = level.levelID,
                 version = level.version,
                 solved = level.hasSolution,
                 difficulty = level.difficulty,
                 dateCreated = level.dateCreated,
                 dateModified = levelTextAsset.dateModified.ToString(),
-                //timestamp = levelTextAsset.dateModified.GetUnixEpoch(),
 
             };
 
@@ -308,7 +327,7 @@ public class LevelSelector : MonoBehaviour
         }
 
         IEnumerable<LevelTextAsset> filteredLevels =
-            difficultyFilter > 0 ? levelDatabase.Values.Where(level => level.difficulty == difficultyFilter) : levelDatabase.Values;
+            difficultyFilter > 0 ? levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == difficultyFilter) : levelDatabase.Values;
 
         if (sortType == SortType.Difficulty)
         {

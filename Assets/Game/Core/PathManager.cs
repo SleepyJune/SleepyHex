@@ -29,6 +29,8 @@ public class PathManager : MonoBehaviour
     bool isMouseDown = false;
 
     LevelManager levelManager;
+
+    public bool canFillSlots = true;
     
     void Start()
     {
@@ -120,6 +122,11 @@ public class PathManager : MonoBehaviour
 
     public void OnGameSlotPressed(UIGameSlot gameSlot)
     {
+        if (!canFillSlots)
+        {
+            return;
+        }
+
         var slot = gameSlot.uiSlot.slot;
 
         if(path != null)
@@ -154,7 +161,7 @@ public class PathManager : MonoBehaviour
 
     public void OnGameSlotEnter(UIGameSlot gameSlot)
     {
-        if (!isMouseDown)
+        if (!isMouseDown || !canFillSlots)
         {
             return;
         }
@@ -190,6 +197,7 @@ public class PathManager : MonoBehaviour
                     
                     if(path.waypoints.Count == levelManager.GetCurrentLevel().map.Values.Count)
                     {
+                        canFillSlots = false;
                         Invoke("CheckSolution", .25f);
                     }                   
                 }

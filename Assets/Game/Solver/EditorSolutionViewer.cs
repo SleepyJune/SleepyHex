@@ -22,16 +22,6 @@ public class EditorSolutionViewer : LevelSolutionViewer
         this.paths = solvedPaths;
     }
 
-    public void SetPuzzleRating(Level level)
-    {
-        if(slotsVisited > 0)
-        {
-            var rating = PuzzleRating.RatePuzzle(level, slotsVisited);
-
-            solutionText.text += "\nRating: " + rating;
-        }
-    }
-
     public void Next()
     {
         if(paths != null)

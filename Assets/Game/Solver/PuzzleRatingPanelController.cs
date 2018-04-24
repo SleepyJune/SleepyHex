@@ -9,10 +9,67 @@ using UnityEngine.UI;
 public class PuzzleRatingPanelController : MonoBehaviour
 {
     public LevelLoader levelLoader;
-    
+
+    public Toggle[] toggles;
+
+    public InputField diffInput;
+
+    float difficulty;
+
+    int bigDifficulty = 1;
+    float smallDifficulty = .5f;
+
     void Start()
     {
+        for(int i=0;i<toggles.Length;i++)
+        {
+            var toggle = toggles[i];
+
+            var num = i;
+
+            toggle.onValueChanged.AddListener((isSelected) =>
+            {
+                if (!isSelected)
+                {
+                    return;
+                }
+
+                SetDifficultyToggle(num+1);
+            });
+        }
         
+        RefreshDifficultyInput();
+    }
+
+    public void RefreshDifficultyInput()
+    {
+        difficulty = bigDifficulty + smallDifficulty;
+        diffInput.text = difficulty.ToString();
+    }
+
+    public void SetDifficultyToggle(int difficulty)
+    {
+        bigDifficulty = difficulty;
+        RefreshDifficultyInput();
+    }
+
+    public void SetSliderDifficulty(float difficulty)
+    {
+        smallDifficulty = (float)Math.Round(difficulty,1);
+        RefreshDifficultyInput();
+    }
+
+    public void OnSetButtonPressed()
+    {
+        float difficulty;
+        if(float.TryParse(diffInput.text, out difficulty))
+        {
+            SetLevelDifficulty(difficulty);
+        }
+        else
+        {
+            Debug.Log("Invalid difficulty");
+        }
     }
 
     public void SetLevelDifficulty(float difficulty)
@@ -58,6 +115,8 @@ public class PuzzleRatingPanelController : MonoBehaviour
 
                 levelLoader.SetLevelID(level.levelID);
             }
+
+            Debug.Log("Set difficulty: " + level.difficulty);
 
             levelLoader.Save(false, false);
         }
