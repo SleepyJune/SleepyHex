@@ -1323,7 +1323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb67e46970371349a936ebaa7b3e451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsPrefab: {fileID: 0}
 --- !u!114 &1405807367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2001,7 +2000,7 @@ Prefab:
     - target: {fileID: 114284506369873696, guid: 4b6f653f2e308aa43bce6dbd09432d13,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Levels
+      value: Game
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f653f2e308aa43bce6dbd09432d13, type: 2}

@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized]
     public LevelManager levelManager;
+    
+    public ScoreManager scoreManager;
 
     void Awake()
     {
@@ -29,5 +31,11 @@ public class GameManager : MonoBehaviour
 
         pathManager = GetComponent<PathManager>();
         levelManager = GetComponent<LevelManager>();
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        pathManager.ClearPath();
+        levelManager.LoadLevel(levelName);
     }
 }

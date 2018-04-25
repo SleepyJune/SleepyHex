@@ -12,21 +12,41 @@ public class ScoreManager : MonoBehaviour
 
     public Animator[] stars;
 
+    public LevelSelector2 levelSelector;
+
+    public DialogWindow scorePanel;
+
     void Start()
     {
-        if(Score.current != null)
+
+    }
+
+    public void SetStars(Score score)
+    {
+        if (score != null)
         {
-            var score = Score.current;
+            scorePanel.Show(); //need this here for reseting all animations first
 
             scoreText.text = score.points.ToString();
 
             score.SetStoredStars();
-
+            
             for (int i = 0; i < score.stars; i++)
             {
                 var star = stars[i];
                 star.SetBool("isEmpty", false);
-            }
+            }            
+        }
+    }
+
+    public void Restart()
+    {
+        var current = LevelManager.currentLevel;
+
+        if (current != null)
+        {
+            GameManager.instance.LoadLevel(current.levelName);
+            scorePanel.Close();
         }
     }
 
@@ -41,8 +61,11 @@ public class ScoreManager : MonoBehaviour
             {
                 var next = LevelSelector.levelListDatabase[index + 1];
 
-                LevelManager.levelNameToLoad = next.name;
-                SceneChanger.ChangeScene("Game");
+                GameManager.instance.LoadLevel(next.name);
+                scorePanel.Close();
+
+                //LevelManager.levelNameToLoad = next.name;
+                //SceneChanger.ChangeScene("Game");
             }
         }
     }

@@ -12,15 +12,18 @@ public class LevelSelectButton : MonoBehaviour
     public GameObject[] stars;
     
     LevelTextAsset level;
+
+    LevelSelector2 levelSelector;
     
     void Start()
     {
 
     }
 
-    public void SetButton(LevelTextAsset level)
+    public void SetButton(LevelTextAsset level, LevelSelector2 levelSelector)
     {
         this.level = level;
+        this.levelSelector = levelSelector;
 
         levelName.text = level.levelID.ToString();
 
@@ -35,7 +38,9 @@ public class LevelSelectButton : MonoBehaviour
 
     public void LoadLevel()
     {
-        LevelManager.levelNameToLoad = level.name;
-        SceneChanger.ChangeScene("Game");
+        //LevelManager.levelNameToLoad = level.name;
+        //SceneChanger.ChangeScene("Game");
+
+        levelSelector.LoadLevel(level.name);
     }
 }

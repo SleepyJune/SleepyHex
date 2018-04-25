@@ -36,6 +36,8 @@ public class LevelSelector2 : MonoBehaviour
 
     public DialogWindow difficultyPanel;
 
+    DialogWindow selectorPanel;
+
     void Start()
     {
         Initialize();
@@ -45,7 +47,9 @@ public class LevelSelector2 : MonoBehaviour
     {
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
 
-        if(difficultyFilter != -1)
+        selectorPanel = GetComponent<DialogWindow>();
+
+        if (difficultyFilter != -1)
         {
             difficultyPanel.Close();
         }
@@ -69,7 +73,7 @@ public class LevelSelector2 : MonoBehaviour
             RefreshList();
         }
     }
-        
+
     public void SetDifficultyFilter(int difficulty)
     {
         difficultyFilter = difficulty;
@@ -177,6 +181,12 @@ public class LevelSelector2 : MonoBehaviour
         RefreshList();
     }
 
+    public void LoadLevel(string levelName)
+    {
+        GameManager.instance.LoadLevel(levelName);
+        selectorPanel.Close();
+    }
+
     public void RefreshList()
     {        
         foreach (Transform child in levelList)
@@ -215,7 +225,7 @@ public class LevelSelector2 : MonoBehaviour
             if (level != null)
             {
                 var newButton = Instantiate(levelSelectionButton, levelList);
-                newButton.GetComponent<LevelSelectButton>().SetButton(level);
+                newButton.GetComponent<LevelSelectButton>().SetButton(level, this);
             }
         }
     }    
