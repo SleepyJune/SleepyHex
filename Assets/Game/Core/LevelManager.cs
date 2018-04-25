@@ -25,27 +25,23 @@ public class LevelManager : LevelLoader
 
     void Start()
     {
-        if(Application.platform == RuntimePlatform.WindowsEditor)
+        if (rateButton)
         {
-            amazonHelper = AmazonS3Helper.instance;
-
-            if (rateButton)
+            if (Application.platform == RuntimePlatform.WindowsEditor)
             {
+                amazonHelper = AmazonS3Helper.instance;
                 rateButton.interactable = true;
             }
-        }
-        else
-        {
-            if (rateButton)
+            else
             {
                 rateButton.interactable = false;
             }
         }
 
-        if(levelNameToLoad != null)
+        /*if (levelNameToLoad != null)
         {
             LoadLevel(levelNameToLoad);
-        }
+        }*/
     }
 
     public override bool isValidSlot(Slot slot)
@@ -63,13 +59,13 @@ public class LevelManager : LevelLoader
     public override void LoadLevelFeatures(Level level)
     {
         solveButton.interactable = level.hasSolution;
-        
+
         ChangeRandomColor();
     }
 
     void ChangeRandomColor()
     {
-        if(backgroundImage == null)
+        if (backgroundImage == null)
         {
             return;
         }
@@ -98,40 +94,20 @@ public class LevelManager : LevelLoader
 
     public void Check()
     {
-        if(level.hasSolution)
+        if (level.hasSolution)
         {
             var path = GameManager.instance.pathManager.GetPath();
-            if(path != null)
+            if (path != null)
             {
                 var solution = level.solution;
-                var score = path.GetTotalPoints();
+                var points = path.GetTotalPoints();
 
-                Score.current = new Score(level, score);
-                SceneChanger.ChangeScene("Score");
+                var newScore = new Score(level, points);
 
-                return;
+                GameManager.instance.scoreManager.SetStars(newScore);
 
-                var popup = Instantiate(solutionPopupPrefab, dialogParent);
-
-                if (path.isSolution(level))
-                {
-                    if (score == solution.bestScore)
-                    {
-                        popup.SetType(SolutionType.BestSolution);
-                    }
-                    else if (score == solution.worstScore)
-                    {
-                        popup.SetType(SolutionType.WorstSolution);
-                    }
-                    else
-                    {
-                        popup.SetType(SolutionType.Solution);
-                    }
-                }
-                else
-                {
-                    popup.SetType(SolutionType.NoSolution);
-                }
+                //Score.current = new Score(level, score);
+                //SceneChanger.ChangeScene("Score");
             }
         }
     }

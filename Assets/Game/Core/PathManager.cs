@@ -115,6 +115,7 @@ public class PathManager : MonoBehaviour
         }
 
         path = null;
+        canFillSlots = true;
 
         ResetAllBlanks();
         UpdateSumText();
