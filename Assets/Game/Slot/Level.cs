@@ -42,6 +42,9 @@ public class Level
     [NonSerialized]
     public bool isInitialized;
 
+    [NonSerialized]
+    public bool isSolvedInEditor;
+
     public Level(int columns, int rows)
     {
         map = new Dictionary<Vector3, Slot>();
@@ -105,9 +108,9 @@ public class Level
         slots = map.Values.ToArray();
     }
 
-    public void AddSlotsToMap()
+    public void Initialize(bool reinitialize = false)
     {
-        if (isInitialized)
+        if (isInitialized && !reinitialize)
         {
             return;
         }
@@ -125,10 +128,7 @@ public class Level
         //Add neighbours
         foreach(var slot in map.Values)
         {
-            if (slot.neighbours == null)
-            {
-                slot.neighbours = new HashSet<Slot>();
-            }
+            slot.neighbours = new HashSet<Slot>();
 
             foreach (var direction in VectorExtensions.directions)
             {
@@ -153,6 +153,22 @@ public class Level
         }
     }
 
+    public bool isNewLevel
+    {
+        get
+        {
+            return !LevelSelector.levelDatabase.ContainsKey(levelName);
+        }
+    }
+
+    public bool canSave
+    {
+        get
+        {
+            return hasSolution && difficulty != 0 && levelName != "New Level";
+        }
+    }
+
     public IDictionary<string, string> GetMetadata()
     {
         IDictionary<string, string> data = new Dictionary<string, string>()
@@ -166,13 +182,6 @@ public class Level
 
     public LevelTextAsset SaveLevel(bool modified = true)
     {
-        if (modified)
-        {
-            dateModified = DateTime.UtcNow.ToString();
-            difficulty = 0;
-            version += 1;
-        }
-
         slots = map.Values.Where(s => s.number >= 0).ToArray();
 
         string levelStr = JsonUtility.ToJson(this);
@@ -207,7 +216,7 @@ public class Level
 
             if (level != null)
             {
-                level.AddSlotsToMap();
+                level.Initialize();
                 return level;
             }
             else

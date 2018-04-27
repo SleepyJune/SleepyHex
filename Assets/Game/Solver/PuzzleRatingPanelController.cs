@@ -6,6 +6,8 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
 public class PuzzleRatingPanelController : MonoBehaviour
 {
     public LevelLoader levelLoader;
@@ -47,6 +49,20 @@ public class PuzzleRatingPanelController : MonoBehaviour
         diffInput.text = difficulty.ToString();
     }
 
+    public void ShowCurrentDifficulty()
+    {
+        var level = levelLoader.GetCurrentLevel();
+
+        if (level != null)
+        {
+            if (level.difficulty > 0)
+            {
+                difficulty = level.difficulty;
+                diffInput.text = difficulty.ToString();
+            }
+        }
+    }
+
     public void SetDifficultyToggle(int difficulty)
     {
         bigDifficulty = difficulty;
@@ -64,11 +80,32 @@ public class PuzzleRatingPanelController : MonoBehaviour
         float difficulty;
         if(float.TryParse(diffInput.text, out difficulty))
         {
-            SetLevelDifficulty(difficulty);
+            Scene scene = SceneManager.GetActiveScene();
+
+            if(scene.name == "LevelEditor")
+            {
+                SetLevelDifficulty2(difficulty);
+            }
+            else
+            {
+                SetLevelDifficulty(difficulty);
+            }
         }
         else
         {
             Debug.Log("Invalid difficulty");
+        }
+    }
+
+    public void SetLevelDifficulty2(float difficulty)
+    {
+        var level = levelLoader.GetCurrentLevel();
+
+        if (level != null)
+        {
+            level.difficulty = (float)Math.Round(difficulty, 2);
+
+            AutoSetID(level);
         }
     }
 
@@ -80,45 +117,50 @@ public class PuzzleRatingPanelController : MonoBehaviour
         {
             level.difficulty = (float)Math.Round(difficulty, 2);
 
-            var filtered = LevelSelector.levelDatabase.Values.Where(other => other.difficulty == level.difficulty).ToList();
-            var levelIds = filtered.Select(o => o.levelID);
-
-            bool changeId = false;
-
-            if(level.levelID == 0 || level.levelID > filtered.Count) //not in the list
-            {
-                changeId = true;
-            }
-            else
-            {
-                var other = filtered.FirstOrDefault(o => o.levelID == level.levelID && o.name != level.levelName);
-                if (other != null) //same id but different name
-                {
-                    changeId = true;
-                }
-            }
-
-            if (changeId)
-            {
-                var unfilled = Enumerable.Range(1, filtered.Count).Except(levelIds).FirstOrDefault();
-
-                if (unfilled != 0)
-                {
-                    level.levelID = unfilled;
-                }
-                else
-                {
-                    level.levelID = filtered.Count + 1;
-                }
-
-                Debug.Log("Changed level id: " + level.levelID);
-
-                levelLoader.SetLevelID(level.levelID);
-            }
+            AutoSetID(level);
 
             Debug.Log("Set difficulty: " + level.difficulty);
 
             levelLoader.Save(false, false);
+        }
+    }
+
+    public void AutoSetID(Level level)
+    {
+        var filtered = LevelSelector.levelDatabase.Values.Where(other => Math.Floor(other.difficulty) == Math.Floor(level.difficulty)).ToList();
+        var levelIds = filtered.Select(o => o.levelID);
+
+        bool changeId = false;
+
+        if (level.levelID == 0 || level.levelID > filtered.Count) //not in the list
+        {
+            changeId = true;
+        }
+        else
+        {
+            var other = filtered.FirstOrDefault(o => o.levelID == level.levelID && o.name != level.levelName);
+            if (other != null) //same id but different name
+            {
+                changeId = true;
+            }
+        }
+
+        if (changeId)
+        {
+            var unfilled = Enumerable.Range(1, filtered.Count).Except(levelIds).FirstOrDefault();
+
+            if (unfilled != 0)
+            {
+                level.levelID = unfilled;
+            }
+            else
+            {
+                level.levelID = filtered.Count + 1;
+            }
+
+            Debug.Log("Changed level id: " + level.levelID);
+
+            levelLoader.SetLevelID(level.levelID);
         }
     }
 }
