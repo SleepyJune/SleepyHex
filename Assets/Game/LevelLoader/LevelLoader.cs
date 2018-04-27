@@ -94,11 +94,6 @@ public class LevelLoader : MonoBehaviour
         amazonHelper.UploadLevelVersion(version);
 
         //saveScreen.SetActive(false);
-
-        if (softLoad)
-        {
-            SoftLoad(levelText);
-        }
     }
 
     public Level SoftLoad(LevelTextAsset levelText)

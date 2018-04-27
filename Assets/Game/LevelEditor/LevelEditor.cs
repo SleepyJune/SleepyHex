@@ -28,6 +28,8 @@ public class LevelEditor : LevelLoader
 
     public DialogWindow resolvePanel;
 
+    public LevelEditorIconController iconController;
+
     void Start()
     {
         amazonHelper = AmazonS3Helper.instance;
@@ -54,6 +56,8 @@ public class LevelEditor : LevelLoader
 
         SetLevelName(level.levelName);
         SetLevelID(level.levelID);
+
+        iconController.SetIcons(level);
     }
 
     void GenerateTemplateSlots()
@@ -117,7 +121,15 @@ public class LevelEditor : LevelLoader
         {
             var number = selectedTemplate.uiSlot.slot.number;
 
-            level.modified = true;
+            if (!level.modified)
+            {
+                level.modified = true;
+                level.version += 1;
+            }
+
+            level.dateModified = DateTime.UtcNow.ToString();
+            level.difficulty = 0;
+            level.isSolvedInEditor = false;
 
             if (number >= -1)
             {
@@ -151,6 +163,7 @@ public class LevelEditor : LevelLoader
         if (Application.platform == RuntimePlatform.WindowsEditor)
         {
             solveButton.interactable = true;
+            level.isSolvedInEditor = level.hasSolution;
         }
         else
         {
@@ -164,19 +177,17 @@ public class LevelEditor : LevelLoader
         {
             if (level.modified)
             {
-                Save();
+                level.Initialize(true);
+            }
+
+            if (level.hasSolution && level.isSolvedInEditor)
+            {
+                resolvePanel.Show();
             }
             else
             {
-                if (level.hasSolution)
-                {
-                    resolvePanel.Show();
-                }
-                else
-                {
-                    var solver = Instantiate(levelSolverPrefab, slotListParent);
-                    solver.Solve(level, this, levelSolutionViewer);
-                }
+                var solver = Instantiate(levelSolverPrefab, slotListParent);
+                solver.Solve(level, this, levelSolutionViewer, 1);
             }
         }
         else
@@ -219,19 +230,29 @@ public class LevelEditor : LevelLoader
 
     public void Save()
     {
-        if (level.modified)
+        if (!level.canSave)
+        {
+            iconController.SetIcons(level);
+            iconController.window.Show();
+            return;
+        }
+
+        if (!level.isNewLevel)
         {
             overwritePanel.Show();
         }
         else
         {
-            Save(false);
+            Save(level.modified);
         }        
     }
 
     public void Save(bool modified)
     {
-        Save(modified, true);
+        if(level.canSave)
+        {
+            Save(modified, true);
+        }
     }
 }
 

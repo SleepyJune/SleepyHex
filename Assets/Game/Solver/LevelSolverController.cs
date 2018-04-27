@@ -98,6 +98,7 @@ public class LevelSolverController : MonoBehaviour
                 //solutionViewer.SetAdditionalStats(solver.slotsVisited);
 
                 level.solution = solution;
+                level.isSolvedInEditor = true;
 
                 if (solveType == (int)SolveType.Ovewrite)
                 {
