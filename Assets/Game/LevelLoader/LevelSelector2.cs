@@ -43,6 +43,11 @@ public class LevelSelector2 : MonoBehaviour
         Initialize();
     }
 
+    void OnEnable()
+    {
+        SoundManager.instance.PlayHomeMusic();
+    }
+
     public void Initialize()
     {
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);

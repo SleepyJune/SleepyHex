@@ -58,7 +58,12 @@ public class LevelManager : LevelLoader
 
     public override void LoadLevelFeatures(Level level)
     {
-        solveButton.interactable = level.hasSolution;
+        if(solveButton != null)
+        {
+            solveButton.interactable = level.hasSolution;
+        }
+
+        SoundManager.instance.OnLevelLoaded();
 
         ChangeRandomColor();
     }
