@@ -5831,6 +5831,7 @@ MonoBehaviour:
   - {fileID: 224906705}
   - {fileID: 1037966792}
   diffInput: {fileID: 2057886827}
+  slider: {fileID: 943131536}
 --- !u!114 &1005774242
 MonoBehaviour:
   m_ObjectHideFlags: 0

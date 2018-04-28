@@ -16,6 +16,8 @@ public class PuzzleRatingPanelController : MonoBehaviour
 
     public InputField diffInput;
 
+    public Slider slider;
+
     float difficulty;
 
     int bigDifficulty = 1;
@@ -57,8 +59,15 @@ public class PuzzleRatingPanelController : MonoBehaviour
         {
             if (level.difficulty > 0)
             {
-                difficulty = level.difficulty;
-                diffInput.text = difficulty.ToString();
+                slider.value = level.difficulty % 1;
+
+                var big = (int)Math.Floor(level.difficulty);
+                if(big >= 1 && big-1 < toggles.Length)
+                {
+                    toggles[big - 1].isOn = true;
+                }
+
+                RefreshDifficultyInput();
             }
         }
     }
