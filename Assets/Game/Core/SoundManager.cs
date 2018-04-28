@@ -19,7 +19,7 @@ public class SoundManager : MonoBehaviour
 
     public int musicFadeDelay = 5;
     
-    public int musicPlayTime = 300;
+    public int musicPlayTime = 150;
     
     float musicStartTime;
 
@@ -89,16 +89,10 @@ public class SoundManager : MonoBehaviour
             yield return null;
         }
 
-        if (!isPlayingHomeMusic)
-        {
-            //musicSource.volume = 0;
-            //musicSource.Stop();
+        musicSource.volume = 0;
+        musicSource.Stop();
 
-            musicSource.volume = 1;
-
-            musicSource.clip = gameMusic[currentGameMusicIndex];
-            musicSource.Play();
-        }
+        PlayGameMusic();
 
         isChangingMusic = false;
     }
@@ -124,14 +118,26 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void OnLevelLoaded()
+    void PlayGameMusic()
     {
-        if (gameMusic != null && isPlayingHomeMusic)
+        if (!isPlayingHomeMusic)
         {
+            musicSource.volume = 1;
+
             musicSource.clip = gameMusic[currentGameMusicIndex];
             musicSource.Play();
 
+            musicStartTime = Time.time;
+        }
+    }
+
+    public void OnLevelLoaded()
+    {
+        if (gameMusic != null && isPlayingHomeMusic)
+        {            
             isPlayingHomeMusic = false;
+
+            PlayGameMusic();
         }
     }
 }
