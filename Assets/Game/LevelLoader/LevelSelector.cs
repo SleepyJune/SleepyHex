@@ -289,7 +289,7 @@ public class LevelSelector : MonoBehaviour
 
             var ratingTransform = newButton.transform.Find("Rating");
             ratingTransform.gameObject.SetActive(true);
-            ratingTransform.Find("Text").GetComponent<Text>().text = difficulty.ToString();
+            ratingTransform.Find("Text").GetComponent<Text>().text = levelText.difficulty.ToString();
         }
 
     }
