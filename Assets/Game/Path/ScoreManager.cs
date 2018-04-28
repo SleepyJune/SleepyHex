@@ -16,6 +16,10 @@ public class ScoreManager : MonoBehaviour
 
     public DialogWindow scorePanel;
 
+    public AudioSource soundSource;
+
+    public AudioClip[] starSounds;
+
     void Start()
     {
 
@@ -35,7 +39,9 @@ public class ScoreManager : MonoBehaviour
             {
                 var star = stars[i];
                 star.SetBool("isEmpty", false);
-            }            
+            }
+            
+            soundSource.PlayOneShot(starSounds[score.stars - 1]);
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,26 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    public AudioSource source;
+    public AudioSource musicSource;
+    public AudioSource soundSource;
 
     public AudioClip homeMusic;
     public AudioClip[] gameMusic;
 
-    public int changeMusicDelay = 5;
+    public int musicFadeDelay = 5;
+    
+    public int musicPlayTime = 300;
+    
+    float musicStartTime;
 
     [NonSerialized]
     public int currentGameMusicIndex = 0;
     [NonSerialized]
-    public bool isPlayingHomeMusic = true;
+    public bool isPlayingHomeMusic = false;
     [NonSerialized]
     public bool isChangingMusic = false;
+
+    public AudioClip[] clickSounds;
 
     void Awake()
     {
@@ -39,27 +47,22 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        InvokeRepeating("ChangeMusic", 0, 1);
+        InvokeRepeating("ChangeMusic", 0, 5);
 
         if(gameMusic != null)
         {
             currentGameMusicIndex = UnityEngine.Random.Range(0, gameMusic.Length-1);
         }
+
+        PlayHomeMusic();
     }
 
     void ChangeMusic()
     {
-        if (!source.isPlaying && !isChangingMusic)
+        if (!isChangingMusic && Time.time - musicStartTime >= musicPlayTime)
         {
             isChangingMusic = true;
-            Invoke("ChangeMusicHelper", changeMusicDelay);
-        }
-    }
 
-    void ChangeMusicHelper()
-    {
-        if (!isPlayingHomeMusic)
-        {
             if (gameMusic != null)
             {
                 currentGameMusicIndex += 1;
@@ -68,13 +71,33 @@ public class SoundManager : MonoBehaviour
                     currentGameMusicIndex = 0;
                 }
 
-                source.clip = gameMusic[currentGameMusicIndex];
-                source.Play();
+                StartCoroutine(SoundFadeOut(musicFadeDelay));
             }
         }
-        else
+    }
+
+    IEnumerator SoundFadeOut(int delay)
+    {
+        while (musicSource.volume > 0.01f)
         {
-            PlayHomeMusic();
+            if (isPlayingHomeMusic)
+            {
+                break;
+            }
+
+            musicSource.volume -= Time.deltaTime / delay;
+            yield return null;
+        }
+
+        if (!isPlayingHomeMusic)
+        {
+            //musicSource.volume = 0;
+            //musicSource.Stop();
+
+            musicSource.volume = 1;
+
+            musicSource.clip = gameMusic[currentGameMusicIndex];
+            musicSource.Play();
         }
 
         isChangingMusic = false;
@@ -84,8 +107,10 @@ public class SoundManager : MonoBehaviour
     {
         if (!isPlayingHomeMusic)
         {
-            source.clip = homeMusic;
-            source.Play();
+            musicSource.volume = 1;
+
+            musicSource.clip = homeMusic;
+            musicSource.Play();
 
             isPlayingHomeMusic = true;
         }
@@ -103,8 +128,8 @@ public class SoundManager : MonoBehaviour
     {
         if (gameMusic != null && isPlayingHomeMusic)
         {
-            source.clip = gameMusic[currentGameMusicIndex];
-            source.Play();
+            musicSource.clip = gameMusic[currentGameMusicIndex];
+            musicSource.Play();
 
             isPlayingHomeMusic = false;
         }
