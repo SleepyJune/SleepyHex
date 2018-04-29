@@ -29,6 +29,11 @@ public class LevelSelectButton : MonoBehaviour
 
         var numStars = Score.GetStoredStars(level.name);
 
+        SetStars(numStars);
+    }
+
+    public void SetStars(int numStars)
+    {
         for (int i = 0; i < numStars; i++)
         {
             var star = stars[i];

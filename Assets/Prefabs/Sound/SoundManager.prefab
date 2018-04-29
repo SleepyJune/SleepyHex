@@ -284,7 +284,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d39c5d22aa30d0b4d8fe74f67cfbc4a5, type: 3}
   - {fileID: 8300000, guid: 9ed471fa303bf7e489b89a3a86db2c2b, type: 3}
   musicFadeDelay: 5
-  musicPlayTime: 300
+  musicPlayTime: 150
   clickSounds:
   - {fileID: 8300000, guid: d102780fea8532a468969249c94cd483, type: 3}
   - {fileID: 8300000, guid: 0ebcd36599e6a064d8f657d21821f51a, type: 3}
