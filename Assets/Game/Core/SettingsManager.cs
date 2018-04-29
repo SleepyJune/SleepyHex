@@ -13,4 +13,14 @@ public class SettingsManager : MonoBehaviour
     {
         Destroy(parent.gameObject);
     }
+
+    public void MuteMusic(bool mute)
+    {
+        SoundManager.instance.musicSource.mute = mute;
+    }
+
+    public void MuteSound(bool mute)
+    {
+        AudioListener.volume = mute ? 0 : 1;
+    }
 }

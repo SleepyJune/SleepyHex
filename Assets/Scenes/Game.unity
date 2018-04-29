@@ -3832,6 +3832,16 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114704438980105602, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359545553123204, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224217635643290770, guid: 14401e6baac709d4ea5b7bfb69f2466e,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -4061,6 +4071,56 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 114704438980105602, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704438980105602, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704438980105602, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1576123574}
+    - target: {fileID: 114704438980105602, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MuteSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 114704438980105602, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359545553123204, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359545553123204, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359545553123204, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1576123574}
+    - target: {fileID: 114359545553123204, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MuteMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359545553123204, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14401e6baac709d4ea5b7bfb69f2466e, type: 2}
   m_IsPrefabParent: 0
@@ -4086,6 +4146,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1576123572}
+--- !u!114 &1576123574 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114221889083334250, guid: 14401e6baac709d4ea5b7bfb69f2466e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1576123570}
+  m_Script: {fileID: 11500000, guid: 3a339d1549413a24389f79afb99e2ea3, type: 3}
 --- !u!224 &1576554653 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224254029059041968, guid: 38a87dc3cb1f0a445bb149bb23f6704e,
