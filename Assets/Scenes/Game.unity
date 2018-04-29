@@ -1592,7 +1592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelList: {fileID: 1293812337}
   levelListParent: {fileID: 613275915}
-  levelSelectionButton: {fileID: 1454675049903766, guid: 0f8b89f90ee42ce479cdd198f1518537,
+  levelSelectionButton: {fileID: 114074873859987362, guid: 0f8b89f90ee42ce479cdd198f1518537,
     type: 2}
   levelLoader: {fileID: 0}
   difficultyButtons: []
@@ -1753,6 +1753,7 @@ MonoBehaviour:
   solutionPopupPrefab: {fileID: 114902626294094348, guid: 4a9b79850c2fbfc4c931500f71a2bbb3,
     type: 2}
   backgroundImage: {fileID: 574533560}
+  levelUIText: {fileID: 1038403606}
 --- !u!114 &756398038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2656,7 +2657,7 @@ RectTransform:
   m_GameObject: {fileID: 1038403604}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99984, y: 0.99984, z: 192}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1484730752}
   m_RootOrder: 3

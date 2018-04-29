@@ -23,7 +23,7 @@ public class LevelSelector2 : MonoBehaviour
     public Transform levelList;
     public Transform levelListParent;
 
-    public GameObject levelSelectionButton;
+    public LevelSelectButton levelSelectionButton;
 
     public LevelLoader levelLoader;
 
@@ -37,6 +37,8 @@ public class LevelSelector2 : MonoBehaviour
     public DialogWindow difficultyPanel;
 
     DialogWindow selectorPanel;
+
+    public Dictionary<string, LevelSelectButton> buttonDatabase;
 
     void Start()
     {
@@ -192,6 +194,27 @@ public class LevelSelector2 : MonoBehaviour
         selectorPanel.Close();
     }
 
+    public void SetButtonStars(Score score)
+    {
+        var storedStars = score.GetStoredStars();
+
+        Debug.Log(score.stars + " vs " + storedStars);
+
+        if (score.stars > storedStars)
+        {
+            LevelSelectButton button;
+
+            Debug.Log("1");
+
+            if (buttonDatabase.TryGetValue(score.level.levelName, out button))
+            {
+                button.SetStars(score.stars);
+
+                Debug.Log("here");
+            }
+        }
+    }
+
     public void RefreshList()
     {        
         foreach (Transform child in levelList)
@@ -225,12 +248,16 @@ public class LevelSelector2 : MonoBehaviour
 
         Debug.Log("Num levels: " + LevelSelector.levelListDatabase.Count());
 
+        buttonDatabase = new Dictionary<string, LevelSelectButton>();
+
         foreach (var level in LevelSelector.levelListDatabase)
         {
             if (level != null)
             {
                 var newButton = Instantiate(levelSelectionButton, levelList);
-                newButton.GetComponent<LevelSelectButton>().SetButton(level, this);
+                newButton.SetButton(level, this);
+
+                buttonDatabase.Add(level.name, newButton);
             }
         }
     }    

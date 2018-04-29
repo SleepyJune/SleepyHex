@@ -23,6 +23,8 @@ public class LevelManager : LevelLoader
     public static Level currentLevel = null;
     public static string levelNameToLoad = null;
 
+    public Text levelUIText;
+
     void Start()
     {
         if (rateButton)
@@ -62,6 +64,8 @@ public class LevelManager : LevelLoader
         {
             solveButton.interactable = level.hasSolution;
         }
+
+        levelUIText.text = level.levelID.ToString();
 
         SoundManager.instance.OnLevelLoaded();
 
