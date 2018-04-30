@@ -147,7 +147,7 @@ public class PuzzleRatingPanelController : MonoBehaviour
         }
         else
         {
-            var other = filtered.FirstOrDefault(o => o.levelID == level.levelID && o.name != level.levelName);
+            var other = filtered.FirstOrDefault(o => o.levelID == level.levelID && o.levelName != level.levelName);
             if (other != null) //same id but different name
             {
                 changeId = true;

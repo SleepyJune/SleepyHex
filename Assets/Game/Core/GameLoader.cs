@@ -46,7 +46,7 @@ public class GameLoader : MonoBehaviour
         {
             if (anim)
             {
-                var value = Mathf.Clamp01(operation.progress / 0.9f); ;
+                var value = Mathf.Clamp01(operation.progress / 0.9f);
 
                 anim.SetFloat("Progress", value);
             }
@@ -55,7 +55,7 @@ public class GameLoader : MonoBehaviour
             {
                 operation.allowSceneActivation = true;
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         //if (LoadGroup) LoadGroup.SetActive(false);

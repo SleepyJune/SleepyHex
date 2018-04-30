@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class LevelTextAsset
+using UnityEngine;
+
+[Serializable]
+public class LevelTextAsset : ScriptableObject
 {
-    public string name;
+    public string levelName;
     public string text;
 
     public int levelID;
@@ -17,14 +20,14 @@ public class LevelTextAsset
 
     public bool hasSolution;
 
-    public DateTime dateModified;
-    public DateTime dateCreated;
+    public string dateModified;
+    public string dateCreated;
 
     public float difficulty;
 
-    public LevelTextAsset(string name, int localVersion, int webVersion, DateTime dateModified, DateTime dateCreated)
+    public LevelTextAsset(string name, int localVersion, int webVersion, string dateModified, string dateCreated)
     {
-        this.name = name;
+        this.levelName = name;
         this.text = null;
 
         this.localVersion = localVersion;

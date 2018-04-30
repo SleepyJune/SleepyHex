@@ -7,7 +7,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelSolverController : MonoBehaviour
+class LevelSolverController : MonoBehaviour
 {    
     public enum SolveType
     {

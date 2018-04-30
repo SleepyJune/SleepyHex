@@ -63,12 +63,12 @@ public class ScoreManager : MonoBehaviour
 
         if(current != null)
         {
-            var index = LevelSelector.levelListDatabase.FindIndex(level => level.name == current.levelName);
+            var index = LevelSelector.levelListDatabase.FindIndex(level => level.levelName == current.levelName);
             if(index > -1 && index+1 < LevelSelector.levelListDatabase.Count)
             {
                 var next = LevelSelector.levelListDatabase[index + 1];
 
-                GameManager.instance.LoadLevel(next.name);
+                GameManager.instance.LoadLevel(next.levelName);
                 scorePanel.Close();
 
                 //LevelManager.levelNameToLoad = next.name;
