@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class LevelEditor : LevelLoader
+class LevelEditor : LevelLoader
 {
     public Transform templateSlotParent;
    
@@ -29,6 +29,8 @@ public class LevelEditor : LevelLoader
     public DialogWindow resolvePanel;
 
     public LevelEditorIconController iconController;
+
+    protected AmazonS3Helper amazonHelper;
 
     void Start()
     {
@@ -218,7 +220,7 @@ public class LevelEditor : LevelLoader
 
             if (levelText.webVersion >= 0)
             {
-                var webPath = DataPath.webPath + levelText.name + ".json";
+                var webPath = DataPath.webPath + levelText.levelName + ".json";
                 amazonHelper.DeleteObject(level.levelName, webPath);
                 amazonHelper.DeleteLevelVersion(level.levelName);
             }

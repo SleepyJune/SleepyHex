@@ -90,7 +90,7 @@ public class LevelSelector : MonoBehaviour
 
             var comparer = new NaturalComparer();
 
-            foreach (var levelText in filteredLevels.OrderBy(level => level.name, comparer))
+            foreach (var levelText in filteredLevels.OrderBy(level => level.levelName, comparer))
             {
                 var level = Level.LoadLevel(levelText);
                 if (level != null)
@@ -111,7 +111,7 @@ public class LevelSelector : MonoBehaviour
 
             var comparer = new NaturalComparer();
 
-            foreach (var levelText in filteredLevels.OrderBy(level => level.name, comparer))
+            foreach (var levelText in filteredLevels.OrderBy(level => level.levelName, comparer))
             {
                 var level = Level.LoadLevel(levelText);
                 if (level != null)
@@ -139,8 +139,8 @@ public class LevelSelector : MonoBehaviour
         foreach (var file in data)
         {
             LevelTextAsset level;
-            DateTime dateModified = DateTime.Parse(file.dateModified);
-            DateTime dateCreated = DateTime.Parse(file.dateCreated);
+            string dateModified = file.dateModified;
+            string dateCreated = file.dateCreated;
 
             if (levelDatabase.TryGetValue(file.levelName, out level))
             {
@@ -186,20 +186,20 @@ public class LevelSelector : MonoBehaviour
 
     void LoadLevelFromString(string str)
     {
-        var levelTextAsset = new LevelTextAsset("new", 0, -1, DateTime.UtcNow, DateTime.UtcNow);
+        var levelTextAsset = new LevelTextAsset("new", 0, -1, DateTime.UtcNow.ToString(), DateTime.UtcNow.ToString());
         levelTextAsset.text = str;
 
         Level level = Level.LoadLevel(levelTextAsset);
         if (level != null)
         {
-            levelTextAsset.name = level.levelName;
+            levelTextAsset.levelName = level.levelName;
             levelTextAsset.levelID = level.levelID;
             levelTextAsset.localVersion = level.version;
             levelTextAsset.hasSolution = level.hasSolution;
             levelTextAsset.difficulty = level.difficulty;
 
-            levelTextAsset.dateCreated = DateTime.Parse(level.dateCreated);
-            levelTextAsset.dateModified = DateTime.Parse(level.dateModified);
+            levelTextAsset.dateCreated = level.dateCreated;
+            levelTextAsset.dateModified = level.dateModified;
 
             if (level.hasSolution)
             {
@@ -261,7 +261,7 @@ public class LevelSelector : MonoBehaviour
     void AddButton(LevelTextAsset levelText)
     {
         var newButton = Instantiate(levelSelectionButton, levelList);        
-        newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.name));
+        newButton.GetComponent<Button>().onClick.AddListener(() => LoadLevel(levelText.levelName));
 
         if(sortType == SortType.ID)
         {
@@ -269,7 +269,7 @@ public class LevelSelector : MonoBehaviour
         }
         else
         {
-            newButton.GetComponentInChildren<Text>().text = levelText.name;
+            newButton.GetComponentInChildren<Text>().text = levelText.levelName;
         }
 
         if (levelText.webVersion > levelText.localVersion ||
@@ -334,13 +334,13 @@ public class LevelSelector : MonoBehaviour
             var comparer = new NaturalComparer();
             levelListDatabase = filteredLevels
                         .OrderByDescending(level => level.difficulty)
-                        .ThenByDescending(level => level.name, comparer)
+                        .ThenByDescending(level => level.levelName, comparer)
                         .ToList();
         }
         else if (sortType == SortType.Name)
         {
             var comparer = new NaturalComparer();
-            levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
+            levelListDatabase = filteredLevels.OrderByDescending(level => level.levelName, comparer).ToList();
 
             //levelListDatabase = filteredLevels.OrderByDescending(level => level.levelID).ToList();
         }
@@ -350,7 +350,7 @@ public class LevelSelector : MonoBehaviour
         }
         else
         {
-            levelListDatabase = filteredLevels.OrderByDescending(level => level.dateModified).ToList();
+            levelListDatabase = filteredLevels.OrderByDescending(level => DateTime.Parse(level.dateModified)).ToList();
         }
 
         Debug.Log("Num levels: " + levelListDatabase.Count());
@@ -383,12 +383,12 @@ public class LevelSelector : MonoBehaviour
             if (levelText.webVersion > levelText.localVersion ||
             (levelText.webVersionFile != null && !levelText.hasSolution && levelText.webVersionFile.solved))
             {
-                var filename = DataPath.webPath + levelText.name + ".json";
+                var filename = DataPath.webPath + levelText.levelName + ".json";
                 amazonHelper.GetFile(filename, name, LoadLevelTextWeb);
             }
             else
             {
-                var filePath = DataPath.savePath + levelText.name + ".json";
+                var filePath = DataPath.savePath + levelText.levelName + ".json";
                 if (File.Exists(filePath))
                 {
                     string data = File.ReadAllText(filePath);
@@ -422,7 +422,7 @@ public class LevelSelector : MonoBehaviour
             level.SaveLevel(false);
 
             levelText.localVersion = levelText.webVersion;
-            levelText.dateModified = DateTime.Parse(level.dateModified);
+            levelText.dateModified = level.dateModified;
 
             levelListParent.gameObject.SetActive(false);
             RefreshList();
@@ -431,16 +431,16 @@ public class LevelSelector : MonoBehaviour
 
     public static void AddLevel(LevelTextAsset newLevel, bool overwrite = false)
     {
-        if (levelDatabase.ContainsKey(newLevel.name))
+        if (levelDatabase.ContainsKey(newLevel.levelName))
         {
             if (overwrite)
             {
-                levelDatabase[newLevel.name] = newLevel;
+                levelDatabase[newLevel.levelName] = newLevel;
             }
         }
         else
         {
-            levelDatabase.Add(newLevel.name, newLevel);
+            levelDatabase.Add(newLevel.levelName, newLevel);
         }
     }
 

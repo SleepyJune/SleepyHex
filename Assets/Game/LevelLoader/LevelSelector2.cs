@@ -13,6 +13,8 @@ using Amazon.S3.Model;
 
 public class LevelSelector2 : MonoBehaviour
 {
+    public LevelDatabase levelDatabase;
+
     public enum SortType
     {
         DateModified,
@@ -70,7 +72,9 @@ public class LevelSelector2 : MonoBehaviour
     {
         if (!LevelSelector.isLoaded)
         {
-            LoadLevelLocal();
+            //LoadLevelLocal();
+
+            LoadLevelByDatabase(levelDatabase);
             RefreshList();
 
             LevelSelector.isLoaded = true;
@@ -79,6 +83,16 @@ public class LevelSelector2 : MonoBehaviour
         {
             RefreshList();
         }
+    }
+
+    public static void LoadLevelByDatabase(LevelDatabase levelDatabase)
+    {
+        foreach(var level in levelDatabase.levels)
+        {
+            LevelSelector.AddLevel(level);
+        }
+
+        LevelSelector.isLoaded = true;
     }
 
     public void SetDifficultyFilter(int difficulty)
@@ -106,22 +120,22 @@ public class LevelSelector2 : MonoBehaviour
         }
     }
 
-    void LoadLevelFromString(string str)
+    LevelTextAsset LoadLevelFromString(string str)
     {
-        var levelTextAsset = new LevelTextAsset("new", 0, -1, DateTime.UtcNow, DateTime.UtcNow);
+        var levelTextAsset = new LevelTextAsset("new", 0, -1, DateTime.UtcNow.ToString(), DateTime.UtcNow.ToString());
         levelTextAsset.text = str;
 
         Level level = Level.LoadLevel(levelTextAsset);
         if (level != null)
         {
-            levelTextAsset.name = level.levelName;
+            levelTextAsset.levelName = level.levelName;
             levelTextAsset.levelID = level.levelID;
             levelTextAsset.localVersion = level.version;
             levelTextAsset.hasSolution = level.hasSolution;
             levelTextAsset.difficulty = level.difficulty;
 
-            levelTextAsset.dateCreated = DateTime.Parse(level.dateCreated);
-            levelTextAsset.dateModified = DateTime.Parse(level.dateModified);
+            levelTextAsset.dateCreated = level.dateCreated;
+            levelTextAsset.dateModified = level.dateModified;
 
             if (level.hasSolution)
             {
@@ -132,7 +146,7 @@ public class LevelSelector2 : MonoBehaviour
                 }
             }
 
-            LevelSelector.levelDatabase.Add(levelTextAsset.name, levelTextAsset);
+            return levelTextAsset;
 
             //upload versions
             /*LevelVersion version = new LevelVersion()
@@ -151,6 +165,8 @@ public class LevelSelector2 : MonoBehaviour
 
             amazonHelper.UploadLevelVersion(version);*/
         }
+
+        return null;
     }
 
     void LoadLevelFromAsset()
@@ -164,7 +180,9 @@ public class LevelSelector2 : MonoBehaviour
             //var path = DataPath.savePath + level.name + ".json";
             //File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
 
-            LoadLevelFromString(asset.text);
+            var levelTextAsset = LoadLevelFromString(asset.text);
+
+            LevelSelector.levelDatabase.Add(levelTextAsset.levelName, levelTextAsset);
         }
     }
 
@@ -178,7 +196,9 @@ public class LevelSelector2 : MonoBehaviour
             var path = file.FullName;
             string str = File.ReadAllText(path);
 
-            LoadLevelFromString(str);
+            var levelTextAsset = LoadLevelFromString(str);
+
+            LevelSelector.levelDatabase.Add(levelTextAsset.levelName, levelTextAsset);
         }
     }
 
@@ -231,7 +251,7 @@ public class LevelSelector2 : MonoBehaviour
             var comparer = new NaturalComparer();
             LevelSelector.levelListDatabase = filteredLevels
                         .OrderBy(level => level.difficulty)
-                        .ThenBy(level => level.name, comparer)
+                        .ThenBy(level => level.levelName, comparer)
                         .ToList();
         }
         else if (sortType == SortType.Name)
@@ -243,7 +263,7 @@ public class LevelSelector2 : MonoBehaviour
         }
         else
         {
-            LevelSelector.levelListDatabase = filteredLevels.OrderBy(level => level.dateCreated).ToList();
+            LevelSelector.levelListDatabase = filteredLevels.OrderBy(level => DateTime.Parse(level.dateCreated)).ToList();
         }
 
         Debug.Log("Num levels: " + LevelSelector.levelListDatabase.Count());
@@ -257,7 +277,7 @@ public class LevelSelector2 : MonoBehaviour
                 var newButton = Instantiate(levelSelectionButton, levelList);
                 newButton.SetButton(level, this);
 
-                buttonDatabase.Add(level.name, newButton);
+                buttonDatabase.Add(level.levelName, newButton);
             }
         }
     }    

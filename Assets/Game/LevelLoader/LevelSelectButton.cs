@@ -27,7 +27,7 @@ public class LevelSelectButton : MonoBehaviour
 
         levelName.text = level.levelID.ToString();
 
-        var numStars = Score.GetStoredStars(level.name);
+        var numStars = Score.GetStoredStars(level.levelName);
 
         SetStars(numStars);
     }
@@ -46,6 +46,6 @@ public class LevelSelectButton : MonoBehaviour
         //LevelManager.levelNameToLoad = level.name;
         //SceneChanger.ChangeScene("Game");
 
-        levelSelector.LoadLevel(level.name);
+        levelSelector.LoadLevel(level.levelName);
     }
 }

@@ -42,46 +42,11 @@ public class GameLoader : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false;
 
-        for(int i=0;i<100;i++)
-        {
-            if (anim)
-            {
-                var value = Mathf.Clamp01(i/100.0f); ;
-
-                anim.SetFloat("Progress", value);
-            }
-
-            yield return new WaitForSeconds(0.01f);
-        }
-
-        if (operation.progress >= 0.9f && !operation.allowSceneActivation)
-        {
-            operation.allowSceneActivation = true;
-        }
-
-        //if (LoadGroup) LoadGroup.SetActive(false);
-        if (LoadingCallBack != null)
-        {
-            LoadingCallBack();
-        }
-    }
-
-    IEnumerator AsyncLoad2(string sceneName)
-    {
-        /*if (LoadGroup)
-        {
-            LoadGroup.SetActive(true);
-        }
-        yield return new WaitForSeconds(0.2f);*/
-
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.allowSceneActivation = false;
-
         while (!operation.isDone)
         {
             if (anim)
             {
-                var value = Mathf.Clamp01(operation.progress / 0.9f); ;
+                var value = Mathf.Clamp01(operation.progress / 0.9f);
 
                 anim.SetFloat("Progress", value);
             }

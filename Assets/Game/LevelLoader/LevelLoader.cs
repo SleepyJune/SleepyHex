@@ -75,7 +75,7 @@ public class LevelLoader : MonoBehaviour
         LevelSelector.AddLevel(levelText, true);
         levelSelector.RefreshList();
 
-        var webPath = DataPath.webPath + levelText.name + ".json";
+        var webPath = DataPath.webPath + levelText.levelName + ".json";
         amazonHelper.PostObject(webPath, levelText.text, metadata);
 
         LevelVersion version = new LevelVersion()

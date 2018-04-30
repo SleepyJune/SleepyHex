@@ -1590,6 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4608dfc07ae112b4bb74af40e23e2b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDatabase: {fileID: 11400000, guid: 45c37489e7c745a4583074fcf87d5806, type: 2}
   levelList: {fileID: 1293812337}
   levelListParent: {fileID: 613275915}
   levelSelectionButton: {fileID: 114074873859987362, guid: 0f8b89f90ee42ce479cdd198f1518537,
