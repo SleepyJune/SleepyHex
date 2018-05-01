@@ -11,11 +11,17 @@ public class DialogWindow : MonoBehaviour
 
     public void Show()
     {
-        panel.SetActive(true);
+        if (!panel.activeInHierarchy)
+        {
+            panel.SetActive(true);
+        }
     }
 
     public void Close()
     {
-        panel.SetActive(false);
+        if (panel.activeInHierarchy)
+        {
+            panel.SetActive(false);
+        }
     }
 }

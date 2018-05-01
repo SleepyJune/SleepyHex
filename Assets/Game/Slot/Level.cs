@@ -180,6 +180,22 @@ public class Level
         return data;
     }
 
+    public void SetLastPlayedLevel()
+    {
+        if (levelName != null && levelName != "")
+        {
+            string key = "LastPlayedLevel";
+            PlayerPrefs.SetString(key, levelName);
+        }
+    }
+
+    public static string GetLastPlayedLevel()
+    {
+        string key = "LastPlayedLevel";
+
+        return PlayerPrefs.GetString(key, null);    
+    }
+
     public LevelTextAsset SaveLevel(bool modified = true)
     {
         slots = map.Values.Where(s => s.number >= 0).ToArray();

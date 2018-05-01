@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     
     public ScoreManager scoreManager;
 
+    public LevelSelector2 levelSelector;
+
     void Awake()
     {
         if (instance == null)
