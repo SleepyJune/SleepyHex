@@ -6,13 +6,13 @@ using System.Text;
 
 using UnityEngine;
 
-class ImageShare : MonoBehaviour
+class ShareButton : MonoBehaviour
 {
-    public void StartShare()
+    public void ShareText()
     {
-        if(Application.platform == RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            StartCoroutine(TakeScreenshot());
+            ShareTextHelper();
         }
         else
         {
@@ -20,7 +20,40 @@ class ImageShare : MonoBehaviour
         }
     }
 
-    IEnumerator TakeScreenshot()
+    public void ShareImage()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            StartCoroutine(ShareImageHelper());
+        }
+        else
+        {
+            Debug.Log("Android only");
+        }
+    }
+
+    void ShareTextHelper()
+    {
+        string subject = "SleepyHex";
+        string text = "Play free: https://www.instagram.com/dongi.studio/";
+
+        AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
+        AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
+
+        intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
+        //intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TITLE"), "SleepyHex");
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), text);
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_SUBJECT"), subject);
+        intentObject.Call<AndroidJavaObject>("setType", "text/plain");
+
+        AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
+        AndroidJavaObject jChooser = intentClass.CallStatic<AndroidJavaObject>("createChooser", intentObject, "Share Via");
+
+        currentActivity.Call("startActivity", jChooser);
+    }
+
+    IEnumerator ShareImageHelper()
     {
         yield return new WaitForEndOfFrame();
 
