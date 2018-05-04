@@ -29,8 +29,6 @@ public class LevelSelector2 : MonoBehaviour
 
     public LevelLoader levelLoader;
 
-    public Button[] difficultyButtons;
-
     public SortType sortType = SortType.Difficulty;
 
     [NonSerialized]
@@ -38,9 +36,12 @@ public class LevelSelector2 : MonoBehaviour
 
     public DialogWindow difficultyPanel;
 
-    DialogWindow selectorPanel;
+    public DialogueGroup dialogueGroup;
 
     public Dictionary<string, LevelSelectButton> buttonDatabase;
+
+    public GameObject currentLevelIndicatorPrefab;
+    GameObject currentLevelIndicator;
 
     void Start()
     {
@@ -56,7 +57,7 @@ public class LevelSelector2 : MonoBehaviour
     {
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
 
-        selectorPanel = GetComponent<DialogWindow>();
+        //selectorPanel = GetComponent<DialogWindow>();
 
         if (difficultyFilter != -1)
         {
@@ -103,105 +104,6 @@ public class LevelSelector2 : MonoBehaviour
         RefreshList();
     }
 
-    void LoadLevelLocal()
-    {
-        if (!Directory.Exists(DataPath.savePath))
-        {
-            Directory.CreateDirectory(DataPath.savePath);
-        }
-
-        if (Application.platform != RuntimePlatform.WindowsEditor) //overwrite files if mobile platform
-        {
-            LoadLevelFromAsset();
-        }
-        else
-        {
-            LoadLevelFromFile();
-        }
-    }
-
-    LevelTextAsset LoadLevelFromString(string str)
-    {
-        var levelTextAsset = new LevelTextAsset("new", 0, -1, DateTime.UtcNow.ToString(), DateTime.UtcNow.ToString());
-        levelTextAsset.text = str;
-
-        Level level = Level.LoadLevel(levelTextAsset);
-        if (level != null)
-        {
-            levelTextAsset.levelName = level.levelName;
-            levelTextAsset.levelID = level.levelID;
-            levelTextAsset.localVersion = level.version;
-            levelTextAsset.hasSolution = level.hasSolution;
-            levelTextAsset.difficulty = level.difficulty;
-
-            levelTextAsset.dateCreated = level.dateCreated;
-            levelTextAsset.dateModified = level.dateModified;
-
-            if (level.hasSolution)
-            {
-                if (level.solution.bestScore == level.solution.worstScore
-                    && level.solution.numBestSolutions != level.solution.numSolutions)
-                {
-                    levelTextAsset.hasSolution = false;
-                }
-            }
-
-            return levelTextAsset;
-
-            //upload versions
-            /*LevelVersion version = new LevelVersion()
-            {
-                //category = "Default",
-                levelName = levelName,
-                levelID = level.levelID,
-                version = level.version,
-                solved = level.hasSolution,
-                difficulty = level.difficulty,
-                dateCreated = level.dateCreated,
-                dateModified = levelTextAsset.dateModified.ToString(),
-                //timestamp = levelTextAsset.dateModified.GetUnixEpoch(),
-
-            };
-
-            amazonHelper.UploadLevelVersion(version);*/
-        }
-
-        return null;
-    }
-
-    void LoadLevelFromAsset()
-    {
-        var levels = Resources.LoadAll("Levels", typeof(TextAsset));
-
-        foreach (var obj in levels)
-        {
-            var asset = obj as TextAsset;
-
-            //var path = DataPath.savePath + level.name + ".json";
-            //File.WriteAllText(DataPath.savePath + level.name + ".json", level.text);
-
-            var levelTextAsset = LoadLevelFromString(asset.text);
-
-            LevelSelector.levelDatabase.Add(levelTextAsset.levelName, levelTextAsset);
-        }
-    }
-
-    void LoadLevelFromFile()
-    {
-        var fileListPath = DataPath.savePath + DataPath.fileListFolder + DataPath.fileListName;
-
-        DirectoryInfo d = new DirectoryInfo(DataPath.savePath);
-        foreach (var file in d.GetFiles("*.json"))
-        {
-            var path = file.FullName;
-            string str = File.ReadAllText(path);
-
-            var levelTextAsset = LoadLevelFromString(str);
-
-            LevelSelector.levelDatabase.Add(levelTextAsset.levelName, levelTextAsset);
-        }
-    }
-
     public void SetSortType(int sortType)
     {
         this.sortType = (SortType)sortType;
@@ -211,7 +113,9 @@ public class LevelSelector2 : MonoBehaviour
     public void LoadLevel(string levelName)
     {
         GameManager.instance.LoadLevel(levelName);
-        selectorPanel.Close();
+        //selectorPanel.Close();
+
+        dialogueGroup.SetActive("Game");
     }
 
     public void SetButtonStars(Score score)
@@ -224,8 +128,6 @@ public class LevelSelector2 : MonoBehaviour
         {
             LevelSelectButton button;
 
-            Debug.Log("1");
-
             if (buttonDatabase.TryGetValue(score.level.levelName, out button))
             {
                 button.SetStars(score.stars);
@@ -233,6 +135,45 @@ public class LevelSelector2 : MonoBehaviour
                 Debug.Log("here");
             }
         }
+    }
+
+    public void SetCurrentLevel()
+    {
+        if(currentLevelIndicator != null)
+        {
+            Destroy(currentLevelIndicator);
+        }
+
+        string lastPlayedLevel = Level.GetLastPlayedLevel();
+
+        if (lastPlayedLevel != null)
+        {
+            Debug.Log(lastPlayedLevel);
+
+            LevelSelectButton button;
+            if (buttonDatabase.TryGetValue(lastPlayedLevel, out button))
+            {
+                currentLevelIndicator = Instantiate(currentLevelIndicatorPrefab, button.transform);
+
+                SnapTo(button.GetComponent<RectTransform>());
+            }
+        }
+    }
+
+    void SnapTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        var contentPanel = levelList.GetComponent<RectTransform>();
+        var scrollRect = levelListParent.GetComponent<ScrollRect>();
+
+        var vector = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+
+        vector.x = 0;
+        vector.y -= target.rect.height / 2;
+
+        contentPanel.anchoredPosition = vector;
     }
 
     public void RefreshList()
@@ -280,5 +221,7 @@ public class LevelSelector2 : MonoBehaviour
                 buttonDatabase.Add(level.levelName, newButton);
             }
         }
+
+        SetCurrentLevel();
     }    
 }

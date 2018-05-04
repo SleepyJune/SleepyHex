@@ -60,14 +60,13 @@ public class LevelManager : LevelLoader
 
     public override void LoadLevelFeatures(Level level)
     {
-        if(solveButton != null)
-        {
-            solveButton.interactable = level.hasSolution;
-        }
-
         levelUIText.text = level.levelID.ToString();
 
         SoundManager.instance.OnLevelLoaded();
+
+        level.SetLastPlayedLevel();
+
+        GameManager.instance.levelSelector.SetCurrentLevel();
 
         ChangeRandomColor();
     }

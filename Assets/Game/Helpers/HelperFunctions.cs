@@ -17,11 +17,6 @@ public class HelperFunctions : MonoBehaviour
         GameManager.instance.SendMessage(functionName);
     }
 
-    public void AnimatorTrigger(string triggerName)
-    {
-        GetComponent<Animator>().SetTrigger(triggerName);
-    }
-
     public void SelfDestructImmediate()
     {
         Destroy(gameObject);
