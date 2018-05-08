@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224042964803319860}
   - component: {fileID: 222060184199370136}
   - component: {fileID: 114213379515351210}
-  - component: {fileID: 111392998899891064}
+  - component: {fileID: 95448399364065684}
   m_Layer: 5
   m_Name: Finger
   m_TagString: Untagged
@@ -29,25 +29,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &111392998899891064
-Animation:
+--- !u!95 &95448399364065684
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1629622609130182}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 63ad40594bfc25743bfcf8d8153f61ac, type: 2}
-  - {fileID: 7400000, guid: ae574f4b5ea74aa448167ef9e0ac85ce, type: 2}
-  - {fileID: 7400000, guid: 2a6e398b6f907804fbe989673aec1683, type: 2}
-  - {fileID: 7400000, guid: 0b0fa20e9d23b8145ac7dc5c2d4c6dea, type: 2}
-  - {fileID: 7400000, guid: 29bc731877234f2478bafd9bd090fdab, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 998b8205eb874e744aed65ffd53b1718, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114213379515351210
 MonoBehaviour:
   m_ObjectHideFlags: 1
