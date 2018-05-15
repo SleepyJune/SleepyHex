@@ -9,17 +9,41 @@ public class DialogueGroup : MonoBehaviour
 {
     public DialogWindow[] dialogues;
 
+    Dictionary<string, DialogWindow> windows;
+
+    void Start()
+    {
+        windows = new Dictionary<string, DialogWindow>();
+
+        foreach(var dialogue in dialogues)
+        {
+            windows.Add(dialogue.name, dialogue);
+        }
+    }
+
     public void SetActive(string name)
     {
-        foreach (var dialogue in dialogues)
+        DialogWindow target;
+
+        if (windows.TryGetValue(name, out target))
         {
-            if(dialogue.name != name)
+            foreach (var dialogue in dialogues)
             {
-                dialogue.Close();
-            }
-            else
-            {
-                dialogue.Show();
+                if (dialogue.name != name)
+                {
+                    if (!target.transform.IsChildOf(dialogue.transform))
+                    {
+                        dialogue.Close();
+                    }
+                    else
+                    {
+                        dialogue.Show();
+                    }
+                }
+                else
+                {
+                    dialogue.Show();
+                }
             }
         }
     }

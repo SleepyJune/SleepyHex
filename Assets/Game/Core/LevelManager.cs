@@ -25,6 +25,9 @@ public class LevelManager : LevelLoader
 
     public Text levelUIText;
 
+    int hintsUsed = 0;
+    float solveStartTime;
+
     void Start()
     {
         if (rateButton)
@@ -69,6 +72,14 @@ public class LevelManager : LevelLoader
         GameManager.instance.levelSelector.SetCurrentLevel();
 
         ChangeRandomColor();
+
+        ResetLevelStats();
+    }
+
+    void ResetLevelStats()
+    {
+        solveStartTime = Time.time;
+        hintsUsed = 0;
     }
 
     void ChangeRandomColor()
@@ -111,6 +122,7 @@ public class LevelManager : LevelLoader
                 var points = path.GetTotalPoints();
 
                 var newScore = new Score(level, points);
+                newScore.time = (int)Math.Round(Time.time - solveStartTime);
 
                 GameManager.instance.scoreManager.SetStars(newScore);
 

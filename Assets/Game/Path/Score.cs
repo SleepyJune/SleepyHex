@@ -12,9 +12,13 @@ public class Score
     public Level level;
     public int points;
 
-    public float time;
+    public int time = 0;
+
+    public int hintsUsed = 0;
 
     public int stars;
+
+    public int playCount = 0;
 
     public Score(Level level, int points)
     {
@@ -49,6 +53,17 @@ public class Score
         {
             PlayerPrefs.SetInt(GetStarsPrefKey(level.levelName), stars);
         }
+    }
+
+    public void IncrementPlayCount()
+    {
+        string key = "Level_" + level.levelName + "_PlayCount";
+
+        var playCount = PlayerPrefs.GetInt(key, 0) + 1;
+
+        PlayerPrefs.SetInt(key, playCount);
+
+        this.playCount = playCount;
     }
 
     public void GetStars()

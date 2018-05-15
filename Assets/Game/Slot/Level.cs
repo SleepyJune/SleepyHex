@@ -180,6 +180,11 @@ public class Level
         return data;
     }
 
+    public PuzzleDifficulty GetPuzzleDifficulty()
+    {
+        return (PuzzleDifficulty) Math.Floor(difficulty);
+    }
+
     public void SetLastPlayedLevel()
     {
         if (levelName != null && levelName != "")

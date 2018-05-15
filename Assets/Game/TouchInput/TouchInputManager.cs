@@ -61,7 +61,7 @@ public class TouchInputManager : MonoBehaviour
                 touchData.fingerId = -1;
                 touchData.position = Input.mousePosition;
                 touchData.phase = TouchPhase.Began;
-                
+                                
                 lastMousePosition = Input.mousePosition;
 
                 if (true)//!touchData.IsPointerOverUI() && !CheckClickableObjects(touchData))

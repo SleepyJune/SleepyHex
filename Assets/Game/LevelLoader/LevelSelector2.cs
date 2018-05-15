@@ -35,7 +35,7 @@ public class LevelSelector2 : MonoBehaviour
     public int difficultyFilter = -1;
 
     public DialogWindow difficultyPanel;
-
+    
     public DialogueGroup dialogueGroup;
 
     public Dictionary<string, LevelSelectButton> buttonDatabase;
@@ -121,9 +121,7 @@ public class LevelSelector2 : MonoBehaviour
     public void SetButtonStars(Score score)
     {
         var storedStars = score.GetStoredStars();
-
-        Debug.Log(score.stars + " vs " + storedStars);
-
+        
         if (score.stars > storedStars)
         {
             LevelSelectButton button;
@@ -131,8 +129,6 @@ public class LevelSelector2 : MonoBehaviour
             if (buttonDatabase.TryGetValue(score.level.levelName, out button))
             {
                 button.SetStars(score.stars);
-
-                Debug.Log("here");
             }
         }
     }
@@ -148,8 +144,6 @@ public class LevelSelector2 : MonoBehaviour
 
         if (lastPlayedLevel != null)
         {
-            Debug.Log(lastPlayedLevel);
-
             LevelSelectButton button;
             if (buttonDatabase.TryGetValue(lastPlayedLevel, out button))
             {

@@ -6,13 +6,28 @@ using System.Text;
 
 using UnityEngine;
 
-class ShareButton : MonoBehaviour
+public class ShareButton : MonoBehaviour
 {
     public void ShareText()
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            ShareTextHelper();
+            ShareTextHelper("Play free: https://www.instagram.com/dongi.studio/");
+        }
+        else
+        {
+            Debug.Log("Android only");
+        }
+    }
+        
+    public void ShareTextScore(Score score)
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            StartCoroutine(ShareImageHelper("Try to beat my score in level " + score.level.levelID
+                            + " in difficulty " + score.level.GetPuzzleDifficulty().ToString()
+                            + " @MaxHex puzzle game"
+                            + "\nhttps://www.instagram.com/dongi.studio/"));
         }
         else
         {
@@ -32,10 +47,10 @@ class ShareButton : MonoBehaviour
         }
     }
 
-    void ShareTextHelper()
+    void ShareTextHelper(string text)
     {
         string subject = "SleepyHex";
-        string text = "Play free: https://www.instagram.com/dongi.studio/";
+        //string text = "Play free: https://www.instagram.com/dongi.studio/";
 
         AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
         AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
@@ -53,7 +68,7 @@ class ShareButton : MonoBehaviour
         currentActivity.Call("startActivity", jChooser);
     }
 
-    IEnumerator ShareImageHelper()
+    IEnumerator ShareImageHelper(string text = null)
     {
         yield return new WaitForEndOfFrame();
 
@@ -86,6 +101,12 @@ class ShareButton : MonoBehaviour
         intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), "Demo");
         intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_SUBJECT"), "Beat my score!");
         intentObject.Call<AndroidJavaObject>("setType", "image/png");
+
+        if(text != null)
+        {
+            intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), text);
+        }
+
 
         AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
         AndroidJavaClass fileClass = new AndroidJavaClass("java.io.File");

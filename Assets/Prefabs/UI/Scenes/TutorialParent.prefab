@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224165729708835622}
   - component: {fileID: 95902581423129182}
+  - component: {fileID: 114111714896447418}
   m_Layer: 5
-  m_Name: Tutorial
+  m_Name: TutorialParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,6 +186,7 @@ GameObject:
   - component: {fileID: 222871865978641772}
   - component: {fileID: 114350259209965234}
   - component: {fileID: 114612456337752364}
+  - component: {fileID: 114779362690933748}
   m_Layer: 5
   m_Name: Button_Next
   m_TagString: Untagged
@@ -226,6 +228,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114111714896447418
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1022828463957780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7c2615cd14bfb41a7c0cc4d12e1878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 1022828463957780}
 --- !u!114 &114350259209965234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,7 +343,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114350259209965234}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114779362690933748}
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Next
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114695407177473292
@@ -359,6 +384,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114779362690933748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1978824538890718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8164dd582a55a24fa38d0992f905d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 95902581423129182}
+  targetName: 
 --- !u!114 &114928074066741540
 MonoBehaviour:
   m_ObjectHideFlags: 1
