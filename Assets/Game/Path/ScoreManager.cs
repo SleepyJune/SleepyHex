@@ -28,6 +28,9 @@ public class ScoreManager : MonoBehaviour
     public ShareButton shareButton;
 
     public Score score;
+
+    public Text levelIDText;
+    public Text levelDifficultyText;
     
     void Start()
     {
@@ -39,6 +42,12 @@ public class ScoreManager : MonoBehaviour
         if (score != null)
         {
             this.score = score;
+
+            if(levelIDText && levelDifficultyText)
+            {
+                levelIDText.text = score.level.levelID.ToString();
+                levelDifficultyText.text = ((PuzzleDifficulty)Math.Floor(score.level.difficulty)).ToString();
+            }
                         
             scorePanel.Show(); //need this here for reseting all animations first
 

@@ -10,7 +10,7 @@ public enum PuzzleDifficulty
 {
     Unrated,
     Easy,
-    Medium,
+    Normal,
     Hard,
     Insane,
 }

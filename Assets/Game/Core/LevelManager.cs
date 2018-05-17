@@ -24,6 +24,7 @@ public class LevelManager : LevelLoader
     public static string levelNameToLoad = null;
 
     public Text levelUIText;
+    public Text difficultyText;
 
     int hintsUsed = 0;
     float solveStartTime;
@@ -64,6 +65,7 @@ public class LevelManager : LevelLoader
     public override void LoadLevelFeatures(Level level)
     {
         levelUIText.text = level.levelID.ToString();
+        difficultyText.text = ((PuzzleDifficulty)Math.Floor(level.difficulty)).ToString();
 
         SoundManager.instance.OnLevelLoaded();
 

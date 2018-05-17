@@ -181,25 +181,7 @@ public class LevelSelector2 : MonoBehaviour
             difficultyFilter > 0 ? LevelSelector.levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == difficultyFilter) 
                                         : new List<LevelTextAsset>();
 
-        if (sortType == SortType.Difficulty)
-        {
-            var comparer = new NaturalComparer();
-            LevelSelector.levelListDatabase = filteredLevels
-                        .OrderBy(level => level.difficulty)
-                        .ThenBy(level => level.levelName, comparer)
-                        .ToList();
-        }
-        else if (sortType == SortType.Name)
-        {
-            //var comparer = new NaturalComparer();
-            //levelListDatabase = filteredLevels.OrderByDescending(level => level.name, comparer).ToList();
-
-            LevelSelector.levelListDatabase = filteredLevels.OrderBy(level => level.difficulty).ThenBy(level => level.levelID).ToList();
-        }
-        else
-        {
-            LevelSelector.levelListDatabase = filteredLevels.OrderBy(level => DateTime.Parse(level.dateCreated)).ToList();
-        }
+        LevelSelector.levelListDatabase = filteredLevels.OrderBy(level => level.difficulty).ThenBy(level => level.levelID).ToList();
 
         Debug.Log("Num levels: " + LevelSelector.levelListDatabase.Count());
 

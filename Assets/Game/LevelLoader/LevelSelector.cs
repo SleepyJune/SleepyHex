@@ -86,11 +86,12 @@ public class LevelSelector : MonoBehaviour
             int levelID = 1;
 
             IEnumerable<LevelTextAsset> filteredLevels =
-                levelDatabase.Values.Where(level => level.difficulty == i);
+                levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == i);
 
             var comparer = new NaturalComparer();
 
-            foreach (var levelText in filteredLevels.OrderBy(level => level.levelName, comparer))
+            foreach (var levelText in filteredLevels.OrderBy(level => level.difficulty)
+                                                    .ThenBy(level => level.levelName, comparer))
             {
                 var level = Level.LoadLevel(levelText);
                 if (level != null)
@@ -107,7 +108,7 @@ public class LevelSelector : MonoBehaviour
         for (int i = 1; i <= 4; i++)
         {
             IEnumerable<LevelTextAsset> filteredLevels =
-                levelDatabase.Values.Where(level => level.difficulty == i);
+                levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == i);
 
             var comparer = new NaturalComparer();
 
