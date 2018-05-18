@@ -46,7 +46,7 @@ public class ScoreManager : MonoBehaviour
             if(levelIDText && levelDifficultyText)
             {
                 levelIDText.text = score.level.levelID.ToString();
-                levelDifficultyText.text = ((PuzzleDifficulty)Math.Floor(score.level.difficulty)).ToString();
+                levelDifficultyText.text = score.level.GetDifficultyString();
             }
                         
             scorePanel.Show(); //need this here for reseting all animations first

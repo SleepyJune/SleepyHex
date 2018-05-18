@@ -185,6 +185,11 @@ public class Level
         return (PuzzleDifficulty) Math.Floor(difficulty);
     }
 
+    public string GetDifficultyString()
+    {
+        return ((PuzzleDifficulty)Math.Floor(difficulty)).ToString();
+    }
+
     public void SetLastPlayedLevel()
     {
         if (levelName != null && levelName != "")

@@ -24,10 +24,10 @@ public class ShareButton : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            StartCoroutine(ShareImageHelper("Try to beat my score in level " + score.level.levelID
-                            + " in difficulty " + score.level.GetPuzzleDifficulty().ToString()
-                            + " @MaxHex puzzle game"
-                            + "\nhttps://www.instagram.com/dongi.studio/"));
+            ShareTextHelper("Try to beat my score in level " + score.level.levelID
+                            + " in difficulty " + score.level.GetDifficultyString()
+                            + " at Number Descent puzzle game"
+                            + "\nhttps://www.instagram.com/dongi.studio/");
         }
         else
         {

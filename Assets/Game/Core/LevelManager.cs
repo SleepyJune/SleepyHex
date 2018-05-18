@@ -65,7 +65,7 @@ public class LevelManager : LevelLoader
     public override void LoadLevelFeatures(Level level)
     {
         levelUIText.text = level.levelID.ToString();
-        difficultyText.text = ((PuzzleDifficulty)Math.Floor(level.difficulty)).ToString();
+        difficultyText.text = level.GetDifficultyString();
 
         SoundManager.instance.OnLevelLoaded();
 

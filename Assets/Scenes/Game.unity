@@ -2482,7 +2482,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 79ace1c71fad5f24e9056cecd647e1e8, type: 3}
   - {fileID: 8300000, guid: 88eec17a91166ab43bec1f337f2de96b, type: 3}
   - {fileID: 8300000, guid: c8af7cb25939b7643b43462292b37662, type: 3}
-  shareButton: {fileID: 0}
+  shareButton: {fileID: 1805353776}
   levelIDText: {fileID: 1681794285}
   levelDifficultyText: {fileID: 263935666}
 --- !u!224 &888715011
@@ -6416,11 +6416,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1805353776}
+      objectReference: {fileID: 888715010}
     - target: {fileID: 114984221523153672, guid: c624d81f07b2983428ae2888f51fedd6,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShareImage
+      value: ShareScoreText
       objectReference: {fileID: 0}
     - target: {fileID: 114984221523153672, guid: c624d81f07b2983428ae2888f51fedd6,
         type: 2}
