@@ -55,7 +55,7 @@ public class LevelSelectButton : MonoBehaviour
                 LevelSelectButton button;
                 if(levelSelector.buttonDatabase.TryGetValue(level.nextLevel, out button))
                 {
-                    button.SetLock();
+                    button.SetLock(true);
                 }
             }
         }

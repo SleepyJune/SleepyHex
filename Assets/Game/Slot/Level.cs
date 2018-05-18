@@ -206,6 +206,13 @@ public class Level
         return PlayerPrefs.GetString(key, null);    
     }
 
+    public static string GetHighestPlayedLevel(int difficulty)
+    {
+        string key = "HighestPlayedLevel_" + ((PuzzleDifficulty) difficulty).ToString();
+
+        return PlayerPrefs.GetString(key, null);
+    }
+
     public LevelTextAsset SaveLevel(bool modified = true)
     {
         slots = map.Values.Where(s => s.number >= 0).ToArray();
