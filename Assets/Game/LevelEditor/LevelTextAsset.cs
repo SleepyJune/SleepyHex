@@ -25,6 +25,9 @@ public class LevelTextAsset : ScriptableObject
 
     public float difficulty;
 
+    public string previousLevel;
+    public string nextLevel;
+
     public LevelTextAsset(string name, int localVersion, int webVersion, string dateModified, string dateCreated)
     {
         this.levelName = name;

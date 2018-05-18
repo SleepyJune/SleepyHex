@@ -128,17 +128,15 @@ public class ScoreManager : MonoBehaviour
 
         if(current != null)
         {
-            var index = LevelSelector.levelListDatabase.FindIndex(level => level.levelName == current.levelName);
-            if(index > -1 && index+1 < LevelSelector.levelListDatabase.Count)
+            LevelTextAsset currentLevel;
+            if(LevelSelector.levelDatabase.TryGetValue(current.levelName, out currentLevel))
             {
-                var next = LevelSelector.levelListDatabase[index + 1];
-
-                GameManager.instance.LoadLevel(next.levelName);
-                scorePanel.Close();
-
-                //LevelManager.levelNameToLoad = next.name;
-                //SceneChanger.ChangeScene("Game");
-            }
+                if(currentLevel.nextLevel != null && currentLevel.nextLevel != "")
+                {
+                    GameManager.instance.LoadLevel(currentLevel.nextLevel);
+                    scorePanel.Close();
+                }
+            }            
         }
     }
 }

@@ -55,11 +55,27 @@ public class LevelDatabaseGenerator : Editor
             string str = File.ReadAllText(path);
 
             var levelTextAsset = LoadLevelFromString(str);
-
-            AssetDatabase.AddObjectToAsset(levelTextAsset, target);
-            //stageEventsProperty.AddToObjectArray(levelTextAsset);
-
+            
             newList.Add(levelTextAsset);
+        }
+
+        newList = newList.OrderBy(level => level.difficulty).ThenBy(level => level.levelID).ToList();
+
+        for(int i = 0; i < newList.Count; i++)
+        {
+            var level = newList[i];
+
+            if (i != 0)
+            {
+                level.previousLevel = newList[i - 1].levelName;
+            }
+
+            if(i+1 < newList.Count)
+            {
+                level.nextLevel = newList[i + 1].levelName;
+            }
+
+            AssetDatabase.AddObjectToAsset(level, target);
         }
 
         collection = newList.ToArray();

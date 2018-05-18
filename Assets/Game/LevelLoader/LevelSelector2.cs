@@ -186,7 +186,7 @@ public class LevelSelector2 : MonoBehaviour
         Debug.Log("Num levels: " + LevelSelector.levelListDatabase.Count());
 
         buttonDatabase = new Dictionary<string, LevelSelectButton>();
-
+        
         foreach (var level in LevelSelector.levelListDatabase)
         {
             if (level != null)

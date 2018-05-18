@@ -2098,6 +2098,7 @@ GameObject:
   - component: {fileID: 756398037}
   - component: {fileID: 756398036}
   - component: {fileID: 756398039}
+  - component: {fileID: 756398040}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -2192,6 +2193,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbaa7736e9a2064f94c036990345818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &756398040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 756398034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6311638ee230e42b346db96cacab83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialWindow: {fileID: 2143961495}
 --- !u!1 &839993889
 GameObject:
   m_ObjectHideFlags: 0
@@ -6570,6 +6583,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022828463957780, guid: 8d39b378dbb9a50488a87bee694547b2, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d39b378dbb9a50488a87bee694547b2, type: 2}
