@@ -43,6 +43,9 @@ public class LevelSelector2 : MonoBehaviour
     public GameObject currentLevelIndicatorPrefab;
     GameObject currentLevelIndicator;
 
+    [NonSerialized]
+    public LevelTextAsset highestLevelPlayed;
+
     void Start()
     {
         Initialize();
@@ -101,6 +104,8 @@ public class LevelSelector2 : MonoBehaviour
         difficultyFilter = difficulty;
         PlayerPrefs.SetInt("difficultyFilter", difficultyFilter);
 
+        highestLevelPlayed = null;
+
         RefreshList();
     }
 
@@ -140,12 +145,14 @@ public class LevelSelector2 : MonoBehaviour
             Destroy(currentLevelIndicator);
         }
 
-        string lastPlayedLevel = Level.GetLastPlayedLevel();
+        //string lastPlayedLevel = Level.GetLastPlayedLevel();
 
-        if (lastPlayedLevel != null)
+        if (highestLevelPlayed != null)
         {
+            string highestLevel = highestLevelPlayed.levelName;
+
             LevelSelectButton button;
-            if (buttonDatabase.TryGetValue(lastPlayedLevel, out button))
+            if (buttonDatabase.TryGetValue(highestLevel, out button))
             {
                 currentLevelIndicator = Instantiate(currentLevelIndicatorPrefab, button.transform);
 
@@ -198,6 +205,6 @@ public class LevelSelector2 : MonoBehaviour
             }
         }
 
-        SetCurrentLevel();
+        Invoke("SetCurrentLevel", .05f);
     }    
 }
