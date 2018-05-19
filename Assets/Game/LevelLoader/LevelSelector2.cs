@@ -64,7 +64,8 @@ public class LevelSelector2 : MonoBehaviour
 
         if (difficultyFilter != -1)
         {
-            dialogueGroup.SetActive("LevelSelect");
+            //dialogueGroup.SetActive("LevelSelect");
+            difficultyPanel.Close();
         }
 
         LoadLevels();
