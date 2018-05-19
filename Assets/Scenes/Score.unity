@@ -493,10 +493,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 726245306}
+  minusText: {fileID: 0}
   stars:
   - {fileID: 871563484}
   - {fileID: 1688100440}
   - {fileID: 295435221}
+  levelSelector: {fileID: 0}
+  scorePanel: {fileID: 0}
+  soundSource: {fileID: 0}
+  starSounds: []
+  shareButton: {fileID: 0}
+  levelIDText: {fileID: 0}
+  levelDifficultyText: {fileID: 0}
 --- !u!224 &363407094
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1149,7 +1157,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 270, y: 480}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
