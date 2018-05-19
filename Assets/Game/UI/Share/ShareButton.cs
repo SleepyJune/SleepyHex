@@ -12,7 +12,7 @@ public class ShareButton : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            ShareTextHelper("Play free: https://www.instagram.com/dongi.studio/");
+            ShareTextHelper("Play free: https://play.google.com/store/apps/details?id=com.dongistudio.hex.puzzle");
         }
         else
         {
@@ -24,10 +24,10 @@ public class ShareButton : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            ShareTextHelper("Try to beat my score in level " + score.level.levelID
-                            + " in difficulty " + score.level.GetDifficultyString()
-                            + " at Number Descent puzzle game"
-                            + "\nhttps://www.instagram.com/dongi.studio/");
+            ShareTextHelper("I solved " + score.level.GetDifficultyString() + " " + score.level.levelID
+                            + " with " + score.points + " points! Can you?"
+                            + "\n@Number Descent"
+                            + "\nhttps://play.google.com/store/apps/details?id=com.dongistudio.hex.puzzle");
         }
         else
         {
@@ -50,7 +50,6 @@ public class ShareButton : MonoBehaviour
     void ShareTextHelper(string text)
     {
         string subject = "SleepyHex";
-        //string text = "Play free: https://www.instagram.com/dongi.studio/";
 
         AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
         AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");

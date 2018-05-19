@@ -40,7 +40,10 @@ public class AdMobManager : MonoBehaviour
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
 
-        RequestBanner();
+        if (PlayerPrefs.GetInt("PlayedTutorial", 0) > 0) //don't block tutorial
+        {
+            RequestBanner();
+        }
     }
 
     private void RequestBanner()
