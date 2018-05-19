@@ -493,10 +493,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 726245306}
+  minusText: {fileID: 0}
   stars:
   - {fileID: 871563484}
   - {fileID: 1688100440}
   - {fileID: 295435221}
+  levelSelector: {fileID: 0}
+  scorePanel: {fileID: 0}
+  soundSource: {fileID: 0}
+  starSounds: []
+  shareButton: {fileID: 0}
+  levelIDText: {fileID: 0}
+  levelDifficultyText: {fileID: 0}
 --- !u!224 &363407094
 RectTransform:
   m_ObjectHideFlags: 0
@@ -527,14 +535,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.63517296, g: 0.70043904, b: 0.803, a: 1}
+  m_Color: {r: 0.9264706, g: 0.9264706, b: 0.9264706, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1ea621fb2620ae34c9478062e6c6f5ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -581,7 +589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 25}
+  m_AnchoredPosition: {x: 0, y: 40}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &521251769
@@ -1258,7 +1266,7 @@ Prefab:
     - target: {fileID: 224790420802932234, guid: c624d81f07b2983428ae2888f51fedd6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 8.5
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 224790420802932234, guid: c624d81f07b2983428ae2888f51fedd6,
         type: 2}
@@ -1383,7 +1391,7 @@ Prefab:
     - target: {fileID: 224237506426304992, guid: 96e780a8e2ebfaf428bd2f3d6ebc571c,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -21
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 224237506426304992, guid: 96e780a8e2ebfaf428bd2f3d6ebc571c,
         type: 2}
@@ -1570,7 +1578,7 @@ Prefab:
     - target: {fileID: 224197453880925382, guid: c7760ef51c1a9cc4fba9effeebb2ca01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 8.5
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 224197453880925382, guid: c7760ef51c1a9cc4fba9effeebb2ca01,
         type: 2}
@@ -2107,7 +2115,7 @@ Prefab:
     - target: {fileID: 224439622102061936, guid: 4b6f653f2e308aa43bce6dbd09432d13,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 70
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 224439622102061936, guid: 4b6f653f2e308aa43bce6dbd09432d13,
         type: 2}
