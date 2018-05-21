@@ -29,8 +29,8 @@ public class AdMobManager : MonoBehaviour
 
 
 #if UNITY_ANDROID
-        //string appId = "ca-app-pub-7441401095869420~6580101511";
-        string appId = "ca-app-pub-3940256099942544~3347511713"; //for test
+        string appId = "ca-app-pub-7441401095869420~6580101511";
+        //string appId = "ca-app-pub-3940256099942544~3347511713"; //for test
 #elif UNITY_IPHONE
                 string appId = "ca-app-pub-7441401095869420~6580101511";
 #else
@@ -49,8 +49,8 @@ public class AdMobManager : MonoBehaviour
     private void RequestBanner()
     {
 #if UNITY_ANDROID
-        //string adUnitId = "ca-app-pub-7441401095869420/9429217018";
-        string adUnitId = "ca-app-pub-3940256099942544/6300978111"; //for test
+        string adUnitId = "ca-app-pub-7441401095869420/9429217018";
+        //string adUnitId = "ca-app-pub-3940256099942544/6300978111"; //for test
 #elif UNITY_IPHONE
                     string adUnitId = "ca-app-pub-7441401095869420/9429217018";
 #else
