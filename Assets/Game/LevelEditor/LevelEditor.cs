@@ -29,9 +29,7 @@ class LevelEditor : LevelLoader
     public DialogWindow resolvePanel;
 
     public LevelEditorIconController iconController;
-
-    protected AmazonS3Helper amazonHelper;
-
+    
     void Start()
     {
         amazonHelper = AmazonS3Helper.instance;
