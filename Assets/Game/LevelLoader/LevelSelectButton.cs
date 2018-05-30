@@ -68,6 +68,11 @@ public class LevelSelectButton : MonoBehaviour
             return;
         }
 
+#if UNITY_EDITOR
+        SetButtonActive();
+        return;
+#endif
+
         if (unlocked)
         {
             SetButtonActive();

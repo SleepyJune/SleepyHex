@@ -105,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224735737347353832}
   - component: {fileID: 95489240960045828}
+  - component: {fileID: 114060908447042564}
   m_Layer: 5
   m_Name: MessageShareUs
   m_TagString: Untagged
@@ -146,6 +147,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114060908447042564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653127867122946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7c2615cd14bfb41a7c0cc4d12e1878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 1653127867122946}
 --- !u!114 &114235219066387172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,12 +401,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 4d2924a517348204496bfd5b19c53b90, type: 3}
-        m_MethodName: 
+      - m_Target: {fileID: 114060908447042564}
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
