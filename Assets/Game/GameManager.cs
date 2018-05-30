@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized]
     public LevelManager levelManager;
-    
+
+    [NonSerialized]
+    public GlobalStatsManager globalStatsManager;
+
     public ScoreManager scoreManager;
 
     public LevelSelector2 levelSelector;
@@ -33,6 +36,7 @@ public class GameManager : MonoBehaviour
 
         pathManager = GetComponent<PathManager>();
         levelManager = GetComponent<LevelManager>();
+        globalStatsManager = GetComponent<GlobalStatsManager>();
     }
 
     public void LoadLevel(string levelName)

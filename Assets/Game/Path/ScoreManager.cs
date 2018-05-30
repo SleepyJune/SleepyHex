@@ -31,7 +31,9 @@ public class ScoreManager : MonoBehaviour
 
     public Text levelIDText;
     public Text levelDifficultyText;
-    
+
+    public MessageManager messageManager;
+   
     void Start()
     {
 
@@ -72,7 +74,9 @@ public class ScoreManager : MonoBehaviour
             levelSelector.SetButtonStars(score);
             score.SetStoredStars();
             score.IncrementPlayCount();
-            
+
+            GameManager.instance.globalStatsManager.IncrementGlobalPlayCount();
+
             for (int i = 0; i < score.stars; i++)
             {
                 var star = stars[i];
@@ -82,6 +86,8 @@ public class ScoreManager : MonoBehaviour
             soundSource.PlayOneShot(starSounds[score.stars - 1]);
             
             SendLevelCompleteEvent(score);
+
+            messageManager.ShowRateMeWindow();
         }
     }
 
