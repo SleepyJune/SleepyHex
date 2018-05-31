@@ -218,9 +218,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.21
-  m_Text: 'Don''t forget to share us
-
-    to get more hints!'
+  m_Text: "Challenge Your Friends! \nShare the game to\n get more hints!"
 --- !u!114 &114516602137907532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,7 +512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: -3}
   m_SizeDelta: {x: 174.29, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224735737347353832
