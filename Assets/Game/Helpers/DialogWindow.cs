@@ -11,7 +11,7 @@ public class DialogWindow : MonoBehaviour
 
     public void Show()
     {
-        if (!panel.activeInHierarchy)
+        if (!panel.activeSelf)//if (!panel.activeInHierarchy)
         {
             panel.SetActive(true);
         }
@@ -19,7 +19,7 @@ public class DialogWindow : MonoBehaviour
 
     public void Close()
     {
-        if (panel.activeInHierarchy)
+        if (panel.activeSelf)
         {
             panel.SetActive(false);
         }
