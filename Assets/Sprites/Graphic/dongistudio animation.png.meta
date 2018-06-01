@@ -1,13 +1,14 @@
 fileFormatVersion: 2
-guid: d02798a7de27e3545bf6295db1d3670f
-timeCreated: 1527816710
+guid: 4c1aa992c3bd06b4aa7cfc4e13d3b778
+timeCreated: 1527820377
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: hexblank_0
-    21300002: hexblank_1
-    21300004: hexblank_4
-    21300006: hexblank_7
+    21300000: dongistudio animation_0
+    21300002: dongistudio animation_2
+    21300004: dongistudio animation_3
+    21300006: dongistudio animation_7
+    21300008: dongistudio animation_10
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -94,13 +95,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hexblank_0
+      name: dongistudio animation_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 208
-        width: 179
-        height: 155
+        x: 176
+        y: 731
+        width: 447
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -108,13 +109,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: hexblank_1
+      name: dongistudio animation_2
       rect:
         serializedVersion: 2
-        x: 203
-        y: 208
-        width: 179
-        height: 155
+        x: 60
+        y: 516
+        width: 73
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -122,13 +123,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: hexblank_4
+      name: dongistudio animation_3
       rect:
         serializedVersion: 2
-        x: 203
-        y: 12
-        width: 179
-        height: 156
+        x: 207
+        y: 442
+        width: 385
+        height: 234
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,13 +137,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: hexblank_7
+      name: dongistudio animation_7
       rect:
         serializedVersion: 2
-        x: 12
-        y: 13
-        width: 179
-        height: 155
+        x: 97
+        y: 261
+        width: 606
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dongistudio animation_10
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 18
+        width: 426
+        height: 170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
