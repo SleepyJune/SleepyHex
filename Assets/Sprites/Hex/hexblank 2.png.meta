@@ -1,14 +1,11 @@
 fileFormatVersion: 2
-guid: 4c1aa992c3bd06b4aa7cfc4e13d3b778
-timeCreated: 1527820377
+guid: e370fcd999db474408ac96124b2e3042
+timeCreated: 1527828886
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: dongistudio animation_0
-    21300002: dongistudio animation_2
-    21300004: dongistudio animation_3
-    21300006: dongistudio animation_7
-    21300008: dongistudio animation_10
+    21300000: hexblank 2_0
+    21300002: hexblank 2_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -27,7 +24,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -47,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -95,13 +92,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dongistudio animation_0
+      name: hexblank 2_0
       rect:
         serializedVersion: 2
-        x: 176
-        y: 731
-        width: 447
-        height: 297
+        x: 23
+        y: 13
+        width: 179
+        height: 155
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,55 +106,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dongistudio animation_2
+      name: hexblank 2_1
       rect:
         serializedVersion: 2
-        x: 60
-        y: 516
-        width: 73
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: dongistudio animation_3
-      rect:
-        serializedVersion: 2
-        x: 207
-        y: 442
-        width: 385
-        height: 234
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: dongistudio animation_7
-      rect:
-        serializedVersion: 2
-        x: 97
-        y: 261
-        width: 606
-        height: 120
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: dongistudio animation_10
-      rect:
-        serializedVersion: 2
-        x: 187
-        y: 18
-        width: 426
-        height: 170
+        x: 222
+        y: 13
+        width: 179
+        height: 155
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
