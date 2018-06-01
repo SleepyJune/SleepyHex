@@ -18,14 +18,14 @@ public class MessageManager : MonoBehaviour
 
     public void ShowRateMeWindow()
     {
-        /*if (statsManager.GetUserRatedGame()) //if user already rated the game
+        if (statsManager.GetUserRatedGame()) //if user already rated the game
         {
             return;
-        }*/
+        }
 
         var playCount = statsManager.GetGlobalPlayCount();
 
-        if (playCount >= 2 && playCount % 2 == 0) //every 10 levels
+        if (playCount >= 10 && playCount % 10 == 0) //every 10 levels
         {
             rateMeWindow.Show();            
         }
