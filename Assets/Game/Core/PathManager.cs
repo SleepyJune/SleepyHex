@@ -137,6 +137,23 @@ public class PathManager : MonoBehaviour
             {
                 return;
             }
+
+            if (path.waypointsHash.Contains(slot)) //retracting all the way
+            {
+                var returnSlot = path.waypoints.Find(n => n.slot == slot);
+
+                if (returnSlot.next != null)
+                {
+                    var deleteSlot = returnSlot.next.slot;
+
+                    while(path.waypoints.Count > 0 && path.waypointsHash.Contains(deleteSlot))
+                    {
+                        GoBack();
+                    }
+                    return;
+                }
+            }
+
         }
 
         selectedSlot = gameSlot;
@@ -176,13 +193,7 @@ public class PathManager : MonoBehaviour
 
             if (slot != null && previous != null && previous.slot == slot) //retracting
             {
-                var lastPoint = path.GetLastPoint();
-                RemovePoint(lastPoint, lastPoint.previous);
-
-                path.RemovePoint(lastPoint);
-                line.positionCount -= 1;
-
-                UpdateSumText();
+                GoBack();
             }
             else
             {
@@ -203,6 +214,20 @@ public class PathManager : MonoBehaviour
                     }                   
                 }
             }
+        }
+    }
+
+    void GoBack()
+    {
+        if (path != null && path.waypoints.Count > 0)
+        {
+            var lastPoint = path.GetLastPoint();
+            RemovePoint(lastPoint, lastPoint.previous);
+
+            path.GoBack();
+            line.positionCount -= 1;
+
+            UpdateSumText();
         }
     }
 

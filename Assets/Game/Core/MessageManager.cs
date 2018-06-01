@@ -25,7 +25,7 @@ public class MessageManager : MonoBehaviour
 
         var playCount = statsManager.GetGlobalPlayCount();
 
-        if (playCount >= 2 && playCount % 2 == 0) //every 10 levels
+        if (playCount >= 10 && playCount % 10 == 0) //every 10 levels
         {
             rateMeWindow.Show();            
         }

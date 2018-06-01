@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 222845053810056892}
   - component: {fileID: 114220842151076050}
   - component: {fileID: 95346659296967366}
+  - component: {fileID: 225943090736139592}
   m_Layer: 5
   m_Name: StartIcon
   m_TagString: Untagged
@@ -391,3 +392,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225943090736139592
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1232599056300844}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
