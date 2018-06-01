@@ -64,7 +64,8 @@ public class LevelSelector : MonoBehaviour
 
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                amazonHelper.ListLevelVersions(LoadLevelListWeb);
+                //amazonHelper.ListLevelVersions(LoadLevelListWeb);
+                RefreshList();
             }
             else
             {
@@ -81,7 +82,7 @@ public class LevelSelector : MonoBehaviour
 
     void WriteLevelID()
     {
-        for (int i = 1; i <= 4; i++)
+        for (int i = 1; i <= 1; i++)//for (int i = 1; i <= 4; i++)
         {
             int levelID = 1;
 
