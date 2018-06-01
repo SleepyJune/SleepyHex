@@ -69,8 +69,11 @@ public class LevelSelectButton : MonoBehaviour
         }
 
 #if UNITY_EDITOR
-        SetButtonActive();
-        return;
+        if (GameManager.instance.devModeManager.unlockAllLevels)
+        {
+            SetButtonActive();
+            return;
+        }
 #endif
 
         if (unlocked)

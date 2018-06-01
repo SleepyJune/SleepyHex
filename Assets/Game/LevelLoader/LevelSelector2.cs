@@ -49,6 +49,16 @@ public class LevelSelector2 : MonoBehaviour
     void Start()
     {
         Initialize();
+
+        Invoke("PlayTutorial", 0);
+    }
+
+    void PlayTutorial()
+    {
+        if (PlayerPrefs.GetInt("PlayedTutorial", 0) == 0)
+        {
+            LoadLevel("tutorial 1");
+        }
     }
 
     void OnEnable()
@@ -118,9 +128,16 @@ public class LevelSelector2 : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
-        GameManager.instance.LoadLevel(levelName);
+        if (PlayerPrefs.GetInt("PlayedTutorial", 0) == 0)
+        {
+            GameManager.instance.LoadLevel("tutorial 1");
+        }
+        else
+        {
+            GameManager.instance.LoadLevel(levelName);
+        }     
+               
         //selectorPanel.Close();
-
         dialogueGroup.SetActive("Game");
     }
 
