@@ -73,6 +73,8 @@ public class LevelManager : LevelLoader
 
         GameManager.instance.levelSelector.SetCurrentLevel();
 
+        GameManager.instance.tutorialManager.ShowTutorial(level);
+
         ChangeRandomColor();
 
         ResetLevelStats();
