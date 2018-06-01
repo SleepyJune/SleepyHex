@@ -4125,7 +4125,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1009372114594984, guid: 170cfad95995d6041b59a1c1b0ace71b, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224793935108913202, guid: 170cfad95995d6041b59a1c1b0ace71b,
         type: 2}
@@ -4170,6 +4170,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224629201170741720, guid: 170cfad95995d6041b59a1c1b0ace71b,
     type: 2}
   m_PrefabInternal: {fileID: 996730151}
+--- !u!114 &996730153 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114177011919568414, guid: 170cfad95995d6041b59a1c1b0ace71b,
+    type: 2}
+  m_PrefabInternal: {fileID: 996730151}
+  m_Script: {fileID: 11500000, guid: eb7c2615cd14bfb41a7c0cc4d12e1878, type: 3}
 --- !u!1 &1003680949
 GameObject:
   m_ObjectHideFlags: 0
@@ -5187,7 +5193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1279767994
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5218,7 +5224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d1a47d7fcc298949823528b6cf2cabf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rateMeWindow: {fileID: 0}
+  rateMeWindow: {fileID: 996730153}
 --- !u!114 &1279767996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7836,6 +7842,10 @@ Prefab:
     - target: {fileID: 224250682308397614, guid: b720f78c9843d70449753d8aa70e2d93,
         type: 2}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266188174925336, guid: b720f78c9843d70449753d8aa70e2d93, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
