@@ -7,16 +7,10 @@ using UnityEngine;
 
 public class AnimatorStateManager : MonoBehaviour
 {
-    Animator anim;
+    public Animator anim;
 
-    int intState;
-
-    string intKey;
-
-    void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
+    private int intState;
+    private string intKey;
 
     void OnEnable()
     {

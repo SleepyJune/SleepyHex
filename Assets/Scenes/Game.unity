@@ -3830,6 +3830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f327920cd9e435e44a8fcae29b1dc2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 900075328}
 --- !u!1001 &912870071
 Prefab:
   m_ObjectHideFlags: 0
@@ -8200,7 +8201,7 @@ Prefab:
     - target: {fileID: 224154524317550784, guid: b720f78c9843d70449753d8aa70e2d93,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224154524317550784, guid: b720f78c9843d70449753d8aa70e2d93,
         type: 2}

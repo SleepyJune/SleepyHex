@@ -19,7 +19,7 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
-        
+       
     }
 
     public void ShowTutorial(Level current)
@@ -31,9 +31,7 @@ public class TutorialManager : MonoBehaviour
             tutorialWindow.Show();
 
             tutorialText.text = tutorial.text;
-
-            //Debug.Log("tut: " + tutorial.tutorialId);
-
+            
             //anim.SetInteger("tutorialID", tutorial.tutorialId);
             animManager.SetInteger("tutorialID", tutorial.tutorialId);
 
