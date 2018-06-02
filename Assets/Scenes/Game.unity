@@ -2996,7 +2996,7 @@ MonoBehaviour:
   levels:
   - tutorialId: 1
     levelName: tutorial 1
-    text: Swipe the numbers in descending order. Tap anywhere to reset.
+    text: Swipe the numbers in descending order. Tap the background to reset.
   - tutorialId: 2
     levelName: tuterial 2
     text: Fill in all the hexes to complete the puzzle.
