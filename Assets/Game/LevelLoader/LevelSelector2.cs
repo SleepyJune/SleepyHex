@@ -57,6 +57,7 @@ public class LevelSelector2 : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("PlayedTutorial", 0) == 0)
         {
+            PlayerPrefs.SetInt("PlayedTutorial", 1);
             LoadLevel("tutorial 1");
         }
     }
@@ -68,7 +69,7 @@ public class LevelSelector2 : MonoBehaviour
 
     public void Initialize()
     {
-        difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", -1);
+        difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", 1);
 
         //selectorPanel = GetComponent<DialogWindow>();
 
@@ -130,6 +131,7 @@ public class LevelSelector2 : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("PlayedTutorial", 0) == 0)
         {
+            PlayerPrefs.SetInt("PlayedTutorial", 1);
             GameManager.instance.LoadLevel("tutorial 1");
         }
         else

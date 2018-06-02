@@ -27,7 +27,7 @@ public class AdMobManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        var playCount = GameManager.instance.globalStatsManager.GetGlobalPlayCount();
+        var playCount = PlayerPrefs.GetInt("GlobalPlayCount", 0);
 
         if (playCount <= 25 || PlayerPrefs.GetInt("PlayedTutorial", 0) == 0) //don't block tutorial
         {
