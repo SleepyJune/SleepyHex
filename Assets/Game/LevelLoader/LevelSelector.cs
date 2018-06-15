@@ -54,6 +54,8 @@ public class LevelSelector : MonoBehaviour
         LoadLevels();
 
         //WriteLevelID();
+
+        //WriteColorDifficulty();
     }
 
     void LoadLevels()
@@ -82,7 +84,7 @@ public class LevelSelector : MonoBehaviour
 
     void WriteLevelID()
     {
-        for (int i = 2; i <= 2; i++)//for (int i = 1; i <= 4; i++)
+        for (int i = 5; i <= 5; i++)//for (int i = 1; i <= 4; i++)
         {
             int levelID = 1;
 
@@ -121,6 +123,26 @@ public class LevelSelector : MonoBehaviour
                     level.difficulty += .5f;
                     level.SaveLevel(false);
                 }
+            }
+        }
+    }
+
+    void WriteColorDifficulty()
+    {
+        IEnumerable<LevelTextAsset> filteredLevels =
+            levelDatabase.Values.Where(level => level.levelName.StartsWith("col "));
+
+        var comparer = new NaturalComparer();
+
+        foreach (var levelText in filteredLevels.OrderBy(level => level.levelName, comparer))
+        {
+            var level = Level.LoadLevel(levelText);
+            if (level != null)
+            {
+                level.difficulty += 4f;
+                level.SaveLevel(false);
+
+                Debug.Log(level.levelName);
             }
         }
     }

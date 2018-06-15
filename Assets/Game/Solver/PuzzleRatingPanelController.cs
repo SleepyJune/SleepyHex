@@ -13,6 +13,7 @@ public class PuzzleRatingPanelController : MonoBehaviour
     public LevelLoader levelLoader;
 
     public Toggle[] toggles;
+    public int[] difficulties;
 
     public InputField diffInput;
 
@@ -29,7 +30,7 @@ public class PuzzleRatingPanelController : MonoBehaviour
         {
             var toggle = toggles[i];
 
-            var num = i;
+            var num = difficulties[i];
 
             toggle.onValueChanged.AddListener((isSelected) =>
             {
@@ -38,7 +39,7 @@ public class PuzzleRatingPanelController : MonoBehaviour
                     return;
                 }
 
-                SetDifficultyToggle(num+1);
+                SetDifficultyToggle(num);
             });
         }
         
@@ -75,7 +76,7 @@ public class PuzzleRatingPanelController : MonoBehaviour
     public void SetDifficultyToggle(int difficulty)
     {
         bigDifficulty = difficulty;
-        RefreshDifficultyInput();
+        RefreshDifficultyInput();        
     }
 
     public void SetSliderDifficulty(float difficulty)

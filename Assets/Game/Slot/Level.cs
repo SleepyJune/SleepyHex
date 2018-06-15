@@ -7,12 +7,13 @@ using System.IO;
 using UnityEngine;
 
 public enum PuzzleDifficulty
-{
+{    
     Unrated,
     Easy,
     Normal,
     Hard,
     Insane,
+    Beginner,
 }
 
 [Serializable]
