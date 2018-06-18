@@ -31,9 +31,39 @@ public class LevelDatabaseGenerator : Editor
         {
             GenerateFromAsset(ref database.levels);
         }
+
+        if (GUILayout.Button("Check Broken Levels"))
+        {
+            CheckBrokenLevels();
+        }
+
         EditorGUILayout.PropertyField(databaseProperty, true);
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    public void CheckBrokenLevels()
+    {
+        foreach(var levelText in database.levels)
+        {
+            var level = JsonUtility.FromJson<Level>(levelText.text);
+
+            if (level != null)
+            {
+                for(int i = 1; i < 10; i++)
+                {
+                    if (level.slots.Count(x => x.number == i) == 1)
+                    {
+                        var slot = level.slots.First(x => x.number == i);
+                        if (slot.hideNumber)
+                        {
+                            Debug.Log("Broken Level: " + level.levelName);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void GenerateFromAsset(ref LevelTextAsset[] collection)

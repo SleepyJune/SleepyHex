@@ -128,13 +128,17 @@ class LevelEditor : LevelLoader
             }
 
             level.dateModified = DateTime.UtcNow.ToString();
-            level.difficulty = 0;
+            //level.difficulty = 0;
             level.isSolvedInEditor = false;
 
             if (number >= -1)
             {
                 slot.uiSlot.SetNumber(number);
                 level.ChangeSlotNumber(slot.uiSlot.slot);
+
+                //slot.uiSlot.slot.hideNumber = false;
+                //slot.uiSlot.ToggleText(false);
+                //level.ShowNumberText(slot.uiSlot.slot);                
             }
             else
             {

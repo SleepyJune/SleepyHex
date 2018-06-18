@@ -25,6 +25,7 @@ public class PathManager : MonoBehaviour
     LineRenderer line;
 
     public Text sumText;
+    public Slider sumSlider;
 
     bool isMouseDown = false;
 
@@ -41,6 +42,7 @@ public class PathManager : MonoBehaviour
         TouchInputManager.instance.touchEnd += OnTouchEnd;
 
         sumText.text = "";
+        sumSlider.value = 0;
     }
 
     private void OnTouchStart(Touch touch)
@@ -243,13 +245,24 @@ public class PathManager : MonoBehaviour
 
     public void UpdateSumText()
     {
-        if(path != null)
+        var level = levelManager.GetCurrentLevel();
+
+        if (level != null)
         {
-            sumText.text = path.GetTotalPoints().ToString();
-        }
-        else
-        {
-            sumText.text = "";
+            float bestScore = level.solution.bestScore;
+
+            if (path != null)
+            {
+                sumText.text = path.GetTotalPoints().ToString() + " / " + bestScore;
+                sumSlider.value = path.GetTotalPoints() / bestScore;
+            }
+            else
+            {
+                sumText.text = "0 / " + bestScore;
+                sumSlider.value = 0;
+            }
+
+            
         }
 
         UpdateFill();

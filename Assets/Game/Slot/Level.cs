@@ -79,6 +79,15 @@ public class Level
         }
     }
 
+    public void ShowNumberText(Slot newSlot)
+    {
+        Slot slot;
+        if (map.TryGetValue(newSlot.position, out slot))
+        {
+            slot.hideNumber = true;
+        }
+    }
+
     public void MakeEmptyLevel()
     {
         var gridColumns = 12;

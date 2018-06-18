@@ -62,10 +62,15 @@ public class PuzzleRatingPanelController : MonoBehaviour
             {
                 slider.value = level.difficulty % 1;
 
+                smallDifficulty = level.difficulty % 1;
+
                 var big = (int)Math.Floor(level.difficulty);
-                if(big >= 1 && big-1 < toggles.Length)
+
+                var bigToggleIndex = Array.IndexOf(difficulties, big);
+
+                if (bigToggleIndex >= 0 && bigToggleIndex < toggles.Length)
                 {
-                    toggles[big - 1].isOn = true;
+                    toggles[bigToggleIndex].isOn = true;
                 }
 
                 RefreshDifficultyInput();

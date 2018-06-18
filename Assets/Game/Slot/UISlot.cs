@@ -95,7 +95,7 @@ public class UISlot : MonoBehaviour
     {        
         slot.number = number;
 
-        if (slot.isNumber)
+        if (slot.isNumber && !slot.hideNumber)
         {
             text.text = number.ToString();
         }
