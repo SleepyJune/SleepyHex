@@ -10,6 +10,8 @@ public enum SpecialSlot
     Empty = -1,
     Blank = 0,
     Reverse = 10,
+    PlusOne = 11,
+    MinusOne = 12,
 }
 
 public enum SlotType
@@ -17,6 +19,8 @@ public enum SlotType
     Blank,
     Number,
     Reverse,
+    PlusOne,
+    MinusOne,
 }
 
 [System.Serializable]
@@ -117,6 +121,22 @@ public class Slot
         get
         {
             return number == 0;
+        }
+    }
+
+    public bool isBlankFill
+    {
+        get
+        {
+            return number == 0 || number == 11 || number == 12;
+        }
+    }
+
+    public bool isAddFill
+    {
+        get
+        {
+            return number == 11 || number == 12;
         }
     }
 
