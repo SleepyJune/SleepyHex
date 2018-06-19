@@ -62,7 +62,7 @@ class LevelEditor : LevelLoader
 
     void GenerateTemplateSlots()
     {
-        for (int i = -2; i < 11; i++)
+        for (int i = -2; i < 13; i++)
         {
             var newSlot = Instantiate(slotPrefab, templateSlotParent);
             var template = newSlot.gameObject.AddComponent<UITemplateSlot>();

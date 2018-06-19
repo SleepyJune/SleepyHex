@@ -111,6 +111,41 @@ public class UISlot : MonoBehaviour
     {
         blankNumber = number;
         anim.SetInteger("number", number);
+
+        if (slot.isAddFill)
+        {
+            ShowText(true);
+        }
+    }
+
+    public void ResetBlankNumber()
+    {
+        blankNumber = 0;
+        anim.SetInteger("number", slot.number);
+
+        if (slot.isAddFill)
+        {
+            ShowText(false);
+        }
+    }
+
+    public void ShowText(bool show)
+    {
+        if (show)
+        {
+            if (slot.isBlankFill)
+            {
+                text.text = blankNumber.ToString();
+            }
+            else
+            {
+                text.text = slot.number.ToString();
+            }
+        }
+        else
+        {
+            text.text = "";
+        }
     }
 
     public void ToggleText(bool toggle = true)

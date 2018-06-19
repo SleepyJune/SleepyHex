@@ -91,6 +91,20 @@ public class Path
                     pathSlot.number = lastPoint.number;
                     pathSlot.sum = lastPoint.sum + lastPoint.number;
                 }
+                else if (slot.number == (int)SpecialSlot.PlusOne)
+                {
+                    var plusNumber = Math.Min(lastPoint.number + 1, 9);
+
+                    pathSlot.number = plusNumber;
+                    pathSlot.sum = lastPoint.sum + plusNumber;
+                }
+                else if (slot.number == (int)SpecialSlot.MinusOne)
+                {
+                    var minusNumber = Math.Max(lastPoint.number - 1, 1);
+
+                    pathSlot.number = minusNumber;
+                    pathSlot.sum = lastPoint.sum + minusNumber;
+                }
                 else
                 {
                     pathSlot.number = lastPoint.number;

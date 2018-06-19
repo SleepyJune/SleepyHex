@@ -296,11 +296,16 @@ public class PathManager : MonoBehaviour
         {
             foreach (var slot in gridManager.GetUISlots())
             {
-                if (slot.slot.number == (int)SpecialSlot.Blank)
+                if (slot.slot.isBlank)
                 {
-                    slot.SetBlankNumber((int)SpecialSlot.Blank);
+                    slot.ResetBlankNumber();
                 }
-                else if(slot.slot.number == (int)SpecialSlot.Reverse)
+                else if (slot.slot.isAddFill)
+                {
+                    slot.ResetBlankNumber();
+                    slot.SetIconState(0);
+                }
+                else if(slot.slot.isReverse)
                 {
                     slot.SetIconState(0);
                 }
@@ -315,11 +320,16 @@ public class PathManager : MonoBehaviour
 
         if (slot != null)
         {
-            if (end.slot.number == (int)SpecialSlot.Blank)
+            if (end.slot.isBlank)
             {
                 slot.SetBlankNumber(end.number);
             }
-            else if(slot.slot.number == (int)SpecialSlot.Reverse)
+            else if (end.slot.isAddFill)
+            {
+                slot.SetBlankNumber(end.number);
+                slot.SetIconState(3);
+            }
+            else if(slot.slot.isReverse)
             {
                 if (end.isDescending)
                 {
@@ -340,11 +350,16 @@ public class PathManager : MonoBehaviour
 
         if (slot != null)
         {
-            if (start.slot.number == (int)SpecialSlot.Blank)
+            if (start.slot.isBlank)
             {
-                slot.SetBlankNumber((int)SpecialSlot.Blank);
+                slot.ResetBlankNumber();
             }
-            else if (slot.slot.number == (int)SpecialSlot.Reverse)
+            else if (slot.slot.isAddFill)
+            {
+                slot.ResetBlankNumber();
+                slot.SetIconState(0);
+            }
+            else if (slot.slot.isReverse)
             {
                 slot.SetIconState(0);
             }
