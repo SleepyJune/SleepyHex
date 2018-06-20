@@ -100,22 +100,22 @@ class LevelEditor : LevelLoader
     {
         if (selectedTemplate)
         {
-            selectedTemplate.uiSlot.anim.SetBool("selected", false);
+            //selectedTemplate.uiSlot.anim.SetBool("selected", false);
         }
 
         selectedTemplate = slot;
-        selectedTemplate.uiSlot.anim.SetBool("selected", true);
+        //selectedTemplate.uiSlot.anim.SetBool("selected", true);
     }
 
     public void OnEditorSlotPressed(UIEditorSlot slot)
     {
         if (selectedEditorSlot)
         {
-            selectedEditorSlot.uiSlot.anim.SetBool("selected", false);
+            //selectedEditorSlot.uiSlot.anim.SetBool("selected", false);
         }
 
         selectedEditorSlot = slot;
-        selectedEditorSlot.uiSlot.anim.SetBool("selected", true);
+        //selectedEditorSlot.uiSlot.anim.SetBool("selected", true);
 
         if (selectedTemplate)
         {
