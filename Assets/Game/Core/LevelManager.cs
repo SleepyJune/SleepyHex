@@ -24,7 +24,7 @@ public class LevelManager : LevelLoader
     public static string levelNameToLoad = null;
 
     public Text levelUIText;
-    public Text difficultyText;
+    //public Text difficultyText;
 
     int hintsUsed = 0;
     float solveStartTime;
@@ -64,8 +64,8 @@ public class LevelManager : LevelLoader
 
     public override void LoadLevelFeatures(Level level)
     {
-        levelUIText.text = level.levelID.ToString();
-        difficultyText.text = level.GetDifficultyString();
+        levelUIText.text = level.GetDifficultyString() + " " + level.levelID.ToString();
+        //difficultyText.text = level.GetDifficultyString();
 
         SoundManager.instance.OnLevelLoaded();
 
@@ -74,6 +74,8 @@ public class LevelManager : LevelLoader
         GameManager.instance.levelSelector.SetCurrentLevel();
 
         GameManager.instance.tutorialManager.ShowTutorial(level);
+
+        GameManager.instance.hintManager.ResetHintsUsed();
 
         ChangeRandomColor();
 
