@@ -246,6 +246,8 @@ public class Level
         
         Debug.Log("Saved to: " + filePath);
 
+        this.modified = false;
+
         return levelText;
     }
 
