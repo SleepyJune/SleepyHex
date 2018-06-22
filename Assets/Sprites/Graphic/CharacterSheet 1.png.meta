@@ -1,0 +1,622 @@
+fileFormatVersion: 2
+guid: fbdfde8ec6a58ca43ba999abb9c64367
+timeCreated: 1529695197
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CharacterSheet 1_0
+    21300002: CharacterSheet 1_1
+    21300004: CharacterSheet 1_2
+    21300006: CharacterSheet 1_3
+    21300008: CharacterSheet 1_4
+    21300010: CharacterSheet 1_5
+    21300012: CharacterSheet 1_6
+    21300014: CharacterSheet 1_7
+    21300016: CharacterSheet 1_8
+    21300018: CharacterSheet 1_9
+    21300020: CharacterSheet 1_10
+    21300022: CharacterSheet 1_11
+    21300024: CharacterSheet 1_12
+    21300026: CharacterSheet 1_13
+    21300028: CharacterSheet 1_14
+    21300030: CharacterSheet 1_15
+    21300032: CharacterSheet 1_16
+    21300034: CharacterSheet 1_17
+    21300036: CharacterSheet 1_18
+    21300038: CharacterSheet 1_19
+    21300040: CharacterSheet 1_20
+    21300042: CharacterSheet 1_31
+    21300044: CharacterSheet 1_21
+    21300046: CharacterSheet 1_22
+    21300048: CharacterSheet 1_23
+    21300050: CharacterSheet 1_24
+    21300052: CharacterSheet 1_25
+    21300054: CharacterSheet 1_26
+    21300056: CharacterSheet 1_27
+    21300058: CharacterSheet 1_28
+    21300060: CharacterSheet 1_29
+    21300062: CharacterSheet 1_30
+    21300064: CharacterSheet 1_32
+    21300066: CharacterSheet 1_33
+    21300068: CharacterSheet 1_34
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CharacterSheet 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 709
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 709
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_2
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 709
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_3
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 709
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_5
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_6
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_7
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_8
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 1416
+        y: 473
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_11
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 240
+        width: 100
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 3, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_12
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 240
+        width: 100
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_13
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 241
+        width: 100
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_14
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 240
+        width: 100
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_15
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 240
+        width: 100
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_16
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 338
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_17
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 337
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_18
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 337
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_31
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 259
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_19
+      rect:
+        serializedVersion: 2
+        x: 1299
+        y: 258
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_20
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 255
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_21
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 338
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_22
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 343
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_23
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 258
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_24
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 257
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_25
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 342
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_26
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 339
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_27
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 261
+        width: 130
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_28
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 152
+        width: 90
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_29
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 216
+        width: 1
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_30
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 146
+        width: 90
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_32
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 148
+        width: 90
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_33
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 145
+        width: 90
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CharacterSheet 1_34
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 149
+        width: 90
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
