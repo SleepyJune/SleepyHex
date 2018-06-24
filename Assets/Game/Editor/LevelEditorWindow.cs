@@ -6,6 +6,8 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 
+using System.IO;
+
 public class LevelEditorWindow : EditorWindow
 {
     public Level currentLevel;
@@ -13,6 +15,8 @@ public class LevelEditorWindow : EditorWindow
     public LevelDifficultyGroup currentGroup;
 
     bool showCurrentLevel = false;
+
+    LevelTextAsset selectedLevel;
 
     int selectionGridId = 0;
     string[] selectionGridStrings;
@@ -63,7 +67,7 @@ public class LevelEditorWindow : EditorWindow
 
             showCurrentLevel = true;
 
-            var selectedLevel = group.levels[selectionGridId];
+            selectedLevel = group.levels[selectionGridId];
 
             if (LevelEditor.instance)
             {
@@ -171,6 +175,17 @@ public class LevelEditorWindow : EditorWindow
             if (GUILayout.Button("Save", GUILayout.Width(100)))
             {
                 level.SaveLevel(false);
+
+                if(selectedLevel.levelName != level.levelName)
+                {
+                    if (Directory.Exists(DataPath.savePath))
+                    {
+                        var filePath = DataPath.savePath + selectedLevel.levelName + ".json";
+                        File.Delete(filePath);
+                    }
+
+                    selectedLevel.levelName = level.levelName;
+                }
 
                 AssetDatabase.Refresh();
             }

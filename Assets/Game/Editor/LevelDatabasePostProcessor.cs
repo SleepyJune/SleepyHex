@@ -19,17 +19,34 @@ class LevelDatabasePostProcessor : AssetPostprocessor
             database = (LevelDatabase)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelLoader/LevelDatabase.asset", typeof(LevelDatabase));
         }
 
-        /*foreach (string str in importedAssets)
+        bool databaseModified = false;
+
+        foreach (string str in importedAssets)
         {
-            Debug.Log("Reimported Asset: " + str);            
+            if (str.StartsWith("Assets/Resources/Levels/"))
+            {
+                databaseModified = true;
+                break;
+            }
+
+            //Debug.Log("Reimported Asset: " + str);            
         }
 
         foreach (string str in deletedAssets)
         {
-            Debug.Log("Deleted Asset: " + str);
-        }*/
+            if (str.StartsWith("Assets/Resources/Levels/"))
+            {
+                databaseModified = true;
+                break;
+            }
 
-        LevelDatabaseGenerator.GenerateFromAsset(ref database);
+            //Debug.Log("Deleted Asset: " + str);
+        }
+
+        if (databaseModified)
+        {
+            LevelDatabaseGenerator.GenerateFromAsset(ref database);
+        }
 
         /*for (int i = 0; i < movedAssets.Length; i++)
         {
