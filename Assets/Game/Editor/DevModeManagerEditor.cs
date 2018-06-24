@@ -12,6 +12,7 @@ using System.Linq;
 [CanEditMultipleObjects]
 public class DevModeManagerEditor : Editor
 {
+    
     public override void OnInspectorGUI()
     {
         //serializedObject.Update();
@@ -22,8 +23,7 @@ public class DevModeManagerEditor : Editor
         {
             PlayerPrefs.DeleteAll();
         }
-
-
+                
         //serializedObject.ApplyModifiedProperties();
     }
 }

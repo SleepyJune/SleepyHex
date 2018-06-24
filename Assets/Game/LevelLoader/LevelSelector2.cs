@@ -103,9 +103,12 @@ public class LevelSelector2 : MonoBehaviour
 
     public static void LoadLevelByDatabase(LevelDatabase levelDatabase)
     {
-        foreach(var level in levelDatabase.levels)
+        foreach (var group in levelDatabase.difficultyGroups)
         {
-            LevelSelector.AddLevel(level);
+            foreach (var level in group.levels)
+            {
+                LevelSelector.AddLevel(level);
+            }
         }
 
         LevelSelector.isLoaded = true;

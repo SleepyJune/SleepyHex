@@ -5,11 +5,15 @@ using System.Text;
 using System.IO;
 
 using UnityEngine;
+using UnityEditor;
+
 using UnityEngine.UI;
 using System.Collections;
 
-class LevelEditor : LevelLoader
+public class LevelEditor : LevelLoader
 {
+    public static LevelEditor instance = null;
+
     public Transform templateSlotParent;
    
     [NonSerialized]
@@ -29,7 +33,20 @@ class LevelEditor : LevelLoader
     public DialogWindow resolvePanel;
 
     public LevelEditorIconController iconController;
-    
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
     void Start()
     {
         amazonHelper = AmazonS3Helper.instance;
@@ -229,6 +246,8 @@ class LevelEditor : LevelLoader
 
             LevelSelector.DeleteLevel(level.levelName);
             levelSelector.RefreshList();
+
+            AssetDatabase.Refresh();
         }
     }
 
@@ -256,6 +275,8 @@ class LevelEditor : LevelLoader
         if(level.canSave)
         {
             Save(modified, true);
+
+            AssetDatabase.Refresh();
         }
     }
 }

@@ -2889,6 +2889,9 @@ MonoBehaviour:
     levelName: tutorial 6
     text: Hexes with the same colors have the same numbers. You can start anywhere
       that is not a blank or reverse hex.
+  - tutorialId: 0
+    levelName: tutorial add
+    text: Moving onto hex with +1 mark will add 1 to the current number.
 --- !u!114 &756398041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5326,7 +5329,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1293812338
 MonoBehaviour:
@@ -5381,7 +5384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1321620713
 MonoBehaviour:
   m_ObjectHideFlags: 0

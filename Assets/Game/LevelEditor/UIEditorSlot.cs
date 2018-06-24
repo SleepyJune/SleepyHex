@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-class UIEditorSlot : MonoBehaviour, IPointerDownHandler
+public class UIEditorSlot : MonoBehaviour, IPointerDownHandler
 {
     public UISlot uiSlot;
     

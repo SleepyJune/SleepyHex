@@ -6,7 +6,8 @@ using System.Text;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Level/Level Database")]
+
 public class LevelDatabase : ScriptableObject
 {
-    public LevelTextAsset[] levels = new LevelTextAsset[0];
+    public LevelDifficultyGroup[] difficultyGroups = new LevelDifficultyGroup[0];
 }
