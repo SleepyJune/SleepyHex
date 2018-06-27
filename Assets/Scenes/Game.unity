@@ -1152,7 +1152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &257091271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2652,6 +2652,7 @@ GameObject:
   - component: {fileID: 756398041}
   - component: {fileID: 756398040}
   - component: {fileID: 756398042}
+  - component: {fileID: 756398043}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -2812,6 +2813,18 @@ MonoBehaviour:
     type: 2}
   startIconPrefab: {fileID: 1302188859142368, guid: 78e5ecf58ae443148895d8d5e978a3a4,
     type: 2}
+--- !u!114 &756398043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 756398034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d70073de49a2f4386c52086585c2ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterAC: {fileID: 274294790}
 --- !u!1 &772188093
 GameObject:
   m_ObjectHideFlags: 0
@@ -5176,7 +5189,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1293812338
 MonoBehaviour:
@@ -5231,7 +5244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1321620713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6038,7 +6051,6 @@ GameObject:
   - component: {fileID: 1509625341}
   - component: {fileID: 1509625340}
   - component: {fileID: 1509625339}
-  - component: {fileID: 1509625342}
   - component: {fileID: 1509625343}
   m_Layer: 5
   m_Name: Button
@@ -6104,9 +6116,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1509625342}
-        m_MethodName: SetTrigger
-        m_Mode: 5
+      - m_Target: {fileID: 756398043}
+        m_MethodName: TriggerPlayerPoke
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6150,19 +6162,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1509625337}
---- !u!114 &1509625342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1509625337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8164dd582a55a24fa38d0992f905d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 274294790}
-  targetName: 
 --- !u!225 &1509625343
 CanvasGroup:
   m_ObjectHideFlags: 0
