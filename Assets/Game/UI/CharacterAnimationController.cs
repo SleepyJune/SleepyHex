@@ -32,21 +32,19 @@ public class CharacterAnimationController : MonoBehaviour
     {
         if (GameManager.instance.pathManager.GetLastMoveTime() >= 5)
         {
-            characterAC.SetTrigger("PlayerAFK");
+            characterAC.SetBool("isPlayerAFK", true);
             isAFK = true;
-
-            Debug.Log("AFK");
         }
         else
         {
+            characterAC.SetBool("isPlayerAFK", false);
             isAFK = false;
-
-            Debug.Log("not AFK");
         }
     }
 
     public void TriggerHints(int numHints)
     {
+        characterAC.SetInteger("HintCount", numHints);
         characterAC.SetTrigger("Hints");
     }
 
