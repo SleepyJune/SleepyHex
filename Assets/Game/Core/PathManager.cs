@@ -32,6 +32,8 @@ public class PathManager : MonoBehaviour
     LevelManager levelManager;
 
     public bool canFillSlots = true;
+
+    float lastMoveTime = 0;
     
     void Start()
     {
@@ -43,15 +45,26 @@ public class PathManager : MonoBehaviour
 
         sumText.text = "";
         sumSlider.value = 0;
+
+        lastMoveTime = Time.time;
+    }
+
+    public float GetLastMoveTime()
+    {
+        return Time.time - lastMoveTime;
     }
 
     private void OnTouchStart(Touch touch)
     {
         isMouseDown = true;
+
+        lastMoveTime = Time.time;
     }
 
     private void OnTouchMove(Touch touch)
     {
+        lastMoveTime = Time.time;
+
         if (isMouseDown && path != null)
         {
             var grid = levelManager.GetGridManager();
@@ -97,6 +110,8 @@ public class PathManager : MonoBehaviour
     private void OnTouchEnd(Touch touch)
     {
         isMouseDown = false;
+
+        lastMoveTime = Time.time;
     }
 
     public void ClearPath()
@@ -320,6 +335,8 @@ public class PathManager : MonoBehaviour
 
         if (slot != null)
         {
+            GameManager.instance.characterController.TriggerFill(true);
+
             if (end.slot.isBlank)
             {
                 slot.SetBlankNumber(end.number);
@@ -350,6 +367,8 @@ public class PathManager : MonoBehaviour
 
         if (slot != null)
         {
+            GameManager.instance.characterController.TriggerFill(false);
+
             if (start.slot.isBlank)
             {
                 slot.ResetBlankNumber();

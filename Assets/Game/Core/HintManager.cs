@@ -51,16 +51,22 @@ public class HintManager : MonoBehaviour
                     var numHexShown = (int)Math.Min(numHex, Math.Ceiling(numHex / 3.0));
 
                     DrawPathLine(bestPath.Take(numHexShown));
+
+                    GameManager.instance.characterController.TriggerHints(1);
                 }
                 else if(hintsUsed == 2)
                 {
                     var numHexShown = (int)Math.Min(numHex, Math.Ceiling(2 * numHex / 3.0));
 
                     DrawPathLine(bestPath.Take(numHexShown));
+
+                    GameManager.instance.characterController.TriggerHints(2);
                 }
                 else
                 {
                     DrawPathLine(bestPath);
+
+                    GameManager.instance.characterController.TriggerHints(3);
                 }
 
             }

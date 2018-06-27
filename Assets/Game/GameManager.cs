@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized]
     public HintManager hintManager;
+
+    [NonSerialized]
+    public CharacterAnimationController characterController;
     
     public DevModeManager devModeManager;
 
@@ -47,6 +50,7 @@ public class GameManager : MonoBehaviour
         globalStatsManager = GetComponent<GlobalStatsManager>();
         tutorialManager = GetComponent<TutorialManager>();
         hintManager = GetComponent<HintManager>();
+        characterController = GetComponent<CharacterAnimationController>();
     }
 
     public void LoadLevel(string levelName)
