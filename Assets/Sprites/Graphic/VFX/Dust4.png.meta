@@ -1,17 +1,18 @@
 fileFormatVersion: 2
-guid: fb0e9ea442b80a846979aa6384d74860
-timeCreated: 1529880834
+guid: b068db9c15c44bf498cb10ac2208e942
+timeCreated: 1530132610
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Hit_22_v2_0
-    21300002: Hit_22_v2_1
-    21300004: Hit_22_v2_2
-    21300006: Hit_22_v2_3
-    21300008: Hit_22_v2_4
-    21300010: Hit_22_v2_5
-    21300012: Hit_22_v2_6
-    21300014: Hit_22_v2_7
+    21300000: Dust4_0
+    21300002: Dust4_1
+    21300004: Dust4_2
+    21300006: Dust4_3
+    21300008: Dust4_4
+    21300010: Dust4_5
+    21300012: Dust4_6
+    21300014: Dust4_7
+    21300016: Dust4_8
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -39,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -98,120 +99,134 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hit_22_v2_0
+      name: Dust4_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
-        width: 512
-        height: 256
+        y: 514
+        width: 233
+        height: 179
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hit_22_v2_1
+      name: Dust4_1
       rect:
         serializedVersion: 2
-        x: 512
-        y: 256
-        width: 512
-        height: 256
+        x: 233
+        y: 514
+        width: 233
+        height: 176
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hit_22_v2_2
+      name: Dust4_2
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 256
-        width: 512
-        height: 256
+        x: 464
+        y: 514
+        width: 233
+        height: 179
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hit_22_v2_3
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 256
-        width: 512
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Hit_22_v2_4
+      name: Dust4_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 512
-        height: 256
+        y: 278
+        width: 233
+        height: 184
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hit_22_v2_5
+      name: Dust4_4
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 512
-        height: 256
+        x: 232
+        y: 278
+        width: 233
+        height: 185
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hit_22_v2_6
+      name: Dust4_5
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 512
-        height: 256
+        x: 465
+        y: 279
+        width: 233
+        height: 185
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hit_22_v2_7
+      name: Dust4_6
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 0
-        width: 512
-        height: 256
+        x: 0
+        y: 42
+        width: 233
+        height: 189
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Dust4_7
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 44
+        width: 233
+        height: 187
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Dust4_8
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 43
+        width: 233
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     outline: []
     physicsShape: []
-  spritePackingTag: Dust
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

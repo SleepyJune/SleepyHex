@@ -1,17 +1,24 @@
 fileFormatVersion: 2
-guid: 559c2689ad742114b9f3ab55fc5e1094
-timeCreated: 1530043017
+guid: 6cf06c61fc5298d4ea06c45e41d9d17d
+timeCreated: 1530154286
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Dust4_0
-    21300002: Dust4_1
-    21300004: Dust4_2
-    21300006: Dust4_3
-    21300008: Dust4_4
-    21300010: Dust4_5
-    21300012: Dust4_6
-    21300014: Dust4_7
+    21300000: coin_0
+    21300002: coin_1
+    21300004: coin_2
+    21300006: coin_3
+    21300008: coin_4
+    21300010: coin_5
+    21300012: coin_6
+    21300014: coin_7
+    21300016: coin_8
+    21300018: coin_9
+    21300020: coin_10
+    21300022: coin_11
+    21300024: coin_12
+    21300026: coin_13
+    21300028: coin_14
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -98,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dust4_0
+      name: coin_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 462
-        width: 232.66667
-        height: 231
+        y: 472
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,13 +119,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_1
+      name: coin_1
       rect:
         serializedVersion: 2
-        x: 232
-        y: 462
-        width: 232.66667
-        height: 231
+        x: 236
+        y: 472
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,13 +133,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_2
+      name: coin_2
       rect:
         serializedVersion: 2
-        x: 464
-        y: 462
-        width: 232.66667
-        height: 231
+        x: 472
+        y: 472
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,13 +147,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_3
+      name: coin_3
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 472
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 231
-        width: 232.66667
-        height: 231
+        y: 236
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,13 +175,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_4
+      name: coin_5
       rect:
         serializedVersion: 2
-        x: 232
-        y: 231
-        width: 232.66667
-        height: 231
+        x: 236
+        y: 236
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,13 +189,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_5
+      name: coin_6
       rect:
         serializedVersion: 2
-        x: 464
-        y: 231
-        width: 232.66667
-        height: 231
+        x: 472
+        y: 236
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,13 +203,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_6
+      name: coin_7
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 236
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_8
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 236
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_9
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 232.66667
-        height: 231
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,13 +245,69 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Dust4_7
+      name: coin_10
       rect:
         serializedVersion: 2
-        x: 232
+        x: 236
         y: 0
-        width: 232.66667
-        height: 231
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_11
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 0
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_12
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 0
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_13
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 0
+        width: 236
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: coin_14
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 0
+        width: 236
+        height: 236
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
