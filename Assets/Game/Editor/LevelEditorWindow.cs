@@ -172,6 +172,8 @@ public class LevelEditorWindow : EditorWindow
 
             //GUILayout.Space(20);
 
+            GUILayout.BeginHorizontal();
+
             if (GUILayout.Button("Save", GUILayout.Width(100)))
             {
                 level.SaveLevel(false);
@@ -189,6 +191,29 @@ public class LevelEditorWindow : EditorWindow
 
                 AssetDatabase.Refresh();
             }
+
+            if (GUILayout.Button("Copy", GUILayout.Width(100)))
+            {
+                level.levelName = level.levelName + "_Copy";
+                level.SaveLevel(false);
+
+                AssetDatabase.Refresh();
+            }
+
+            if (GUILayout.Button("Delete", GUILayout.Width(100)))
+            {
+                if (Directory.Exists(DataPath.savePath))
+                {
+                    var filePath = DataPath.savePath + level.levelName + ".json";
+                    File.Delete(filePath);
+
+                    currentLevel = null;
+
+                    AssetDatabase.Refresh();
+                }
+            }
+
+            GUILayout.EndHorizontal();
         }
     }
 
