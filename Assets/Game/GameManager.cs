@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized]
     public CharacterAnimationController characterController;
-    
+
+    public DailyBonusManager dailyBonusManager;
+
     public DevModeManager devModeManager;
 
     public ScoreManager scoreManager;

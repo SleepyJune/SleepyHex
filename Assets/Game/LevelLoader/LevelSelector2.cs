@@ -65,6 +65,16 @@ public class LevelSelector2 : MonoBehaviour
     void OnEnable()
     {
         SoundManager.instance.PlayHomeMusic();
+
+        Invoke("CheckDailyBonus", .01f);
+    }
+
+    void CheckDailyBonus()
+    {
+        if (GameManager.instance && GameManager.instance.dailyBonusManager != null)
+        {
+            GameManager.instance.dailyBonusManager.CheckDailyBonus();
+        }
     }
 
     public void Initialize()

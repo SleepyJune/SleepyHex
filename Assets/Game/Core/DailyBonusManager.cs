@@ -11,7 +11,7 @@ public class DailyBonusManager : MonoBehaviour
     [NonSerialized]
     HintManager hintManager;
 
-    DialogWindow window;
+    public DialogWindow window;
 
     public GameObject[] activeStars;
 
@@ -20,7 +20,6 @@ public class DailyBonusManager : MonoBehaviour
     void Awake()
     {
         hintManager = GameManager.instance.hintManager;
-        window = GetComponent<DialogWindow>();
     }
 
     void OnEnable()
@@ -31,6 +30,26 @@ public class DailyBonusManager : MonoBehaviour
 
         var dailyBonus = GetDailyBonusStars();
         DisplayStars(dailyBonus);
+    }
+
+    public bool CheckDailyBonus()
+    {
+        string dateNow = DateTime.UtcNow.ToString();
+        string lastPlayedDate = PlayerPrefs.GetString("LastPlayedDate", dateNow);
+
+        DateTime oldDate = DateTime.Parse(lastPlayedDate);
+        DateTime newDate = DateTime.UtcNow;
+
+        TimeSpan difference = newDate.Subtract(oldDate);
+
+        if(difference.Seconds >= 10 || !PlayerPrefs.HasKey("LastPlayedDate"))
+        {
+            window.Show();
+            PlayerPrefs.SetString("LastPlayedDate", dateNow);
+            return true;
+        }
+
+        return false;
     }
 
     public int GetDailyBonusStars()

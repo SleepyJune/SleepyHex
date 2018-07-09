@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HintManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class HintManager : MonoBehaviour
 
     [NonSerialized]
     public int hintsUsed = 0;
+
+    public Text numHintCount;
 
     public LevelLoader levelLoader;
 
@@ -28,7 +31,12 @@ public class HintManager : MonoBehaviour
 
     void Start()
     {
+        
+    }
 
+    void OnEnable()
+    {
+        UpdateHintText(GetPrefabHints());
     }
 
     void SetDefaultHints()
@@ -37,6 +45,11 @@ public class HintManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("Hints", 10);
         }
+    }
+
+    public void UpdateHintText(int hints)
+    {
+        numHintCount.text = hints.ToString();
     }
 
     public int GetPrefabHints()
@@ -55,6 +68,8 @@ public class HintManager : MonoBehaviour
     {
         int hints = PlayerPrefs.GetInt("Hints", 0) - 1;
         PlayerPrefs.SetInt("Hints", hints);
+
+        UpdateHintText(hints);
         return hints;
     }
 
@@ -78,7 +93,12 @@ public class HintManager : MonoBehaviour
 
                 hintsUsed += 1;
 
-                if(hintsUsed == 1)
+                if(hintsUsed <= 3)
+                {
+                    ReduceHint();
+                }
+                                                
+                if (hintsUsed == 1)
                 {
                     var numHexShown = (int)Math.Min(numHex, Math.Ceiling(numHex / 3.0));
 
