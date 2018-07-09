@@ -10,6 +10,8 @@ public class TutorialManager : MonoBehaviour
 {
     public DialogWindow tutorialWindow;
 
+    GameObject tutorialOverlay;
+                
     public Text tutorialText;
     public Animator anim;
 
@@ -28,16 +30,20 @@ public class TutorialManager : MonoBehaviour
                 
         if (tutorial != null)
         {
-            tutorialWindow.Show();
-
-            tutorialText.text = tutorial.text;
             
-            //anim.SetInteger("tutorialID", tutorial.tutorialId);
-            animManager.SetInteger("tutorialID", tutorial.tutorialId);
+            if(tutorialOverlay != null)
+            {
+                Destroy(tutorialOverlay);
+            }
 
-            //anim.SetTrigger("tutorial" + tutorial.tutorialId);
+            if(tutorial.overlay != null)
+            {
+                tutorialOverlay = Instantiate(tutorial.overlay, tutorialWindow.transform);
+            }
 
-            //anim.Play("tutorial" + tutorial.tutorialId, 0, 1);
+            tutorialWindow.Show();
+            //tutorialText.text = tutorial.text;            
+            
         }
         else
         {

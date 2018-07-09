@@ -12,5 +12,7 @@ public class TutorialLevel
 
     public string levelName;
 
-    public string text;
+    //public string text;
+
+    public GameObject overlay;
 }

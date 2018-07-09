@@ -79,7 +79,7 @@ public class LevelSelector2 : MonoBehaviour
 
     public void Initialize()
     {
-        difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", 1);
+        difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", 5);
 
         //selectorPanel = GetComponent<DialogWindow>();
 
