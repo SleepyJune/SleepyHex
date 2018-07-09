@@ -21,9 +21,41 @@ public class HintManager : MonoBehaviour
     GameObject startIcon;
     LineRenderer line;
 
+    void Awake()
+    {
+        SetDefaultHints();
+    }
+
     void Start()
     {
 
+    }
+
+    void SetDefaultHints()
+    {
+        if (!PlayerPrefs.HasKey("Hints"))
+        {
+            PlayerPrefs.SetInt("Hints", 10);
+        }
+    }
+
+    public int GetPrefabHints()
+    {        
+        return PlayerPrefs.GetInt("Hints", 0);
+    }
+
+    public int AddHint(int count = 1)
+    {
+        int hints = PlayerPrefs.GetInt("Hints", 0) + count;
+        PlayerPrefs.SetInt("Hints", hints);
+        return hints;        
+    }
+
+    public int ReduceHint()
+    {
+        int hints = PlayerPrefs.GetInt("Hints", 0) - 1;
+        PlayerPrefs.SetInt("Hints", hints);
+        return hints;
     }
 
     public void ResetHintsUsed()

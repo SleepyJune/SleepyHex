@@ -28,6 +28,7 @@ public class PathManager : MonoBehaviour
     public Slider sumSlider;
 
     bool isMouseDown = false;
+    bool isButtonPressed = false;
 
     LevelManager levelManager;
 
@@ -155,6 +156,14 @@ public class PathManager : MonoBehaviour
                 return;
             }
 
+            if (lastPoint.slot.neighbours.Contains(slot))
+            {
+                isButtonPressed = true;
+                OnGameSlotEnter(gameSlot);
+                isButtonPressed = false;
+                return;
+            }
+
             if (path.waypointsHash.Contains(slot)) //retracting all the way
             {
                 var returnSlot = path.waypoints.Find(n => n.slot == slot);
@@ -196,7 +205,7 @@ public class PathManager : MonoBehaviour
 
     public void OnGameSlotEnter(UIGameSlot gameSlot)
     {
-        if (!isMouseDown || !canFillSlots)
+        if ((!isMouseDown && !isButtonPressed) || !canFillSlots)
         {
             return;
         }
