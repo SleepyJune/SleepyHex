@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class LevelSelectButton : MonoBehaviour
 {
+    public static HashSet<string> unlockedLevels = new HashSet<string>();
+
     public Text levelName;
     public GameObject[] stars;
 
@@ -38,7 +40,7 @@ public class LevelSelectButton : MonoBehaviour
         SetLock(numStars > 0);
         SetStars(numStars);
     }
-
+        
     public void SetStars(int numStars)
     {
         for (int i = 0; i < numStars; i++)
@@ -50,12 +52,31 @@ public class LevelSelectButton : MonoBehaviour
         if (numStars > 0)
         {
             //set next level active
-            if (level.nextLevel != null && level.nextLevel != "")
+
+            LevelTextAsset currentLevel = level;
+
+            for (int i = 0; i < 5; i++)
             {
-                LevelSelectButton button;
-                if(levelSelector.buttonDatabase.TryGetValue(level.nextLevel, out button))
+                LevelTextAsset nextLevel;
+
+                if (LevelSelector.levelDatabase.TryGetValue(currentLevel.nextLevel, out nextLevel))
+                {                    
+                    LevelSelectButton button;
+                    if (levelSelector.buttonDatabase.TryGetValue(currentLevel.nextLevel, out button))
+                    {
+                        button.SetLock(true);
+                    }
+
+                    if (!unlockedLevels.Contains(nextLevel.levelName))
+                    {
+                        unlockedLevels.Add(nextLevel.levelName);
+                    }
+
+                    currentLevel = nextLevel;
+                }
+                else
                 {
-                    button.SetLock(true);
+                    break;
                 }
             }
         }
@@ -82,7 +103,14 @@ public class LevelSelectButton : MonoBehaviour
             return;
         }
 
-        if(level.levelID == 1)
+        if (unlockedLevels.Contains(level.levelName))
+        {
+            SetButtonActive();
+            return;
+        }
+
+
+        if (level.levelID == 1)
         {
             SetButtonActive();
             return;
