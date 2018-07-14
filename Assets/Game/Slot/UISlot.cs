@@ -148,6 +148,14 @@ public class UISlot : MonoBehaviour
         }
     }
 
+    public void SetGameOverAnimation()
+    {
+        if(anim != null)
+        {
+            anim.SetTrigger("gameOver");
+        }
+    }
+
     public void ToggleText(bool toggle = true)
     {
         if (toggle)

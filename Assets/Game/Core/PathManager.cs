@@ -35,7 +35,7 @@ public class PathManager : MonoBehaviour
     public bool canFillSlots = true;
 
     float lastMoveTime = 0;
-    
+
     void Start()
     {
         levelManager = GameManager.instance.levelManager;
@@ -74,8 +74,8 @@ public class PathManager : MonoBehaviour
 
             var uiSlot = grid.GetUISlot(lastSlot.slot.position);
             if (uiSlot != null)
-            {               
-                if(uiSlot.gameSlot != null && uiSlot.gameSlot.isSelected)
+            {
+                if (uiSlot.gameSlot != null && uiSlot.gameSlot.isSelected)
                 {
                     return;
                 }
@@ -86,7 +86,7 @@ public class PathManager : MonoBehaviour
 
                 var dir = (touchPos - slotPos).normalized;
 
-                foreach(var neighbour in uiSlot.slot.neighbours)
+                foreach (var neighbour in uiSlot.slot.neighbours)
                 {
                     var neighbourUiSlot = grid.GetUISlot(neighbour.position);
                     if (neighbourUiSlot != null)
@@ -99,7 +99,7 @@ public class PathManager : MonoBehaviour
                         {
                             var gameSlot = neighbourUiSlot.GetComponent<UIGameSlot>();
                             OnGameSlotEnter(gameSlot);
-                            
+
                             return;
                         }
                     }
@@ -148,7 +148,7 @@ public class PathManager : MonoBehaviour
 
         var slot = gameSlot.uiSlot.slot;
 
-        if(path != null)
+        if (path != null)
         {
             var lastPoint = path.GetLastPoint();
             if (lastPoint.slot == slot)
@@ -172,7 +172,7 @@ public class PathManager : MonoBehaviour
                 {
                     var deleteSlot = returnSlot.next.slot;
 
-                    while(path.waypoints.Count > 0 && path.waypointsHash.Contains(deleteSlot))
+                    while (path.waypoints.Count > 0 && path.waypointsHash.Contains(deleteSlot))
                     {
                         GoBack();
                     }
@@ -232,12 +232,13 @@ public class PathManager : MonoBehaviour
                     line.SetPosition(line.positionCount - 1, gameSlot.transform.position);
 
                     UpdateSumText();
-                    
-                    if(path.waypoints.Count == levelManager.GetCurrentLevel().map.Values.Count)
+
+                    if (path.waypoints.Count == levelManager.GetCurrentLevel().map.Values.Count)
                     {
                         canFillSlots = false;
                         Invoke("CheckSolution", 2f);
-                    }                   
+                        SetGameOver();
+                    }
                 }
             }
         }
@@ -286,7 +287,7 @@ public class PathManager : MonoBehaviour
                 sumSlider.value = 0;
             }
 
-            
+
         }
 
         UpdateFill();
@@ -297,7 +298,7 @@ public class PathManager : MonoBehaviour
         var gridManager = levelManager.GetGridManager();
 
         if (gridManager != null)
-        {            
+        {
             foreach (var slot in gridManager.GetUISlots())
             {
                 var filled = false;
@@ -308,6 +309,34 @@ public class PathManager : MonoBehaviour
                 }
 
                 slot.SetFilled(filled);
+            }
+        }
+    }
+
+    void SetGameOver()
+    {
+        /*if (line != null)
+        {
+            Destroy(line.gameObject);
+        }
+
+        if (startIcon != null)
+        {
+            Destroy(startIcon);
+        }
+
+        if (endIcon != null)
+        {
+            Destroy(endIcon);
+        }*/
+
+        var gridManager = levelManager.GetGridManager();
+
+        if (gridManager != null)
+        {
+            foreach (var slot in gridManager.GetUISlots())
+            {
+                slot.SetGameOverAnimation();
             }
         }
     }
@@ -329,7 +358,7 @@ public class PathManager : MonoBehaviour
                     slot.ResetBlankNumber();
                     slot.SetIconState(0);
                 }
-                else if(slot.slot.isReverse)
+                else if (slot.slot.isReverse)
                 {
                     slot.SetIconState(0);
                 }
@@ -355,7 +384,7 @@ public class PathManager : MonoBehaviour
                 slot.SetBlankNumber(end.number);
                 slot.SetIconState(3);
             }
-            else if(slot.slot.isReverse)
+            else if (slot.slot.isReverse)
             {
                 if (end.isDescending)
                 {
