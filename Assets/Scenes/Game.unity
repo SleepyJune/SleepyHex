@@ -11330,11 +11330,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 888715010}
+      objectReference: {fileID: 1805353776}
     - target: {fileID: 114984221523153672, guid: c624d81f07b2983428ae2888f51fedd6,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShareScoreText
+      value: ShareImage
       objectReference: {fileID: 0}
     - target: {fileID: 114984221523153672, guid: c624d81f07b2983428ae2888f51fedd6,
         type: 2}
