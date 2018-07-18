@@ -36,6 +36,10 @@ public class PathManager : MonoBehaviour
 
     float lastMoveTime = 0;
 
+    Queue<float> actionQueue = new Queue<float>();
+
+    float lastUpdateTime = 0;
+
     void Start()
     {
         levelManager = GameManager.instance.levelManager;
@@ -48,6 +52,16 @@ public class PathManager : MonoBehaviour
         sumSlider.value = 0;
 
         lastMoveTime = Time.time;
+    }
+
+    void Update()
+    {
+        if(Time.time - lastUpdateTime >= .25f)
+        {
+            UpdateActionsPerSecond();
+
+            lastUpdateTime = Time.time;
+        }
     }
 
     public float GetLastMoveTime()
@@ -134,7 +148,7 @@ public class PathManager : MonoBehaviour
 
         path = null;
         canFillSlots = true;
-
+    
         ResetAllBlanks();
         UpdateSumText();
     }
@@ -315,20 +329,35 @@ public class PathManager : MonoBehaviour
 
     void SetGameOver()
     {
-        /*if (line != null)
+        if (line != null)
         {
-            Destroy(line.gameObject);
+            var anim = line.gameObject.GetComponent<Animator>();
+
+            if (anim)
+            {
+                anim.SetTrigger("gameOver");
+            }
         }
 
         if (startIcon != null)
         {
-            Destroy(startIcon);
+            var anim = startIcon.gameObject.GetComponent<Animator>();
+
+            if (anim)
+            {
+                anim.SetTrigger("gameOver");
+            }
         }
 
         if (endIcon != null)
         {
-            Destroy(endIcon);
-        }*/
+            var anim = endIcon.gameObject.GetComponent<Animator>();
+
+            if (anim)
+            {
+                anim.SetTrigger("gameOver");
+            }
+        }
 
         var gridManager = levelManager.GetGridManager();
 
@@ -366,6 +395,23 @@ public class PathManager : MonoBehaviour
         }
     }
 
+    void UpdateActionsPerSecond()
+    {
+        int actionsPerSecond = 0;
+
+        foreach (var time in actionQueue.ToList())
+        {
+            if (Time.time - time >= 1)
+            {
+                actionQueue.Dequeue();
+            }
+
+            actionsPerSecond += 1;
+        }
+
+        GameManager.instance.characterController.SetAPS(actionsPerSecond);
+    }
+
     void AddPoint(PathSlot start, PathSlot end)
     {
         var gridManager = levelManager.GetGridManager();
@@ -374,6 +420,10 @@ public class PathManager : MonoBehaviour
         if (slot != null)
         {
             GameManager.instance.characterController.TriggerFill(true);
+
+            actionQueue.Enqueue(Time.time);
+
+            UpdateActionsPerSecond();
 
             if (end.slot.isBlank)
             {
