@@ -9,6 +9,8 @@ public class CharacterAnimationController : MonoBehaviour
 {
     public Animator characterAC;
 
+    public Animator VFX_AC;
+    
     float lastUpdateTime = 0;
 
     public bool isAFK = false;
@@ -68,5 +70,10 @@ public class CharacterAnimationController : MonoBehaviour
     public void TriggerPlayerPoke()
     {
         characterAC.SetTrigger("PlayerPoke");
+    }
+
+    public void SetAPS(int actionsPerSecond)
+    {
+        VFX_AC.SetInteger("ActionsPerSecond", actionsPerSecond);
     }
 }
