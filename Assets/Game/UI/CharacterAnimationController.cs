@@ -75,5 +75,6 @@ public class CharacterAnimationController : MonoBehaviour
     public void SetAPS(int actionsPerSecond)
     {
         VFX_AC.SetInteger("ActionsPerSecond", actionsPerSecond);
+        characterAC.SetInteger("ActionsPerSecond", actionsPerSecond);
     }
 }

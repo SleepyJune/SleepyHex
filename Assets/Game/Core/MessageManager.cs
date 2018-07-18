@@ -34,5 +34,7 @@ public class MessageManager : MonoBehaviour
     public void UserPressedRateButton()
     {
         statsManager.SetUserRatedGame();
+
+        GameManager.instance.hintManager.AddHint(10); //add 10 free hints
     }
 }
