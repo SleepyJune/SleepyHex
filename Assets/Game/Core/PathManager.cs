@@ -361,7 +361,7 @@ public class PathManager : MonoBehaviour
             }
         }
 
-        GameManager.instance.characterController.SetGameOver();
+        GameManager.instance.characterController.SetGameOverTrigger();
 
         var gridManager = levelManager.GetGridManager();
 
