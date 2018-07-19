@@ -80,6 +80,14 @@ public class HintManager : MonoBehaviour
 
     public void ShowSolution()
     {
+        var hints = GetPrefabHints();
+
+        if(hints <= 0) //no more hints left
+        {
+            GameManager.instance.characterController.TriggerSpeechBubble(SpeechBubbleIndex.NoMoreHints);
+            return;
+        }
+
         var current = LevelManager.currentLevel;
 
         if (current != null)

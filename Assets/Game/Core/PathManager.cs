@@ -151,6 +151,8 @@ public class PathManager : MonoBehaviour
     
         ResetAllBlanks();
         UpdateSumText();
+
+        GameManager.instance.characterController.TriggerClearAll();
     }
 
     public void OnGameSlotPressed(UIGameSlot gameSlot)
@@ -250,7 +252,7 @@ public class PathManager : MonoBehaviour
                     if (path.waypoints.Count == levelManager.GetCurrentLevel().map.Values.Count)
                     {
                         canFillSlots = false;
-                        Invoke("CheckSolution", 2f);
+                        Invoke("CheckSolution", 3f);
                         SetGameOver();
                     }
                 }
@@ -358,6 +360,8 @@ public class PathManager : MonoBehaviour
                 anim.SetTrigger("gameOver");
             }
         }
+
+        GameManager.instance.characterController.SetGameOver();
 
         var gridManager = levelManager.GetGridManager();
 
