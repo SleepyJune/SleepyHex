@@ -151,7 +151,10 @@ public class PathManager : MonoBehaviour
     
         ResetAllBlanks();
         UpdateSumText();
+    }
 
+    public void PlayerPressClear()
+    {
         GameManager.instance.characterController.TriggerClearAll();
     }
 
