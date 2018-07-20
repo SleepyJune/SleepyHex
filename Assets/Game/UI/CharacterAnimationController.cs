@@ -5,15 +5,26 @@ using System.Text;
 
 using UnityEngine;
 
+public enum SpeechBubbleIndex
+{
+    Default = 0,
+    NoMoreHints = 10,
+    NoInsaneHints = 11,
+}
+
 public class CharacterAnimationController : MonoBehaviour
 {
     public Animator characterAC;
 
     public Animator VFX_AC;
-    
+
+    public Animator speechBubbleAC;
+
     float lastUpdateTime = 0;
 
     public bool isAFK = false;
+
+
 
     void Start()
     {
@@ -42,6 +53,16 @@ public class CharacterAnimationController : MonoBehaviour
             characterAC.SetBool("isPlayerAFK", false);
             isAFK = false;
         }
+    }
+
+    public void SetGameOverTrigger()
+    {
+        characterAC.SetTrigger("gameOver");
+    }
+
+    public void TriggerClearAll()
+    {
+        characterAC.SetTrigger("ClearAll");
     }
 
     public void TriggerHints(int numHints)
@@ -76,5 +97,11 @@ public class CharacterAnimationController : MonoBehaviour
     {
         VFX_AC.SetInteger("ActionsPerSecond", actionsPerSecond);
         characterAC.SetInteger("ActionsPerSecond", actionsPerSecond);
+    }
+
+    public void TriggerSpeechBubble(SpeechBubbleIndex textIndex)
+    {
+        speechBubbleAC.SetTrigger("StartBubble");
+        speechBubbleAC.SetInteger("TextIndex", (int)textIndex);
     }
 }
