@@ -22,6 +22,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     float lastUpdateTime = 0;
 
+    [NonSerialized]
     public bool isAFK = false;
 
 
