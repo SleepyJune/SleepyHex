@@ -66,6 +66,8 @@ public class PathManager : MonoBehaviour
 
     public void SetNewLevel()
     {
+        lastMoveTime = Time.time;
+
         GameManager.instance.characterController.SetGameStartTrigger();
     }
 
@@ -84,6 +86,11 @@ public class PathManager : MonoBehaviour
     private void OnTouchMove(Touch touch)
     {
         lastMoveTime = Time.time;
+
+        if (!canFillSlots)
+        {
+            return;
+        }
 
         if (isMouseDown && path != null)
         {
@@ -160,7 +167,11 @@ public class PathManager : MonoBehaviour
 
     public void PlayerPressClear()
     {
-        GameManager.instance.characterController.TriggerClearAll();
+        if (canFillSlots)
+        {
+            GameManager.instance.characterController.TriggerClearAll();
+            ClearPath();
+        }
     }
 
     public void OnGameSlotPressed(UIGameSlot gameSlot)

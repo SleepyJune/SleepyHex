@@ -58,7 +58,12 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void SetGameStartTrigger()
     {
+        CheckAFK();
         characterAC.SetTrigger("gameStart");
+
+        characterAC.ResetTrigger("gameOver");
+        characterAC.ResetTrigger("Fill");
+        characterAC.ResetTrigger("Unfill");
     }
 
     public void SetGameOverTrigger()
