@@ -25,7 +25,7 @@ public class CharacterAnimationController : MonoBehaviour
     [NonSerialized]
     public bool isAFK = false;
 
-
+    int pokeCount = 0;
 
     void Start()
     {
@@ -82,6 +82,11 @@ public class CharacterAnimationController : MonoBehaviour
         characterAC.SetTrigger("Hints");
     }
 
+    public void SetTailColor(int colorIndex)
+    {
+        characterAC.SetInteger("TailColor", colorIndex);
+    }
+
     public void TriggerFill(bool fill)
     {
         if (fill)
@@ -102,6 +107,15 @@ public class CharacterAnimationController : MonoBehaviour
     public void TriggerPlayerPoke()
     {
         characterAC.SetTrigger("PlayerPoke");
+
+        pokeCount += 1;
+
+        if(pokeCount > 10)
+        {
+            pokeCount = 0;
+        }
+
+        characterAC.SetInteger("pokeCount", pokeCount);
     }
 
     public void SetAPS(int actionsPerSecond)

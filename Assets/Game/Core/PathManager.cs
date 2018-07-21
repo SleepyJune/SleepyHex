@@ -443,6 +443,7 @@ public class PathManager : MonoBehaviour
         if (slot != null)
         {
             GameManager.instance.characterController.TriggerFill(true);
+            GameManager.instance.characterController.SetTailColor(end.number);
 
             actionQueue.Enqueue(Time.time);
 
