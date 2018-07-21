@@ -55,6 +55,11 @@ public class CharacterAnimationController : MonoBehaviour
         }
     }
 
+    public void SetGameStartTrigger()
+    {
+        characterAC.SetTrigger("gameStart");
+    }
+
     public void SetGameOverTrigger()
     {
         characterAC.SetTrigger("gameOver");
