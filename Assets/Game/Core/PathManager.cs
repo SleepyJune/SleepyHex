@@ -64,6 +64,11 @@ public class PathManager : MonoBehaviour
         }
     }
 
+    public void SetNewLevel()
+    {
+        GameManager.instance.characterController.SetGameStartTrigger();
+    }
+
     public float GetLastMoveTime()
     {
         return Time.time - lastMoveTime;

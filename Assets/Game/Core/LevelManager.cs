@@ -77,6 +77,8 @@ public class LevelManager : LevelLoader
 
         GameManager.instance.hintManager.ResetHintsUsed();
 
+        GameManager.instance.pathManager.SetNewLevel();
+
         ChangeRandomColor();
 
         ResetLevelStats();
