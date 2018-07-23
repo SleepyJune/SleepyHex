@@ -163,6 +163,8 @@ public class PathManager : MonoBehaviour
     
         ResetAllBlanks();
         UpdateSumText();
+
+        GameManager.instance.characterController.SetTailColor(0);
     }
 
     public void PlayerPressClear()
@@ -210,7 +212,7 @@ public class PathManager : MonoBehaviour
                     while (path.waypoints.Count > 0 && path.waypointsHash.Contains(deleteSlot))
                     {
                         GoBack();
-                    }
+                    }                    
                     return;
                 }
             }
@@ -236,6 +238,8 @@ public class PathManager : MonoBehaviour
 
         startIcon = Instantiate(startPrefab, slotListTop);
         startIcon.transform.position = gameSlot.transform.position;
+
+        FillSlot(path.GetLastPoint());
     }
 
     public void OnGameSlotEnter(UIGameSlot gameSlot)
@@ -435,6 +439,12 @@ public class PathManager : MonoBehaviour
         GameManager.instance.characterController.SetAPS(actionsPerSecond);
     }
 
+    void FillSlot(PathSlot slot)
+    {
+        GameManager.instance.characterController.TriggerFill(true);
+        GameManager.instance.characterController.SetTailColor(slot.number);
+    }
+
     void AddPoint(PathSlot start, PathSlot end)
     {
         var gridManager = levelManager.GetGridManager();
@@ -442,8 +452,7 @@ public class PathManager : MonoBehaviour
 
         if (slot != null)
         {
-            GameManager.instance.characterController.TriggerFill(true);
-            GameManager.instance.characterController.SetTailColor(end.number);
+            FillSlot(end);
 
             actionQueue.Enqueue(Time.time);
 
@@ -480,6 +489,7 @@ public class PathManager : MonoBehaviour
         if (slot != null)
         {
             GameManager.instance.characterController.TriggerFill(false);
+            GameManager.instance.characterController.SetTailColor(end.number);
 
             if (start.slot.isBlank)
             {
