@@ -73,6 +73,11 @@ public class LevelDatabaseGenerator : Editor
             GenerateFromAsset(ref database);
         }
 
+        if (GUILayout.Button("Write Level IDs"))
+        {
+            WriteLevelID();
+        }
+
         if (GUILayout.Button("Check Broken Levels"))
         {
             CheckBrokenLevels();
@@ -104,6 +109,37 @@ public class LevelDatabaseGenerator : Editor
         //list.DoLayoutList();
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    void WriteLevelID()
+    {
+        foreach (var group in database.difficultyGroups)
+        {
+            var comparer = new NaturalComparer();
+
+            int levelID = 1;
+
+            /*if(group.groupName != "Insane")
+            {
+                continue;
+            }*/
+
+            foreach (var levelText in group.levels.OrderBy(level => level.difficulty)
+                                                    .ThenBy(level => level.levelName, comparer))
+            {
+                var level = Level.LoadLevel(levelText);
+                if (level != null)
+                {
+                    if(level.levelID != levelID)
+                    {
+                        level.levelID = levelID;
+                        level.SaveLevel(false);
+                    }
+
+                    levelID = levelID + 1;
+                }
+            }
+        }
     }
 
     public void CheckBrokenLevels()
