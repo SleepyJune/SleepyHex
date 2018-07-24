@@ -23,7 +23,18 @@ public class DevModeManagerEditor : Editor
         {
             PlayerPrefs.DeleteAll();
         }
-                
+
+        if (GUILayout.Button("Add Hints"))
+        {
+            int hints = PlayerPrefs.GetInt("Hints", 0) + 1;
+            PlayerPrefs.SetInt("Hints", hints);
+
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.hintManager.UpdateHintText(hints);
+            }
+        }
+
         //serializedObject.ApplyModifiedProperties();
     }
 }

@@ -66,12 +66,13 @@ public class LevelManager : LevelLoader
     {
         levelUIText.text = level.GetDifficultyString() + " " + level.levelID.ToString();
         //difficultyText.text = level.GetDifficultyString();
-
+                
         SoundManager.instance.OnLevelLoaded();
 
         level.SetLastPlayedLevel();
 
-        GameManager.instance.levelSelector.SetCurrentLevel();
+        GameManager.instance.levelSelector.SetCurrentLevel(level.GetPuzzleDifficulty(), level.levelName);
+        GameManager.instance.levelSelector.SetCurrentLevelIndicator();
 
         GameManager.instance.tutorialManager.ShowTutorial(level);
 
@@ -111,6 +112,25 @@ public class LevelManager : LevelLoader
         backgroundImage.color = color;
     }
 
+    public string GetNextLevel()
+    {
+        var current = currentLevel;
+
+        if (current != null)
+        {
+            LevelTextAsset currentLevel;
+            if (LevelSelector.levelDatabase.TryGetValue(current.levelName, out currentLevel))
+            {
+                if (currentLevel.nextLevel != null && currentLevel.nextLevel != "")
+                {
+                    return currentLevel.nextLevel;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public void Solve()
     {
         if (level.hasSolution)
@@ -133,6 +153,14 @@ public class LevelManager : LevelLoader
                 newScore.time = (int)Math.Round(Time.time - solveStartTime);
 
                 GameManager.instance.scoreManager.SetStars(newScore);
+
+                string nextLevelName = GetNextLevel();
+
+                if (nextLevelName != null && nextLevelName != "")
+                {
+                    GameManager.instance.levelSelector.SetCurrentLevel(level.GetPuzzleDifficulty(), nextLevelName);
+                    GameManager.instance.levelSelector.SetCurrentLevelIndicator();
+                }
 
                 //Score.current = new Score(level, score);
                 //SceneChanger.ChangeScene("Score");

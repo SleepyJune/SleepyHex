@@ -35,7 +35,7 @@ public class LevelSelector2 : MonoBehaviour
     public int difficultyFilter = -1;
 
     public DialogWindow difficultyPanel;
-    
+
     public DialogueGroup dialogueGroup;
 
     public Dictionary<string, LevelSelectButton> buttonDatabase;
@@ -43,8 +43,8 @@ public class LevelSelector2 : MonoBehaviour
     public GameObject currentLevelIndicatorPrefab;
     GameObject currentLevelIndicator;
 
-    [NonSerialized]
-    public LevelTextAsset highestLevelPlayed;
+    //[NonSerialized]
+    //public LevelTextAsset highestLevelPlayed;
 
     void Start()
     {
@@ -124,14 +124,26 @@ public class LevelSelector2 : MonoBehaviour
         LevelSelector.isLoaded = true;
     }
 
+    public string GetCurrentLevel(PuzzleDifficulty difficulty)
+    {
+        string keyString = "CurrentLevel_" + difficulty.ToString();
+
+        return PlayerPrefs.GetString(keyString, null);
+    }
+
+    public void SetCurrentLevel(PuzzleDifficulty difficulty, string levelName)
+    {
+        string keyString = "CurrentLevel_" + difficulty.ToString();
+        PlayerPrefs.SetString(keyString, levelName);
+    }
+
     public void SetDifficultyFilter(int difficulty)
     {
         difficultyFilter = difficulty;
         PlayerPrefs.SetInt("difficultyFilter", difficultyFilter);
-
-        highestLevelPlayed = null;
-
+        
         RefreshList();
+        //SetCurrentLevel();
     }
 
     public void SetSortType(int sortType)
@@ -150,8 +162,8 @@ public class LevelSelector2 : MonoBehaviour
         else
         {
             GameManager.instance.LoadLevel(levelName);
-        }     
-               
+        }
+
         //selectorPanel.Close();
         dialogueGroup.SetActive("Game");
     }
@@ -159,7 +171,7 @@ public class LevelSelector2 : MonoBehaviour
     public void SetButtonStars(Score score)
     {
         var storedStars = score.GetStoredStars();
-        
+
         if (score.stars > storedStars)
         {
             LevelSelectButton button;
@@ -171,25 +183,40 @@ public class LevelSelector2 : MonoBehaviour
         }
     }
 
-    public void SetCurrentLevel()
+    public void SetCurrentLevelIndicator()
     {
-        if(currentLevelIndicator != null)
+        if (currentLevelIndicator != null)
         {
             Destroy(currentLevelIndicator);
         }
 
-        //string lastPlayedLevel = Level.GetLastPlayedLevel();
+        string currentLevel = GetCurrentLevel((PuzzleDifficulty)difficultyFilter);
 
-        if (highestLevelPlayed != null)
+        if (currentLevel != null && currentLevel != "")
         {
-            string highestLevel = highestLevelPlayed.levelName;
-
             LevelSelectButton button;
-            if (buttonDatabase.TryGetValue(highestLevel, out button))
+            if (buttonDatabase.TryGetValue(currentLevel, out button))
             {
                 currentLevelIndicator = Instantiate(currentLevelIndicatorPrefab, button.transform);
 
                 SnapTo(button.GetComponent<RectTransform>());
+            }
+        }
+        else
+        {
+            var firstLevel = LevelSelector.levelListDatabase.FirstOrDefault();
+
+            if(firstLevel != null)
+            {
+                SetCurrentLevel((PuzzleDifficulty)difficultyFilter, firstLevel.levelName);
+
+                LevelSelectButton button;
+                if (buttonDatabase.TryGetValue(firstLevel.levelName, out button))
+                {
+                    currentLevelIndicator = Instantiate(currentLevelIndicatorPrefab, button.transform);
+
+                    SnapTo(button.GetComponent<RectTransform>());
+                }
             }
         }
     }
@@ -211,14 +238,14 @@ public class LevelSelector2 : MonoBehaviour
     }
 
     public void RefreshList()
-    {        
+    {
         foreach (Transform child in levelList)
         {
             Destroy(child.gameObject);
         }
 
         IEnumerable<LevelTextAsset> filteredLevels =
-            difficultyFilter > 0 ? LevelSelector.levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == difficultyFilter) 
+            difficultyFilter > 0 ? LevelSelector.levelDatabase.Values.Where(level => Math.Floor(level.difficulty) == difficultyFilter)
                                         : new List<LevelTextAsset>();
 
         LevelSelector.levelListDatabase = filteredLevels.OrderBy(level => level.difficulty).ThenBy(level => level.levelID).ToList();
@@ -226,7 +253,7 @@ public class LevelSelector2 : MonoBehaviour
         Debug.Log("Num levels: " + LevelSelector.levelListDatabase.Count());
 
         buttonDatabase = new Dictionary<string, LevelSelectButton>();
-        
+
         foreach (var level in LevelSelector.levelListDatabase)
         {
             if (level != null)
@@ -238,6 +265,6 @@ public class LevelSelector2 : MonoBehaviour
             }
         }
 
-        Invoke("SetCurrentLevel", .05f);
-    }    
+        Invoke("SetCurrentLevelIndicator", .05f);
+    }
 }

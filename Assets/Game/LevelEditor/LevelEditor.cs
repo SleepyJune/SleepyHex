@@ -5,7 +5,11 @@ using System.Text;
 using System.IO;
 
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 
 using UnityEngine.UI;
 using System.Collections;
@@ -247,7 +251,9 @@ public class LevelEditor : LevelLoader
             LevelSelector.DeleteLevel(level.levelName);
             levelSelector.RefreshList();
 
+#if UNITY_EDITOR
             AssetDatabase.Refresh();
+#endif
         }
     }
 
@@ -276,7 +282,10 @@ public class LevelEditor : LevelLoader
         {
             Save(modified, true);
 
+#if UNITY_EDITOR
             AssetDatabase.Refresh();
+#endif
+
         }
     }
 }
