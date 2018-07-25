@@ -132,7 +132,7 @@ public class LevelSelectButton : MonoBehaviour
         levelButton.interactable = true;
         lockIcon.SetActive(false);
 
-        if (levelSelector.highestLevelPlayed != null)
+        /*if (levelSelector.highestLevelPlayed != null)
         {
             if (level.levelID > levelSelector.highestLevelPlayed.levelID)
             {
@@ -144,7 +144,7 @@ public class LevelSelectButton : MonoBehaviour
         {
             levelSelector.highestLevelPlayed = level;
             levelSelector.SetCurrentLevel();
-        }
+        }*/
     }
 
     public void LoadLevel()

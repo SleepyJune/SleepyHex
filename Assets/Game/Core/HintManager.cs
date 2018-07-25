@@ -92,6 +92,12 @@ public class HintManager : MonoBehaviour
 
         if (current != null)
         {
+            if(current.GetPuzzleDifficulty() == PuzzleDifficulty.Insane)
+            {
+                GameManager.instance.characterController.TriggerSpeechBubble(SpeechBubbleIndex.NoInsaneHints);
+                return;
+            }
+
             if (current.solution != null)
             {              
                 var bestPath = current.solution.bestPath;
