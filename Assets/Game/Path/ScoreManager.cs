@@ -33,6 +33,8 @@ public class ScoreManager : MonoBehaviour
     public Text levelDifficultyText;
 
     public MessageManager messageManager;
+
+    public DialogueGroup dialogueGroup;
    
     void Start()
     {
@@ -142,7 +144,15 @@ public class ScoreManager : MonoBehaviour
                     GameManager.instance.LoadLevel(currentLevel.nextLevel);
                     scorePanel.Close();
                 }
-            }            
+                else //show the select difficulty group
+                {
+                    if (dialogueGroup != null)
+                    {
+                        scorePanel.Close();
+                        dialogueGroup.SetActive("LevelDifficulty");
+                    }
+                }
+            }
         }
     }
 }

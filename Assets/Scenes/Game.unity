@@ -4712,6 +4712,7 @@ MonoBehaviour:
   levelIDText: {fileID: 1681794285}
   levelDifficultyText: {fileID: 263935666}
   messageManager: {fileID: 1279767995}
+  dialogueGroup: {fileID: 604755212}
 --- !u!224 &888715011
 RectTransform:
   m_ObjectHideFlags: 0
