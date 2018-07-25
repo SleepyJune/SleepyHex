@@ -42,7 +42,7 @@ public class DailyBonusManager : MonoBehaviour
 
         TimeSpan difference = newDate.Subtract(oldDate);
 
-        if(difference.Seconds >= 5 || !PlayerPrefs.HasKey("LastPlayedDate")) //60 seconds since last played
+        if(difference.Hours >= 24 || !PlayerPrefs.HasKey("LastPlayedDate")) //60 seconds since last played
         {
             window.Show();
             PlayerPrefs.SetString("LastPlayedDate", dateNow);
