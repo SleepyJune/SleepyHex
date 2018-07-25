@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
+  muteMusicToggle: {fileID: 239557819}
 --- !u!114 &239557819
 MonoBehaviour:
   m_ObjectHideFlags: 0
