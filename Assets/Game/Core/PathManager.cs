@@ -275,7 +275,7 @@ public class PathManager : MonoBehaviour
                     if (path.waypoints.Count == levelManager.GetCurrentLevel().map.Values.Count)
                     {
                         canFillSlots = false;
-                        Invoke("CheckSolution", 3f);
+                        Invoke("CheckSolution", 2f);
                         SetGameOver();
                     }
                 }
