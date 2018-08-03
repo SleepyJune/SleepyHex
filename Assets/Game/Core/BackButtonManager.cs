@@ -10,6 +10,8 @@ public class BackButtonManager : MonoBehaviour
 {
     public DialogueGroup dialogueGroup;
 
+    public DialogWindow exitGameDialogue;
+
     bool isGameScene = false;
 
     void Start()
@@ -20,9 +22,24 @@ public class BackButtonManager : MonoBehaviour
         }
     }
 
-    void HomeSceneBackButton()
+    public void ExitApplication()
     {
         Application.Quit();
+    }
+
+    void HomeSceneBackButton()
+    {
+        if (exitGameDialogue)
+        {
+            if (exitGameDialogue.panel.activeSelf)
+            {
+                exitGameDialogue.Close();
+            }
+            else
+            {
+                exitGameDialogue.Show();
+            }
+        }
     }
 
     void GameSceneBackButton()
