@@ -11,6 +11,9 @@ public class DialogueGroup : MonoBehaviour
 
     Dictionary<string, DialogWindow> windows;
 
+    [NonSerialized]
+    public string currentActiveWindow;
+
     void Start()
     {
         windows = new Dictionary<string, DialogWindow>();
@@ -21,12 +24,43 @@ public class DialogueGroup : MonoBehaviour
         }
     }
 
+    public void ShowWindow(string name)
+    {
+        DialogWindow target;
+
+        if (windows.TryGetValue(name, out target))
+        {
+            currentActiveWindow = name;
+
+            target.Show();
+        }
+    }
+
+    public void CloseWindow(string returnWindow)
+    {
+        CloseWindow(currentActiveWindow, returnWindow);
+    }
+
+    public void CloseWindow(string name, string returnWindow)
+    {
+        DialogWindow target;
+
+        if (windows.TryGetValue(name, out target))
+        {
+            currentActiveWindow = returnWindow;
+
+            target.Close();
+        }
+    }
+
     public void SetActive(string name)
     {
         DialogWindow target;
 
         if (windows.TryGetValue(name, out target))
         {
+            currentActiveWindow = name;
+
             foreach (var dialogue in dialogues)
             {
                 if (dialogue.name != name)
