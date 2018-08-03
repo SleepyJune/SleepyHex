@@ -52,8 +52,9 @@ public class ScoreManager : MonoBehaviour
                 levelIDText.text = score.level.levelID.ToString();
                 levelDifficultyText.text = score.level.GetDifficultyString();
             }
-                        
-            scorePanel.Show(); //need this here for reseting all animations first
+
+            dialogueGroup.ShowWindow("Score");
+            //scorePanel.Show(); //need this here for reseting all animations first
 
             scoreText.text = score.points.ToString();
 
@@ -126,7 +127,7 @@ public class ScoreManager : MonoBehaviour
         if (current != null)
         {
             GameManager.instance.LoadLevel(current.levelName);
-            scorePanel.Close();
+            dialogueGroup.CloseWindow("Score","Game");
         }
     }
 
@@ -142,7 +143,8 @@ public class ScoreManager : MonoBehaviour
                 if(currentLevel.nextLevel != null && currentLevel.nextLevel != "")
                 {
                     GameManager.instance.LoadLevel(currentLevel.nextLevel);
-                    scorePanel.Close();
+                    dialogueGroup.CloseWindow("Score", "Game");
+                    //scorePanel.Close();
                 }
                 else //show the select difficulty group
                 {

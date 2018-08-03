@@ -83,10 +83,14 @@ public class LevelSelector2 : MonoBehaviour
 
         //selectorPanel = GetComponent<DialogWindow>();
 
+        dialogueGroup.currentActiveWindow = "LevelDifficulty";
+
         if (difficultyFilter != -1)
         {
-            //dialogueGroup.SetActive("LevelSelect");
-            difficultyPanel.Close();
+            //dialogueGroup.SetActive("LevelSelect");            
+
+            dialogueGroup.CloseWindow("LevelDifficulty","LevelSelect");
+            //difficultyPanel.Close();
         }
 
         LoadLevels();
