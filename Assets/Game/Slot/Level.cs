@@ -61,6 +61,17 @@ public class Level
         }
     }
 
+    public Slot GetSlot(Vector3 position)
+    {
+        Slot slot;
+        if(map.TryGetValue(position, out slot))
+        {
+            return slot;
+        }
+
+        return null;
+    }
+
     public void ChangeSlotNumber(Slot newSlot)
     {
         Slot slot;

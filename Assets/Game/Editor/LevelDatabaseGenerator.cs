@@ -159,14 +159,64 @@ public class LevelDatabaseGenerator : Editor
                             var slot = level.slots.First(x => x.number == i);
                             if (slot.hideNumber)
                             {
-                                Debug.Log("Broken Level: " + level.levelName);
+                                Debug.Log("Broken Slot: " + level.levelName);
                                 break;
                             }
                         }
                     }
+
+                    if (!CheckBrokenSolution(level))
+                    {
+                        Debug.Log("No Solution " + level.levelName);
+                    }
                 }
             }
         }
+    }
+
+    public bool CheckBrokenSolution(Level level)
+    {
+        if (level.solution != null)
+        {
+            level.Initialize();
+
+            var bestPath = level.solution.bestPath;
+            var start = bestPath.FirstOrDefault();
+
+            if (start == null)
+            {                
+                return false;
+            }
+
+            var newPath = new Path(level.GetSlot(bestPath.First()));
+
+
+            foreach(var pos in bestPath)
+            {
+                var slot = level.GetSlot(pos);
+
+                if(pos == start)
+                {
+                    continue;
+                }
+
+                if(slot != null)
+                {
+                    if (!newPath.AddPoint(slot))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public static void DeleteAllSubAssets(UnityEngine.Object obj)
