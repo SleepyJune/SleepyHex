@@ -56,6 +56,12 @@ public class ScoreManager : MonoBehaviour
             dialogueGroup.ShowWindow("Score");
             //scorePanel.Show(); //need this here for reseting all animations first
 
+            /*for (int i = 0; i < score.stars; i++)
+            {
+                var star = stars[i];
+                star.Rebind();
+            }*/
+
             scoreText.text = score.points.ToString();
 
             if (score.level.hasSolution)

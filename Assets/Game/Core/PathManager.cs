@@ -298,7 +298,7 @@ public class PathManager : MonoBehaviour
     }
 
     void CheckSolution()
-    {
+    {        
         levelManager.Check();
     }
 

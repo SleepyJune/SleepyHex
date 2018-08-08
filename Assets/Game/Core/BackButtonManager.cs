@@ -48,7 +48,7 @@ public class BackButtonManager : MonoBehaviour
 
         Debug.Log(curr);
 
-        if (curr == "Game")
+        if (curr == "Game" && GameManager.instance.pathManager.canFillSlots)
         {
             dialogueGroup.ShowWindow("Settings");
         }

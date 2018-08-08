@@ -7795,6 +7795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueGroup: {fileID: 604755212}
+  exitGameDialogue: {fileID: 0}
 --- !u!1 &1394278959
 GameObject:
   m_ObjectHideFlags: 0
