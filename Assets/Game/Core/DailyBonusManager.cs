@@ -47,6 +47,8 @@ public class DailyBonusManager : MonoBehaviour
         if(difference.TotalHours >= 22 || !PlayerPrefs.HasKey("LastPlayedDate")) //60 seconds since last played
         {
             window.Show();
+            //GameManager.instance.dialogueGroup.ShowWindow("DailyBonusManager");
+
             PlayerPrefs.SetString("LastPlayedDate", dateNow);
             return true;
         }

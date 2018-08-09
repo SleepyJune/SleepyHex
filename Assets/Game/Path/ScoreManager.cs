@@ -133,7 +133,8 @@ public class ScoreManager : MonoBehaviour
         if (current != null)
         {
             GameManager.instance.LoadLevel(current.levelName);
-            dialogueGroup.CloseWindow("Score","Game");
+            //dialogueGroup.CloseWindow("Score","Game");
+            dialogueGroup.CloseWindow();
         }
     }
 
@@ -149,7 +150,8 @@ public class ScoreManager : MonoBehaviour
                 if(currentLevel.nextLevel != null && currentLevel.nextLevel != "")
                 {
                     GameManager.instance.LoadLevel(currentLevel.nextLevel);
-                    dialogueGroup.CloseWindow("Score", "Game");
+                    //dialogueGroup.CloseWindow("Score", "Game");
+                    dialogueGroup.CloseWindow();
                     //scorePanel.Close();
                 }
                 else //show the select difficulty group

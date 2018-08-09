@@ -11,8 +11,7 @@ public class DialogueGroup : MonoBehaviour
 
     Dictionary<string, DialogWindow> windows;
 
-    [NonSerialized]
-    public string currentActiveWindow;
+    Stack<string> dialogueStack = new Stack<string>();
 
     void Start()
     {
@@ -24,30 +23,45 @@ public class DialogueGroup : MonoBehaviour
         }
     }
 
+    public string GetCurrentWindow()
+    {
+        if (dialogueStack.Count > 0)
+        {
+            return dialogueStack.Peek();
+        }
+
+        return null;
+    }
+
     public void ShowWindow(string name)
     {
         DialogWindow target;
 
         if (windows.TryGetValue(name, out target))
         {
-            currentActiveWindow = name;
+            Debug.Log("Open: " + name);
+
+            //previousActiveWindow = currentActiveWindow;
+            //currentActiveWindow = name;
+
+            dialogueStack.Push(name);
 
             target.Show();
         }
     }
 
-    public void CloseWindow(string returnWindow)
-    {
-        CloseWindow(currentActiveWindow, returnWindow);
-    }
-
-    public void CloseWindow(string name, string returnWindow)
+    public void CloseWindow()
     {
         DialogWindow target;
 
+        name = dialogueStack.Peek();
+
         if (windows.TryGetValue(name, out target))
         {
-            currentActiveWindow = returnWindow;
+            //currentActiveWindow = returnWindow;
+            dialogueStack.Pop();
+
+            Debug.Log("Top: " + GetCurrentWindow());
 
             target.Close();
         }
@@ -59,10 +73,19 @@ public class DialogueGroup : MonoBehaviour
 
         if (windows.TryGetValue(name, out target))
         {
-            currentActiveWindow = name;
+            //previousActiveWindow = currentActiveWindow;
+            //currentActiveWindow = name;
+
+            dialogueStack = new Stack<string>();
+            dialogueStack.Push(name);
 
             foreach (var dialogue in dialogues)
             {
+                if (dialogue.isPopup)
+                {
+                    continue;
+                }
+
                 if (dialogue.name != name)
                 {
                     if (!target.transform.IsChildOf(dialogue.transform))

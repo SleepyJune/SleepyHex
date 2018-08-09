@@ -9,6 +9,10 @@ public class DialogWindow : MonoBehaviour
 {
     public GameObject panel;
 
+    public DialogueGroup dialogueGroup;
+
+    public bool isPopup = false;
+
     public void Show()
     {
         if (!panel.activeSelf)//if (!panel.activeInHierarchy)
@@ -22,6 +26,14 @@ public class DialogWindow : MonoBehaviour
         if (panel.activeSelf)
         {
             panel.SetActive(false);
+        }
+    }
+
+    public void CloseDialogue()
+    {
+        if (dialogueGroup != null)
+        {
+            dialogueGroup.CloseWindow();
         }
     }
 }

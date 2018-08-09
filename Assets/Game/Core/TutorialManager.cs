@@ -18,10 +18,15 @@ public class TutorialManager : MonoBehaviour
     public AnimatorStateManager animManager;
 
     public TutorialLevel[] levels;
-
+        
     void Start()
     {
        
+    }
+
+    public void DelayedShowWindow()
+    {
+        GameManager.instance.dialogueGroup.ShowWindow("TutorialOverlay");
     }
 
     public void ShowTutorial(Level current)
@@ -41,9 +46,12 @@ public class TutorialManager : MonoBehaviour
                 tutorialOverlay = Instantiate(tutorial.overlay, tutorialWindow.transform);
             }
 
-            tutorialWindow.Show();
+            //tutorialWindow.Show();
+
+            Invoke("DelayedShowWindow", .05f);
+
             //tutorialText.text = tutorial.text;            
-            
+
         }
         else
         {

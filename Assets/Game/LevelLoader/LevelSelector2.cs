@@ -82,14 +82,18 @@ public class LevelSelector2 : MonoBehaviour
         difficultyFilter = PlayerPrefs.GetInt("difficultyFilter", 5);
 
         //selectorPanel = GetComponent<DialogWindow>();
+        
+        dialogueGroup.ShowWindow("LevelSelect");
+        dialogueGroup.ShowWindow("LevelDifficulty");
 
-        dialogueGroup.currentActiveWindow = "LevelDifficulty";
 
         if (difficultyFilter != -1)
         {
             //dialogueGroup.SetActive("LevelSelect");            
 
-            dialogueGroup.CloseWindow("LevelDifficulty","LevelSelect");
+            //dialogueGroup.CloseWindow("LevelDifficulty","LevelSelect");
+
+            dialogueGroup.CloseWindow();
             //difficultyPanel.Close();
         }
 
@@ -168,8 +172,8 @@ public class LevelSelector2 : MonoBehaviour
             GameManager.instance.LoadLevel(levelName);
         }
 
-        //selectorPanel.Close();
         dialogueGroup.SetActive("Game");
+        //selectorPanel.Close();
     }
 
     public void SetButtonStars(Score score)

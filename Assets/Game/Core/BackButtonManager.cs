@@ -44,17 +44,18 @@ public class BackButtonManager : MonoBehaviour
 
     void GameSceneBackButton()
     {
-        var curr = dialogueGroup.currentActiveWindow;
+        var curr = dialogueGroup.GetCurrentWindow();
 
         Debug.Log(curr);
 
-        if (curr == "Game" && GameManager.instance.pathManager.canFillSlots)
+        if (curr == "TutorialOverlay" || curr == "Settings" || curr == "TutorialParent" 
+            || curr == "DailyBonusManager" || curr == "MessageRateUs")
+        {
+            dialogueGroup.CloseWindow();
+        }
+        else if (curr == "Game" && GameManager.instance.pathManager.canFillSlots)
         {
             dialogueGroup.ShowWindow("Settings");
-        }
-        else if (curr == "Settings")
-        {
-            dialogueGroup.CloseWindow("Game");
         }
         else if (curr == "Score")
         {

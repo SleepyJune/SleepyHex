@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     public LevelSelector2 levelSelector;
 
+    public DialogueGroup dialogueGroup;
+
     void Awake()
     {
         if (instance == null)
